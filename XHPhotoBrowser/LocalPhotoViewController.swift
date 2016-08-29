@@ -137,9 +137,6 @@ class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableVi
     
         func shouldClippedToTop(view: UIView?) -> Bool {
             if (view != nil) {
-                if (view!.isKindOfClass(UIImageViewAligned.classForCoder())) {
-                    return (view as! UIImageViewAligned).alignTop
-                }
                 if (view!.layer.contentsRect.size.height < 1) {
                     return true;
                 }

@@ -21,7 +21,7 @@ class XHPhotoItem: NSObject {
 
 class XHPhotoGroup: UIView {
 
-    private var imageViews = [UIImageViewAligned]()
+    private var imageViews = [UIImageView]()
     
     var photoItemArray: [XHPhotoItem]? {
         didSet {
@@ -41,7 +41,7 @@ class XHPhotoGroup: UIView {
     
     func setupPhotoGroup() {
         for _ in 0..<9 {
-            let imageView = UIImageViewAligned()
+            let imageView = UIImageView()
             imageView.contentMode = .ScaleAspectFill
             imageView.clipsToBounds = true
             imageView.userInteractionEnabled = true
@@ -90,16 +90,10 @@ class XHPhotoGroup: UIView {
             imageView.yy_setImageWithURL(NSURL(string: photoItem.original_pic)!,
                                          placeholder: UIImage(named: "whiteplaceholder"),
                                          options: YYWebImageOptions.AvoidSetImage,
-                                         progress: { (a, b) in
-                                            
-                                            
-                },
+                                         progress: nil,
                                          transform: nil,
                                          completion: {[weak imageView] (image, url, from, stage, error) in
-                                            
-//                                            if (image != nil && stage == YYWebImageStage.Finished) {
-//                                                imageView.image = image;
-//                                            }
+
                                             guard let imageView = imageView else {
                                                 return
                                             }
@@ -116,13 +110,14 @@ class XHPhotoGroup: UIView {
                                             //
                                             let scale = (height / width) / (imageView.bounds.size.height / imageView.bounds.size.width);
                                             if (scale < 0.99 || isnan(scale)) { // 宽图把左右两边裁掉
-                                                imageView.alignTop = false
-//                                                imageView.contentMode = UIViewContentMode.ScaleAspectFill;
-//                                                imageView.layer.contentsRect = CGRectMake(0, 0, 1, 1);
+//                                                imageView.alignTop = false
+                                                imageView.contentMode = UIViewContentMode.ScaleAspectFill;
+                                                imageView.layer.contentsRect = CGRectMake(0, 0, 1, 1);
                                             } else { // 高图只保留顶部
-                                                imageView.alignTop = true
-//                                                imageView.contentMode = UIViewContentMode.ScaleToFill;
-//                                                imageView.layer.contentsRect = CGRectMake(0, 0, 1, width / height);
+//                                                imageView.alignTop = true
+                                                imageView.contentMode = UIViewContentMode.ScaleToFill;
+                                                let imageViewScale = imageView.bounds.size.width / imageView.bounds.size.height
+                                                imageView.layer.contentsRect = CGRectMake(0, 0, 1, width / height / imageViewScale);
                                             }
                                             
                                             if (from != YYWebImageFromType.MemoryCacheFast) {
@@ -142,7 +137,7 @@ class XHPhotoGroup: UIView {
     func tapImage(sender: UITapGestureRecognizer) {
         //启动图片浏览器
         let vc = self.xh_viewController
-        let currentPage = imageViews.indexOf(sender.view as! UIImageViewAligned) ?? 0
+        let currentPage = imageViews.indexOf(sender.view as! UIImageView) ?? 0
 
         var items = [XHPhotoGroupItem]()
         let enumer = photoItemArray!.enumerate()
@@ -167,9 +162,6 @@ class XHPhotoGroup: UIView {
 
     func shouldClippedToTop(view: UIView?) -> Bool {
         if (view != nil) {
-            if (view!.isKindOfClass(UIImageViewAligned.classForCoder())) {
-                return (view as! UIImageViewAligned).alignTop
-            }
             if (view!.layer.contentsRect.size.height < 1) {
                 return true;
             }

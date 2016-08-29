@@ -31,9 +31,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     private final let screenBound = UIScreen.mainScreen().bounds
     private var screenWidth: CGFloat { return screenBound.size.width }
     private var screenHeight: CGFloat { return screenBound.size.height }
-    
-
-    
+        
     @IBOutlet weak var collectionView: UICollectionView!
     var images = [ImageModel]()
     let switcher = UISwitch()
@@ -42,12 +40,10 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        //        slide.addTarget(self, action: nil, forControlEvents: UIControlEvents.ValueChanged)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: switcher)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftsSwitcher)
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            //这里写需要大量时间的代码
             for dict in imageurls {
                 let model = ImageModel()
                 model.setValuesForKeysWithDictionary(dict)
@@ -60,9 +56,6 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                 }
             }
             dispatch_async(dispatch_get_main_queue(), {
-                //这里返回主线程，写需要主线程执行的代码
-                //                let random = Int(arc4random_uniform(UInt32(testString.length)))
-                //                self.detailText = (testString as NSString).substringToIndex(random)
                 self.collectionView.reloadData()
             })
         })
@@ -92,9 +85,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("exampleCollectionViewCell", forIndexPath: indexPath) as? ExampleCollectionViewCell else {
             return UICollectionViewCell()
         }
-        //        cell.exampleImageView.image = images[indexPath.row].underlyingImage
-//        cell.exampleImageView.yy_setImageWithURL(NSURL(string: images[indexPath.row].small)!, options: YYWebImageOptions.AllowBackgroundTask)
-        
+
         cell.setInfo(self.images[indexPath.row].small)
         
         return cell
@@ -120,25 +111,6 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         v.fromItemIndex = currentPage
         v.blurEffectBackground = self.switcher.on
         v.showInContaioner(vc.tabBarController!.view, animated: true, completion: nil)
-        
-        
-        //        let fromView = sender.view;
-        //
-        //        var items = [XHPhotoGroupItem]()
-        //
-//                let enumer = images.enumerate()
-//                for (index, photoItem) in enumer {
-//                    let item = XHPhotoGroupItem()
-//                    item.thumbView = imageViews[index]
-//                    item.largeImageURL = NSURL(string: photoItem.original_pic)
-//        //            item.largeImageSize = imageViews[index].image!.size
-//                    items.append(item)
-//                }
-        //
-        //        let v = XHPhotoBrowser.init(groupItems: items)
-        //        v.presentFromImageView(fromView!, toContainer: vc.tabBarController!.view, currentPage: currentPage, animated: true, completion: nil)
-        
-        
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
