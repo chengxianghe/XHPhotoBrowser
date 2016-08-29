@@ -3,8 +3,13 @@ photo browser
 
 ===
 - 用 Objective-C 实现的photo browser的效果, 基于YYKit的Demo中的一个photoView改造而来, 仅供学习交流使用. 
+- 项目依赖[YYWebImage](https://github.com/ibireme/YYWebImage)
 - 支持 ARC 和 CocoaPods 
 - iOS 8.0 (理论上iOS7.0也没问题, 但是我没有设备测试,所以...)
+
+===
+
+CocoaPods: pod 'XHPhotoBrowser'
 
 GitHub：[chengxianghe](https://github.com/chengxianghe) 
 
@@ -29,13 +34,13 @@ GitHub：[chengxianghe](https://github.com/chengxianghe)
 ## Screenshots
 
 ####开启blur预览图
-![image](https://github.com/chengxianghe/watch-gif/blob/master/photobrower1.png?raw=true)
+![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower1.png?raw=true)
 
 ####以controller形式的展示
-![image](https://github.com/chengxianghe/watch-gif/blob/master/photobrower2.png?raw=true)
+![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower2.png?raw=true)
 
 ####关闭blur 显示caption
-![image](https://github.com/chengxianghe/watch-gif/blob/master/photobrower3.png?raw=true)
+![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower3.png?raw=true)
 
 - GIF
 
