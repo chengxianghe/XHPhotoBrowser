@@ -9,7 +9,8 @@ photo browser
 
 ===
 
-CocoaPods:
+###CocoaPods:
+
 `pod 'XHPhotoBrowser'`
 
 GitHub：[chengxianghe](https://github.com/chengxianghe) 
