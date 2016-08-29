@@ -1,13 +1,4 @@
 PODS:
-  - DACircularProgress (2.3.1)
-  - MBProgressHUD (0.9.2)
-  - MWPhotoBrowser (2.1.2):
-    - DACircularProgress (~> 2.3)
-    - MBProgressHUD (~> 0.9)
-    - SDWebImage (!= 3.7.2, ~> 3.7)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
   - YYCache (1.0.3)
   - YYImage (1.0.3):
     - YYImage/Core (= 1.0.3)
@@ -17,19 +8,13 @@ PODS:
     - YYImage
 
 DEPENDENCIES:
-  - MWPhotoBrowser
-  - SDWebImage
   - YYWebImage
 
 SPEC CHECKSUMS:
-  DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
-  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   YYCache: 282f35b5b0990833d0b7a06d864a87141a021da2
   YYImage: 362f44ffba1fc498f2152060f3bb54ed84600981
   YYWebImage: 0431ed108e104527669b86f75efd58958425cca2
 
-PODFILE CHECKSUM: 55cfa5934b6b5eed402bef6af1f8461930e2f5a5
+PODFILE CHECKSUM: 51e85729a6b770782df82fe9340e063d6da78e50
 
 COCOAPODS: 1.0.1

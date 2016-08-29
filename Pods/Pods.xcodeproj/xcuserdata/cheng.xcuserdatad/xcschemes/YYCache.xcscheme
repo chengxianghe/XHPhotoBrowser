@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'A7FC7166ADBB6743030E239FF3C88562'
-               BlueprintName = 'Pods-XHPhotoBrowser'
+               BlueprintIdentifier = 'F715652563898AF865FBD2DAC0B47C6B'
+               BlueprintName = 'YYCache'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-XHPhotoBrowser.a'>
+               BuildableName = 'libYYCache.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -54,35 +54,7 @@ class ViewController: UIViewController {
     }
         
     @IBAction func onPush(sender: AnyObject) {
-//        let browserVC = XHPhotoBrowserController()
-        let browserVC = WMTestViewController()
         
-        var images = [XHPhotoGroupItem]();
-        
-        for i in 0..<imageurls.count {
-            
-            let dict = imageurls[i]
-            let model = ImageModel()
-            model.setValuesForKeysWithDictionary(dict)
-            model.caption = caption[random()%10]
-            
-            let item = MYPhotoGroupItem()
-            item.caption = model.caption
-            item.largeImageURL = NSURL(string: model.big)
-            item.shouldClipToTop = false
-            
-            images.append(item)
-            
-            if images.count == 20 {
-                break
-            }
-        }
-        
-        browserVC.groupItems = images;
-        
-        self.tabBarController?.tabBar.hidden = true
-        self.navigationController?.pushViewController(browserVC, animated: true)
-
     }
 
     override func viewDidLoad() {

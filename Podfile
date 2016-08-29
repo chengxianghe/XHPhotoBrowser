@@ -5,7 +5,5 @@ inhibit_all_warnings!
 platform :ios, "7.0"
 
 target "XHPhotoBrowser" do
-    pod 'SDWebImage'
     pod 'YYWebImage'
-    pod 'MWPhotoBrowser'
 end

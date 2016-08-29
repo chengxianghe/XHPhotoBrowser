@@ -22,14 +22,11 @@
 		14AE3F7C1D73F7620032ABCA /* XHPhotoBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F721D73F7620032ABCA /* XHPhotoBrowserController.m */; };
 		14AE3F7D1D73F7620032ABCA /* XHPhotoGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F741D73F7620032ABCA /* XHPhotoGroupCell.m */; };
 		14AE3F7E1D73F7620032ABCA /* XHPhotoGroupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F771D73F7620032ABCA /* XHPhotoGroupItem.m */; };
-		14AEB98C1D71C44C00E37A99 /* WMTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB98B1D71C44C00E37A99 /* WMTestViewController.m */; };
+		14AE3F851D7407C20032ABCA /* PhotoViewFrameHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F801D7407C20032ABCA /* PhotoViewFrameHelper.swift */; };
+		14AE3F861D7407C20032ABCA /* whiteplaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 14AE3F811D7407C20032ABCA /* whiteplaceholder.png */; };
+		14AE3F871D7407C20032ABCA /* XHPhotoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F821D7407C20032ABCA /* XHPhotoGroup.swift */; };
+		14AE3F881D7407C20032ABCA /* UIImageViewAligned.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F841D7407C20032ABCA /* UIImageViewAligned.swift */; };
 		14AEB9901D72E31200E37A99 /* XHActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB98F1D72E31200E37A99 /* XHActionSheet.m */; };
-		14C5DE901D61F4B500034DB4 /* PhotoViewFrameHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C5DE8F1D61F4B500034DB4 /* PhotoViewFrameHelper.swift */; };
-		14CD4B3E1D5D913200D52764 /* whiteplaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 14CD4B2E1D5D913200D52764 /* whiteplaceholder.png */; };
-		14E911561D5F5E2C00DA704E /* UIImageViewAligned.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E911551D5F5E2C00DA704E /* UIImageViewAligned.swift */; };
-		14E911581D5F5EED00DA704E /* test.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 14E911571D5F5EED00DA704E /* test.jpeg */; };
-		14E9115E1D5F674600DA704E /* width.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 14E9115D1D5F674600DA704E /* width.jpg */; };
-		14E911601D600ECB00DA704E /* XHPhotoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9115F1D600ECB00DA704E /* XHPhotoGroup.swift */; };
 		2CFF160A3FDEA407ADF255DA /* libPods-XHPhotoBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 276FC5EE1633C36F82F1AA73 /* libPods-XHPhotoBrowser.a */; };
 /* End PBXBuildFile section */
 
@@ -59,16 +56,12 @@
 		14AE3F751D73F7620032ABCA /* XHPhotoGroupHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoGroupHeader.h; sourceTree = "<group>"; };
 		14AE3F761D73F7620032ABCA /* XHPhotoGroupItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoGroupItem.h; sourceTree = "<group>"; };
 		14AE3F771D73F7620032ABCA /* XHPhotoGroupItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHPhotoGroupItem.m; sourceTree = "<group>"; };
-		14AEB98A1D71C44C00E37A99 /* WMTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMTestViewController.h; sourceTree = "<group>"; };
-		14AEB98B1D71C44C00E37A99 /* WMTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMTestViewController.m; sourceTree = "<group>"; };
+		14AE3F801D7407C20032ABCA /* PhotoViewFrameHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewFrameHelper.swift; sourceTree = "<group>"; };
+		14AE3F811D7407C20032ABCA /* whiteplaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteplaceholder.png; sourceTree = "<group>"; };
+		14AE3F821D7407C20032ABCA /* XHPhotoGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XHPhotoGroup.swift; sourceTree = "<group>"; };
+		14AE3F841D7407C20032ABCA /* UIImageViewAligned.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewAligned.swift; sourceTree = "<group>"; };
 		14AEB98E1D72E31200E37A99 /* XHActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHActionSheet.h; sourceTree = "<group>"; };
 		14AEB98F1D72E31200E37A99 /* XHActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHActionSheet.m; sourceTree = "<group>"; };
-		14C5DE8F1D61F4B500034DB4 /* PhotoViewFrameHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewFrameHelper.swift; sourceTree = "<group>"; };
-		14CD4B2E1D5D913200D52764 /* whiteplaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteplaceholder.png; sourceTree = "<group>"; };
-		14E911551D5F5E2C00DA704E /* UIImageViewAligned.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageViewAligned.swift; path = ../XHPhotoBrowser/UIImageViewAligned.swift; sourceTree = "<group>"; };
-		14E911571D5F5EED00DA704E /* test.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpeg; sourceTree = "<group>"; };
-		14E9115D1D5F674600DA704E /* width.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = width.jpg; sourceTree = "<group>"; };
-		14E9115F1D600ECB00DA704E /* XHPhotoGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XHPhotoGroup.swift; sourceTree = "<group>"; };
 		276FC5EE1633C36F82F1AA73 /* libPods-XHPhotoBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XHPhotoBrowser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C437230E7695F1CF9A0F45 /* Pods-XHPhotoBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XHPhotoBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XHPhotoBrowser/Pods-XHPhotoBrowser.debug.xcconfig"; sourceTree = "<group>"; };
 		FF9D057E32A4EEE6404339DF /* Pods-XHPhotoBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XHPhotoBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-XHPhotoBrowser/Pods-XHPhotoBrowser.release.xcconfig"; sourceTree = "<group>"; };
@@ -113,16 +106,14 @@
 				14717E931D59DBC3000245D1 /* ViewController.swift */,
 				141311861D5AD964003AA86E /* LocalPhotoViewController.swift */,
 				143FA4EA1D6C44CB001FD20B /* CollectionViewController.swift */,
+				14AE3F7F1D7407C20032ABCA /* PhotoView */,
+				14AE3F831D7407C20032ABCA /* UIImageViewAligned */,
 				14717E951D59DBC3000245D1 /* Main.storyboard */,
 				14717E981D59DBC3000245D1 /* Assets.xcassets */,
 				14717E9A1D59DBC3000245D1 /* LaunchScreen.storyboard */,
 				14717EC21D59DCD2000245D1 /* imagesModels.plist */,
 				14717E9D1D59DBC3000245D1 /* Info.plist */,
-				14E9115D1D5F674600DA704E /* width.jpg */,
-				14E911571D5F5EED00DA704E /* test.jpeg */,
 				141311A51D5AF8BA003AA86E /* XHPhotoBrowser-Bridging-Header.h */,
-				14AEB98A1D71C44C00E37A99 /* WMTestViewController.h */,
-				14AEB98B1D71C44C00E37A99 /* WMTestViewController.m */,
 			);
 			path = XHPhotoBrowser;
 			sourceTree = "<group>";
@@ -148,6 +139,24 @@
 			path = XHPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		14AE3F7F1D7407C20032ABCA /* PhotoView */ = {
+			isa = PBXGroup;
+			children = (
+				14AE3F801D7407C20032ABCA /* PhotoViewFrameHelper.swift */,
+				14AE3F811D7407C20032ABCA /* whiteplaceholder.png */,
+				14AE3F821D7407C20032ABCA /* XHPhotoGroup.swift */,
+			);
+			path = PhotoView;
+			sourceTree = "<group>";
+		};
+		14AE3F831D7407C20032ABCA /* UIImageViewAligned */ = {
+			isa = PBXGroup;
+			children = (
+				14AE3F841D7407C20032ABCA /* UIImageViewAligned.swift */,
+			);
+			path = UIImageViewAligned;
+			sourceTree = "<group>";
+		};
 		14AEB98D1D72E31200E37A99 /* XHActionSheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,21 +170,9 @@
 			isa = PBXGroup;
 			children = (
 				14AE3F691D73F7620032ABCA /* XHPhotoBrowser */,
-				14E911551D5F5E2C00DA704E /* UIImageViewAligned.swift */,
-				14CD4B2B1D5D913200D52764 /* PhotoView */,
 			);
 			path = Class;
 			sourceTree = SOURCE_ROOT;
-		};
-		14CD4B2B1D5D913200D52764 /* PhotoView */ = {
-			isa = PBXGroup;
-			children = (
-				14CD4B2E1D5D913200D52764 /* whiteplaceholder.png */,
-				14E9115F1D600ECB00DA704E /* XHPhotoGroup.swift */,
-				14C5DE8F1D61F4B500034DB4 /* PhotoViewFrameHelper.swift */,
-			);
-			path = PhotoView;
-			sourceTree = "<group>";
 		};
 		E0E11C8CB6FC42DEF04D714B /* Frameworks */ = {
 			isa = PBXGroup;
@@ -257,11 +254,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				14717E9C1D59DBC3000245D1 /* LaunchScreen.storyboard in Resources */,
-				14E9115E1D5F674600DA704E /* width.jpg in Resources */,
+				14AE3F861D7407C20032ABCA /* whiteplaceholder.png in Resources */,
 				14717E991D59DBC3000245D1 /* Assets.xcassets in Resources */,
 				14AE3F7A1D73F7620032ABCA /* XHPhotoBrowser.bundle in Resources */,
-				14CD4B3E1D5D913200D52764 /* whiteplaceholder.png in Resources */,
-				14E911581D5F5EED00DA704E /* test.jpeg in Resources */,
 				14717EC31D59DCD2000245D1 /* imagesModels.plist in Resources */,
 				14717E971D59DBC3000245D1 /* Main.storyboard in Resources */,
 			);
@@ -322,19 +317,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14E911561D5F5E2C00DA704E /* UIImageViewAligned.swift in Sources */,
 				14AEB9901D72E31200E37A99 /* XHActionSheet.m in Sources */,
-				14AEB98C1D71C44C00E37A99 /* WMTestViewController.m in Sources */,
-				14E911601D600ECB00DA704E /* XHPhotoGroup.swift in Sources */,
+				14AE3F871D7407C20032ABCA /* XHPhotoGroup.swift in Sources */,
 				14717E941D59DBC3000245D1 /* ViewController.swift in Sources */,
+				14AE3F881D7407C20032ABCA /* UIImageViewAligned.swift in Sources */,
 				14AE3F7B1D73F7620032ABCA /* XHPhotoBrowser.m in Sources */,
-				14C5DE901D61F4B500034DB4 /* PhotoViewFrameHelper.swift in Sources */,
 				14717E921D59DBC3000245D1 /* AppDelegate.swift in Sources */,
 				141311871D5AD964003AA86E /* LocalPhotoViewController.swift in Sources */,
 				14AE3F7C1D73F7620032ABCA /* XHPhotoBrowserController.m in Sources */,
 				14AE3F7D1D73F7620032ABCA /* XHPhotoGroupCell.m in Sources */,
 				14AE3F781D73F7620032ABCA /* UIView+XHAdd.m in Sources */,
 				14AE3F7E1D73F7620032ABCA /* XHPhotoGroupItem.m in Sources */,
+				14AE3F851D7407C20032ABCA /* PhotoViewFrameHelper.swift in Sources */,
 				14AE3F791D73F7620032ABCA /* XHPageControlView.m in Sources */,
 				143FA4EB1D6C44CB001FD20B /* CollectionViewController.swift in Sources */,
 			);

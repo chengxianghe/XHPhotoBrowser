@@ -7,5 +7,4 @@
 #import "XHPhotoBrowser.h"
 #import "UIView+XHAdd.h"
 #import "XHPhotoBrowserController.h"
-#import "WMTestViewController.h"
 #import "XHActionSheet.h"
