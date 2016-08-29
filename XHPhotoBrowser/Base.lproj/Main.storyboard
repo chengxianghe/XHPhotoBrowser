@@ -24,13 +24,6 @@
                                     <segue destination="PmX-Fv-epb" kind="show" id="Msl-PE-mc8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qJ-ia-abx">
-                                <rect key="frame" x="12" y="120" width="124" height="30"/>
-                                <state key="normal" title="MWPhotoBrowser"/>
-                                <connections>
-                                    <action selector="onPush:" destination="NbO-D5-4r5" eventType="touchUpInside" id="fDZ-1o-ol5"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xPm-Or-2EI">
                                 <rect key="frame" x="12" y="175" width="185" height="30"/>
                                 <state key="normal" title="XHPhotoBrowserController"/>

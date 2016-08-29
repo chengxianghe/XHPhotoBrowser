@@ -9,7 +9,13 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.title = "测试"
+    }
+    
     @IBAction func onPushBrowser(sender: AnyObject) {
         let browserVC = XHPhotoBrowserController()
         var images = [XHPhotoGroupItem]();
@@ -51,17 +57,6 @@ class ViewController: UIViewController {
         self.navigationController?.pushViewController(browserVC, animated: true)
 
         
-    }
-        
-    @IBAction func onPush(sender: AnyObject) {
-        
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.title = "测试"
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
