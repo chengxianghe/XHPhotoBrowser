@@ -18,16 +18,16 @@ s.source       = { :git => "https://github.com/chengxianghe/XHPhotoBrowser.git",
 
 
 s.frameworks = 'Foundation', 'UIKit'
-# s.dependency 'AFNetworking'
+s.dependency 'YYWebImage'
 
 s.requires_arc = true
-s.source_files  = "Class/*"
-s.resources     =  'Class/XHPhotoBrowser/XHPhotoBrowser.bundle'
+s.source_files  = 'Class/XHPhotoBrowser/*.{h,m}'
+s.resources     = 'Class/XHPhotoBrowser/XHPhotoBrowser.bundle'
 
 # 在工程中以子目录显示
-s.subspec 'XHPhotoBrowser' do |ss|
-  ss.source_files = 'Class/XHPhotoBrowser/*.{h,m}'
-end
+# s.subspec 'XHPhotoBrowser' do |ss|
+#   ss.source_files = 'Class/XHPhotoBrowser/*.{h,m}'
+# end
 
 # s.subspec 'Manager' do |ss|
 #   ss.source_files = 'TUNetworking/Manager/*.{h,m}'
