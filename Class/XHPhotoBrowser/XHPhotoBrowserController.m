@@ -53,7 +53,6 @@
 - (void)dealloc {
     [_browser dismissAnimated:NO completion:nil];
     _browser = nil;
-    NSLog(@"%s", __func__);
 }
 
 - (void)_initialisation {

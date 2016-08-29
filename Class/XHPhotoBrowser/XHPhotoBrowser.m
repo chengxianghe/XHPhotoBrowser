@@ -58,7 +58,6 @@
     _groupItems = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    NSLog(@"%s", __func__);
 }
 
 - (instancetype)init {
@@ -288,7 +287,6 @@
 - (void)updateCaption:(BOOL)isScroll {
     if (_pager.currentPage < _groupItems.count) {
         _captionView.text = _groupItems[_pager.currentPage].caption;
-//        NSLog(@"_captionView.text:%@", _captionView.text);
         [UIView animateWithDuration:0.2 animations:^{
             if (isScroll) {
                 if (_showCaptionWhenScroll) {
@@ -454,7 +452,6 @@
             return;
         }
         //activityType:com.apple.UIKit.activity.SaveToCameraRoll completed:1
-        NSLog(@"isLongPressed end: activityType:%@ completed:%d", activityType, completed);
         if ([activityType rangeOfString:@"SaveToCameraRoll"].length > 0) {
             [self.class showHUD:completed ? @"保存成功!" : @"保存失败!" inView:self];
         }
@@ -1139,7 +1136,6 @@
     }
     
     _isLongPressed = YES;
-    NSLog(@"longPress");
     
     [self actionButtonPressed];
 }
