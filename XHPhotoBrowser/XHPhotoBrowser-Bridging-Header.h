@@ -3,7 +3,6 @@
 //
 
 #import "YYWebImage.h"
-#import "XHPhotoGroupItem.h"
 #import "XHPhotoBrowser.h"
 #import "UIView+XHAdd.h"
 #import "XHPhotoBrowserController.h"

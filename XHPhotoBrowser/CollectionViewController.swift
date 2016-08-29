@@ -23,14 +23,6 @@ var caption = ["",
                "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
 ]
 
-
-class ImageModel: NSObject {
-    var small = ""
-    var big = ""
-    var middle = ""
-    var caption = ""
-}
-
 var imageurls: [[String : AnyObject]] = {
     return NSArray.init(contentsOfFile: NSBundle.mainBundle().pathForResource("imagesModels", ofType: "plist")!) as! [[String : AnyObject]]
 }()
