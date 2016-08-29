@@ -13,9 +13,11 @@ photo browser
 
 `pod 'XHPhotoBrowser'`
 
-GitHub：[chengxianghe](https://github.com/chengxianghe) 
 
 ###有什么问题请issue我
+
+GitHub：[chengxianghe](https://github.com/chengxianghe) 
+
 
 ## Version 1.0.2:
 - 删除多余的log
