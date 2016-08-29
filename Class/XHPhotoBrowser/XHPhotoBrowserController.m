@@ -225,8 +225,13 @@
     navBar.shadowImage = nil;
     navBar.translucent = YES;
     navBar.barStyle = UIBarStyleBlackTranslucent;
+
     [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+#if __IPHONE_8_0
+    [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsCompact];
+#else
     [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsLandscapePhone];
+#endif
 }
 
 - (void)storePreviousNavBarAppearance {
@@ -237,7 +242,12 @@
     _previousNavBarHidden = self.navigationController.navigationBarHidden;
     _previousNavBarStyle = self.navigationController.navigationBar.barStyle;
     _previousNavigationBarBackgroundImageDefault = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault];
+    
+#if __IPHONE_8_0
+    _previousNavigationBarBackgroundImageLandscapePhone = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsCompact];
+#else
     _previousNavigationBarBackgroundImageLandscapePhone = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsLandscapePhone];
+#endif
 }
 
 - (void)restorePreviousNavBarAppearance:(BOOL)animated {
@@ -249,7 +259,12 @@
         navBar.barTintColor = _previousNavBarBarTintColor;
         navBar.barStyle = _previousNavBarStyle;
         [navBar setBackgroundImage:_previousNavigationBarBackgroundImageDefault forBarMetrics:UIBarMetricsDefault];
+        
+#if __IPHONE_8_0
+        [navBar setBackgroundImage:_previousNavigationBarBackgroundImageLandscapePhone forBarMetrics:UIBarMetricsCompact];
+#else
         [navBar setBackgroundImage:_previousNavigationBarBackgroundImageLandscapePhone forBarMetrics:UIBarMetricsLandscapePhone];
+#endif
         // Restore back button if we need to
         if (_previousViewControllerBackButton) {
             UIViewController *previousViewController = [self.navigationController topViewController]; // We've disappeared so previous is now top

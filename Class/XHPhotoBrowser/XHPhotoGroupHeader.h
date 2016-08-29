@@ -3,7 +3,12 @@
 #define XHPhotoGroupHeader_h
 
 #import "UIView+XHAdd.h"
-#import "YYWebImage.h"
+
+#if __has_include(<YYWebImage/YYWebImage.h>)
+#import <YYWebImage/YYWebImage.h>
+#else
+@import YYWebImage;
+#endif
 
 #ifndef XH_CLAMP // return the clamped value
 #define XH_CLAMP(_x_, _low_, _high_)  (((_x_) > (_high_)) ? (_high_) : (((_x_) < (_low_)) ? (_low_) : (_x_)))

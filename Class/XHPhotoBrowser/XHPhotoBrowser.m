@@ -445,7 +445,7 @@
     [[UIActivityViewController alloc] initWithActivityItems:@[imageItem] applicationActivities:nil];
     
     @weakify(self);
-    activityViewController.completionHandler = ^(NSString * __nullable activityType, BOOL completed) {
+    UIActivityViewControllerCompletionHandler handler = ^(NSString * __nullable activityType, BOOL completed) {
         [indicator stopAnimating];
         [indicator removeFromSuperview];
         
@@ -461,9 +461,16 @@
         self.isLongPressed = NO;
     };
     
+#if __IPHONE_8_0
+    activityViewController.completionWithItemsHandler = ^(NSString * __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError) {
+        handler(activityType, completed);
+    };
+#else
+    activityViewController.completionHandler = handler;
+#endif
+    
     UIViewController *toVC = self.toContainerView.xh_viewController;
     if (!toVC) toVC = self.xh_viewController;
-    
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [toVC presentViewController:activityViewController animated:YES completion:nil];
@@ -471,7 +478,6 @@
         UIPopoverController *sharePopover = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
         [sharePopover presentPopoverFromBarButtonItem:_toolActionButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
-    
 }
 
 
