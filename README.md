@@ -34,7 +34,7 @@ GitHub：[chengxianghe](https://github.com/chengxianghe)
 ## Screenshots
 
 ####开启blur预览图
-![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower1.png?raw=true)
+![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower1.png?raw=true =100)
 
 ####以controller形式的展示
 ![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower2.png?raw=true)
