@@ -33,14 +33,19 @@ GitHub：[chengxianghe](https://github.com/chengxianghe)
 
 ## Screenshots
 
-####开启blur预览图
-![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower1.png?raw=true =100)
+<img src="https://github.com/chengxianghe/watch-gif/blob/master/photobrower1.png?raw=true" width = "200" alt="开启blur预览图" align=center />
+
+<!--![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower1.png?raw=true =100)-->
 
 ####以controller形式的展示
-![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower2.png?raw=true)
+<img src="https://github.com/chengxianghe/watch-gif/blob/master/photobrower1.png?raw=true" width = "200" alt="以controller形式的展示" align=center />
+
+<!--![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower2.png?raw=true)-->
 
 ####关闭blur 显示caption
-![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower3.png?raw=true)
+<img src="https://github.com/chengxianghe/watch-gif/blob/master/photobrower1.png?raw=true" width = "200" alt="关闭blur 显示caption" align=center />
+
+<!--![screenshot](https://github.com/chengxianghe/watch-gif/blob/master/photobrower3.png?raw=true)-->
 
 - GIF
 
