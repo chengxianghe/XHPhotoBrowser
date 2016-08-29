@@ -26,7 +26,7 @@ s.resources     =  'Class/XHPhotoBrowser/XHPhotoBrowser.bundle'
 
 # 在工程中以子目录显示
 s.subspec 'XHPhotoBrowser' do |ss|
-  ss.source_files = ‘Class/XHPhotoBrowser/*.{h,m}'
+  ss.source_files = 'Class/XHPhotoBrowser/*.{h,m}'
 end
 
 # s.subspec 'Manager' do |ss|
