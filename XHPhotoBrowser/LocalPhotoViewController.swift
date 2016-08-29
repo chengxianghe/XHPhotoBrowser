@@ -13,17 +13,36 @@ class ImageModel: NSObject {
     var small = ""
     var big = ""
     var middle = ""
+    var caption = ""
 }
 
 class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     var dataSource = Array<[XHPhotoItem]>()
+    deinit {
+        print("LocalPhotoViewController deinit")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.statusBarOrientationChange(_:)), name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
+        
         self.loadData()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
+    override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
+        return .Slide
+    }
+    
+    func statusBarOrientationChange(notification: NSNotification) {
+        self.tableView.reloadData()
+//        let orientation = UIApplication.sharedApplication().statusBarOrientation
     }
     
     func loadData() {
@@ -43,7 +62,7 @@ class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableVi
             var i: Int = 0
             
             while i < total {
-                var count = Int(random()%9)
+                var count = Int(random()%8) + 1
                 if i + count > total  {
                     count = total - i
                 }
@@ -99,17 +118,35 @@ class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        
     }
-    */
-
+    
+    
+        func shouldClippedToTop(view: UIView?) -> Bool {
+            if (view != nil) {
+                if (view!.isKindOfClass(UIImageViewAligned.classForCoder())) {
+                    return (view as! UIImageViewAligned).alignTop
+                }
+                if (view!.layer.contentsRect.size.height < 1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    
 }
 
 
@@ -126,11 +163,11 @@ class PhotoTableViewCell: UITableViewCell {
     
     func setInfo(images: [XHPhotoItem]) {
         self.photosView.frame = CGRectMake(10, 10, UIScreen.mainScreen().bounds.width - 20, PhotoTableViewCell.height(images) - 20);
-        self.photosView.setPhotoItemArray(images, isShowImage: true)
+        self.photosView.photoItemArray = images
     }
     
     static func height(images: [XHPhotoItem]) -> CGFloat {
-        let h = PhotoViewFrameHelper.getPhotoViewSizeWithPhotoCount(images.count).height + 20
+        let h = PhotoViewFrameHelper.getPhotoViewSizeWithPhotoCount(images.count, gap: 10).height + 20
         return h
     }
     

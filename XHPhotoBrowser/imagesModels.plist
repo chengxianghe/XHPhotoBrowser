@@ -44,19 +44,19 @@
 	</dict>
 	<dict>
 		<key>middle</key>
-		<string>https://github.com/chengxianghe/watch-gif/blob/master/test/WeChat_1470800214.jpeg?raw=true</string>
+		<string>http://imgsrc.baidu.com/forum/pic/item/7b1bbc315c6034a88247541ecd13495408237643.jpg</string>
 		<key>small</key>
-		<string>https://github.com/chengxianghe/watch-gif/blob/master/test/WeChat_1470800214.jpeg?raw=true</string>
+		<string>http://imgsrc.baidu.com/forum/pic/item/7b1bbc315c6034a88247541ecd13495408237643.jpg</string>
 		<key>big</key>
-		<string>https://github.com/chengxianghe/watch-gif/blob/master/test/WeChat_1470800214.jpeg?raw=true</string>
+		<string>http://imgsrc.baidu.com/forum/pic/item/7b1bbc315c6034a88247541ecd13495408237643.jpg</string>
 	</dict>
 	<dict>
 		<key>middle</key>
-		<string>https://github.com/chengxianghe/watch-gif/blob/master/test/WeChat_1470800219.jpeg?raw=true</string>
+		<string>http://pic25.nipic.com/20121118/7397288_191931239000_2.jpg</string>
 		<key>small</key>
-		<string>https://github.com/chengxianghe/watch-gif/blob/master/test/WeChat_1470800219.jpeg?raw=true</string>
+		<string>http://pic25.nipic.com/20121118/7397288_191931239000_2.jpg</string>
 		<key>big</key>
-		<string>https://github.com/chengxianghe/watch-gif/blob/master/test/WeChat_1470800219.jpeg?raw=true</string>
+		<string>http://pic25.nipic.com/20121118/7397288_191931239000_2.jpg</string>
 	</dict>
 	<dict>
 		<key>big</key>
@@ -89,6 +89,14 @@
 		<string>http://img.hb.aicdn.com/dd45e70262e3250db62ee637104def6e697ce27e54d2d-5dqgaW_fw320</string>
 		<key>small</key>
 		<string>http://img.hb.aicdn.com/dd45e70262e3250db62ee637104def6e697ce27e54d2d-5dqgaW_fw192</string>
+	</dict>
+	<dict>
+		<key>big</key>
+		<string>http://ww4.sinaimg.cn/bmiddle/406ef017jw1ec40av2nscj20ip4p0b29.jpg</string>
+		<key>middle</key>
+		<string>http://ww4.sinaimg.cn/bmiddle/406ef017jw1ec40av2nscj20ip4p0b29.jpg</string>
+		<key>small</key>
+		<string>http://ww4.sinaimg.cn/bmiddle/406ef017jw1ec40av2nscj20ip4p0b29.jpg</string>
 	</dict>
 	<dict>
 		<key>big</key>
