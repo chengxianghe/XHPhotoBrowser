@@ -56,6 +56,8 @@ GitHub：[chengxianghe](https://github.com/chengxianghe)
 
 - [YYWebImage](https://github.com/ibireme/YYWebImage)
 
-<!--## Licence-->
 
-<!--This project uses MIT License.-->
+### License
+----
+
+This code is distributed under the terms and conditions of the MIT license.
