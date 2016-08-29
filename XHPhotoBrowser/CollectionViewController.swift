@@ -24,6 +24,13 @@ var caption = ["",
 ]
 
 
+class ImageModel: NSObject {
+    var small = ""
+    var big = ""
+    var middle = ""
+    var caption = ""
+}
+
 var imageurls: [[String : AnyObject]] = {
     return NSArray.init(contentsOfFile: NSBundle.mainBundle().pathForResource("imagesModels", ofType: "plist")!) as! [[String : AnyObject]]
 }()
@@ -197,9 +204,6 @@ extension CollectionViewController: XHPhotoBrowserDataSource {
     
     func shouldClippedToTop(view: UIView?) -> Bool {
         if (view != nil) {
-            if (view!.isKindOfClass(UIImageViewAligned.classForCoder())) {
-                return (view as! UIImageViewAligned).alignTop
-            }
             if (view!.layer.contentsRect.size.height < 1) {
                 return true;
             }
@@ -292,7 +296,7 @@ extension CollectionViewController: XHPhotoBrowserDelegate {
 
 class ExampleCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var exampleImageView: UIImageViewAligned!
+    @IBOutlet weak var exampleImageView: UIImageView!
     
     func setInfo(url: String) {
         let imageView = self.exampleImageView
@@ -319,11 +323,13 @@ class ExampleCollectionViewCell: UICollectionViewCell {
                 //
                 let scale = (height / width) / (imageView.bounds.size.height / imageView.bounds.size.width);
                 if (scale < 0.99 || isnan(scale)) { // 宽图把左右两边裁掉
-                    imageView.alignTop = false
+                    imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                    imageView.layer.contentsRect = CGRectMake(0, 0, 1, 1)
                 } else { // 高图只保留顶部
-                    imageView.alignTop = true
+                    imageView.contentMode = UIViewContentMode.ScaleToFill;
+                    imageView.layer.contentsRect = CGRectMake(0, 0, 1, width / height);
                 }
-                
+            
                 if (from != YYWebImageFromType.MemoryCacheFast) {
                     let transition = CATransition()
                     transition.duration = 0.15;

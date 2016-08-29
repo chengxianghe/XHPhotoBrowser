@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		141311871D5AD964003AA86E /* LocalPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141311861D5AD964003AA86E /* LocalPhotoViewController.swift */; };
 		143FA4EB1D6C44CB001FD20B /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FA4EA1D6C44CB001FD20B /* CollectionViewController.swift */; };
 		14717E921D59DBC3000245D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14717E911D59DBC3000245D1 /* AppDelegate.swift */; };
 		14717E941D59DBC3000245D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14717E931D59DBC3000245D1 /* ViewController.swift */; };
@@ -22,16 +21,11 @@
 		14AE3F7C1D73F7620032ABCA /* XHPhotoBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F721D73F7620032ABCA /* XHPhotoBrowserController.m */; };
 		14AE3F7D1D73F7620032ABCA /* XHPhotoGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F741D73F7620032ABCA /* XHPhotoGroupCell.m */; };
 		14AE3F7E1D73F7620032ABCA /* XHPhotoGroupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F771D73F7620032ABCA /* XHPhotoGroupItem.m */; };
-		14AE3F851D7407C20032ABCA /* PhotoViewFrameHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F801D7407C20032ABCA /* PhotoViewFrameHelper.swift */; };
-		14AE3F861D7407C20032ABCA /* whiteplaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 14AE3F811D7407C20032ABCA /* whiteplaceholder.png */; };
-		14AE3F871D7407C20032ABCA /* XHPhotoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F821D7407C20032ABCA /* XHPhotoGroup.swift */; };
-		14AE3F881D7407C20032ABCA /* UIImageViewAligned.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F841D7407C20032ABCA /* UIImageViewAligned.swift */; };
 		14AEB9901D72E31200E37A99 /* XHActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB98F1D72E31200E37A99 /* XHActionSheet.m */; };
 		2CFF160A3FDEA407ADF255DA /* libPods-XHPhotoBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 276FC5EE1633C36F82F1AA73 /* libPods-XHPhotoBrowser.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		141311861D5AD964003AA86E /* LocalPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalPhotoViewController.swift; sourceTree = "<group>"; };
 		141311A51D5AF8BA003AA86E /* XHPhotoBrowser-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XHPhotoBrowser-Bridging-Header.h"; sourceTree = "<group>"; };
 		143FA4EA1D6C44CB001FD20B /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		14717E8E1D59DBC3000245D1 /* XHPhotoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XHPhotoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,10 +50,6 @@
 		14AE3F751D73F7620032ABCA /* XHPhotoGroupHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoGroupHeader.h; sourceTree = "<group>"; };
 		14AE3F761D73F7620032ABCA /* XHPhotoGroupItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoGroupItem.h; sourceTree = "<group>"; };
 		14AE3F771D73F7620032ABCA /* XHPhotoGroupItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHPhotoGroupItem.m; sourceTree = "<group>"; };
-		14AE3F801D7407C20032ABCA /* PhotoViewFrameHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewFrameHelper.swift; sourceTree = "<group>"; };
-		14AE3F811D7407C20032ABCA /* whiteplaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteplaceholder.png; sourceTree = "<group>"; };
-		14AE3F821D7407C20032ABCA /* XHPhotoGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XHPhotoGroup.swift; sourceTree = "<group>"; };
-		14AE3F841D7407C20032ABCA /* UIImageViewAligned.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewAligned.swift; sourceTree = "<group>"; };
 		14AEB98E1D72E31200E37A99 /* XHActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHActionSheet.h; sourceTree = "<group>"; };
 		14AEB98F1D72E31200E37A99 /* XHActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHActionSheet.m; sourceTree = "<group>"; };
 		276FC5EE1633C36F82F1AA73 /* libPods-XHPhotoBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XHPhotoBrowser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,10 +94,7 @@
 				14717E911D59DBC3000245D1 /* AppDelegate.swift */,
 				14AEB98D1D72E31200E37A99 /* XHActionSheet */,
 				14717E931D59DBC3000245D1 /* ViewController.swift */,
-				141311861D5AD964003AA86E /* LocalPhotoViewController.swift */,
 				143FA4EA1D6C44CB001FD20B /* CollectionViewController.swift */,
-				14AE3F7F1D7407C20032ABCA /* PhotoView */,
-				14AE3F831D7407C20032ABCA /* UIImageViewAligned */,
 				14717E951D59DBC3000245D1 /* Main.storyboard */,
 				14717E981D59DBC3000245D1 /* Assets.xcassets */,
 				14717E9A1D59DBC3000245D1 /* LaunchScreen.storyboard */,
@@ -137,24 +124,6 @@
 				14AE3F771D73F7620032ABCA /* XHPhotoGroupItem.m */,
 			);
 			path = XHPhotoBrowser;
-			sourceTree = "<group>";
-		};
-		14AE3F7F1D7407C20032ABCA /* PhotoView */ = {
-			isa = PBXGroup;
-			children = (
-				14AE3F801D7407C20032ABCA /* PhotoViewFrameHelper.swift */,
-				14AE3F811D7407C20032ABCA /* whiteplaceholder.png */,
-				14AE3F821D7407C20032ABCA /* XHPhotoGroup.swift */,
-			);
-			path = PhotoView;
-			sourceTree = "<group>";
-		};
-		14AE3F831D7407C20032ABCA /* UIImageViewAligned */ = {
-			isa = PBXGroup;
-			children = (
-				14AE3F841D7407C20032ABCA /* UIImageViewAligned.swift */,
-			);
-			path = UIImageViewAligned;
 			sourceTree = "<group>";
 		};
 		14AEB98D1D72E31200E37A99 /* XHActionSheet */ = {
@@ -254,7 +223,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				14717E9C1D59DBC3000245D1 /* LaunchScreen.storyboard in Resources */,
-				14AE3F861D7407C20032ABCA /* whiteplaceholder.png in Resources */,
 				14717E991D59DBC3000245D1 /* Assets.xcassets in Resources */,
 				14AE3F7A1D73F7620032ABCA /* XHPhotoBrowser.bundle in Resources */,
 				14717EC31D59DCD2000245D1 /* imagesModels.plist in Resources */,
@@ -318,17 +286,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				14AEB9901D72E31200E37A99 /* XHActionSheet.m in Sources */,
-				14AE3F871D7407C20032ABCA /* XHPhotoGroup.swift in Sources */,
 				14717E941D59DBC3000245D1 /* ViewController.swift in Sources */,
-				14AE3F881D7407C20032ABCA /* UIImageViewAligned.swift in Sources */,
 				14AE3F7B1D73F7620032ABCA /* XHPhotoBrowser.m in Sources */,
 				14717E921D59DBC3000245D1 /* AppDelegate.swift in Sources */,
-				141311871D5AD964003AA86E /* LocalPhotoViewController.swift in Sources */,
 				14AE3F7C1D73F7620032ABCA /* XHPhotoBrowserController.m in Sources */,
 				14AE3F7D1D73F7620032ABCA /* XHPhotoGroupCell.m in Sources */,
 				14AE3F781D73F7620032ABCA /* UIView+XHAdd.m in Sources */,
 				14AE3F7E1D73F7620032ABCA /* XHPhotoGroupItem.m in Sources */,
-				14AE3F851D7407C20032ABCA /* PhotoViewFrameHelper.swift in Sources */,
 				14AE3F791D73F7620032ABCA /* XHPageControlView.m in Sources */,
 				143FA4EB1D6C44CB001FD20B /* CollectionViewController.swift in Sources */,
 			);

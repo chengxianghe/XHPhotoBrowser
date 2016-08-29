@@ -164,10 +164,10 @@
             </objects>
             <point key="canvasLocation" x="1736" y="984"/>
         </scene>
-        <!--Local Photo View Controller-->
+        <!--View Controller-->
         <scene sceneID="cWU-tf-vK9">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="PmX-Fv-epb" customClass="LocalPhotoViewController" customModule="XHPhotoBrowser" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="PmX-Fv-epb" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PC7-XO-Clb"/>
                         <viewControllerLayoutGuide type="bottom" id="6om-pp-ary"/>
