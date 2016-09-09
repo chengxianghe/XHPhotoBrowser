@@ -1,5 +1,5 @@
 # ignore userdata
-XHPhotoBrowser/XHPhotoBrowser.xcodeproj/xcuserdata/
-XHPhotoBrowser/XHPhotoBrowser.xcworkspace/xcuserdata/
+XHPhotoBrowser/XHPhotoBrowser.xcodeproj/xcuserdata/*
+XHPhotoBrowser/XHPhotoBrowser.xcworkspace/xcuserdata/*
 # ignore cocoaPods
 # XHPhotoBrowser/Pods
