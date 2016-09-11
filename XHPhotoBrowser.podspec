@@ -2,10 +2,10 @@
 Pod::Spec.new do |s|
 
 s.name         = "XHPhotoBrowser"
-s.version      = "1.0.2"
+s.version      = "1.0.3"
 s.summary      = "XHPhotoBrowser."
 s.description  	= <<-DESC
-			XHPhotoBrowser...
+			XHPhotoBrowser...一个图片展示控件, 使用Objective-C
 			DESC
 s.homepage     = "https://github.com/chengxianghe/XHPhotoBrowser"
 # s.screenshots  = "https://github.com/chengxianghe/watch-gif/raw/master/XHPhotoBrowser.gif?raw=true"
@@ -23,14 +23,5 @@ s.dependency 'YYWebImage'
 s.requires_arc = true
 s.source_files  = 'Class/XHPhotoBrowser/*.{h,m}'
 s.resources     = 'Class/XHPhotoBrowser/XHPhotoBrowser.bundle'
-
-# 在工程中以子目录显示
-# s.subspec 'XHPhotoBrowser' do |ss|
-#   ss.source_files = 'Class/XHPhotoBrowser/*.{h,m}'
-# end
-
-# s.subspec 'Manager' do |ss|
-#   ss.source_files = 'TUNetworking/Manager/*.{h,m}'
-# end
 
 end
