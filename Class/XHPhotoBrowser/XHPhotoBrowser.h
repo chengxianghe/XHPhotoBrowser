@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class XHPhotoBrowser;
 
-
 typedef NS_ENUM(NSUInteger, XHShowStyle) {
     XHShowStyleAuto, ///< 自动
     XHShowStyleHide, ///< 隐藏
@@ -111,21 +110,25 @@ typedef NS_ENUM(NSUInteger, XHShowStyle) {
 @end
 
 /// Used to show a group of images.
-/// One-shot.
 @interface XHPhotoBrowser : UIView
 
 @property (nonatomic, weak, nullable) id <XHPhotoBrowserDataSource> dataSource;
 @property (nonatomic, weak, nullable) id <XHPhotoBrowserDelegate> delegate;
 
 @property (nonatomic, readonly, nullable) NSArray<__kindof id <XHPhotoProtocol>> *groupItems;
-
 @property (nonatomic, readonly) NSInteger currentPage;
+
+
+#pragma mark - 可配置属性
 
 /**
  *  初始化展示的第一页
  */
 @property (nonatomic, assign) NSInteger fromItemIndex;
 
+/**
+ *  图片下标的展示样式(Default is Num)
+ */
 @property (nonatomic, assign) XHPageControlStyle pageStyle;
 
 /**
@@ -192,6 +195,8 @@ typedef NS_ENUM(NSUInteger, XHShowStyle) {
 @property (nonatomic, assign) CGFloat maxCaptionHeight;
 
 
+#pragma mark - 初始化
+
 //- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithFrame:(CGRect)frame UNAVAILABLE_ATTRIBUTE;
@@ -224,6 +229,9 @@ typedef NS_ENUM(NSUInteger, XHShowStyle) {
  *  @param completion 完成的回调
  */
 - (void)dismissAnimated:(BOOL)animated completion:(nullable void (^)(void))completion;
+
+
+#pragma mark - 刷新数据
 
 /**
  *  刷新数据只有当设置了dataSource才有作用
