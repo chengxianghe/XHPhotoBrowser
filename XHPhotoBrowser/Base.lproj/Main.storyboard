@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="j8x-gx-UcA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="j8x-gx-UcA">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -83,7 +83,7 @@
             </objects>
             <point key="canvasLocation" x="1288" y="984"/>
         </scene>
-        <!--collect-->
+        <!--CollectionView-->
         <scene sceneID="9Lf-Jj-eIQ">
             <objects>
                 <viewController id="F7K-vz-42u" customClass="CollectionViewController" customModule="XHPhotoBrowser" customModuleProvider="target" sceneMemberID="viewController">
@@ -148,7 +148,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="collect" id="yeb-fA-of4"/>
+                    <navigationItem key="navigationItem" title="CollectionView" id="yeb-fA-of4"/>
                     <connections>
                         <outlet property="collectionView" destination="MuX-40-Bnz" id="JwR-2F-Llg"/>
                     </connections>
@@ -177,7 +177,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9GJ-x0-wUK" id="SYH-Wp-5Wc">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>

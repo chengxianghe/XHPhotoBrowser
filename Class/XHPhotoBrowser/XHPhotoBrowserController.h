@@ -21,7 +21,11 @@ typedef void(^XHPhotoBrowserControllerOnMoreBlock)();
 /** 初始化展示的第一页 */
 @property (nonatomic, assign) NSInteger fromItemIndex;
 
+/** 导航栏右侧图片 默认的是"•••" */
+@property (nonatomic, strong, nullable) UIImage *rightImage;
+
 /** 点击导航栏右侧更多 */
 @property (nonatomic, copy, nullable) XHPhotoBrowserControllerOnMoreBlock moreBlock;
+
 
 @end

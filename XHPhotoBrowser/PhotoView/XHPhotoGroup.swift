@@ -155,7 +155,7 @@ class XHPhotoGroup: UIView {
         v.delegate = self
         v.fromItemIndex = currentPage
         v.blurEffectBackground = false
-
+        v.toolBarShowStyle = .Show
         v.showInContaioner(vc.tabBarController!.view, animated: true, completion: nil)
 
     }

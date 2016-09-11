@@ -168,11 +168,13 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, 40, 40);
 
-    [btn setImage:[UIImage imageNamed:@"XHPhotoBrowser.bundle/images/btn_common_more_wh"] forState:UIControlStateNormal];
+    if (self.rightImage == nil) {
+        self.rightImage = [UIImage imageNamed:@"XHPhotoBrowser.bundle/images/btn_common_more_wh"];
+    }
+    [btn setImage:self.rightImage forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(onMore:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *toolActionButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = toolActionButton;
-
 
     [_browser showInContaioner:self.view animated:NO completion:nil];
 }

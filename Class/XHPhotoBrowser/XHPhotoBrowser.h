@@ -16,17 +16,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 typedef NS_ENUM(NSUInteger, XHShowStyle) {
-    XHShowStyleAuto,
-    XHShowStyleHide,
-    XHShowStyleShow,
+    XHShowStyleAuto, ///< 自动
+    XHShowStyleHide, ///< 隐藏
+    XHShowStyleShow, ///< 展示
 };
 
 @protocol XHPhotoBrowserDataSource <NSObject>
 
 @required
 
+/**
+ *  提供图片item的总数量
+ *
+ *  @return NSInteger
+ */
 - (NSInteger)xh_numberOfImagesInPhotoBrowser:(XHPhotoBrowser * _Nonnull)photoBrowser;
 
+/**
+ *  提供对应index的item
+ *
+ *  @param index 图片item所在的index
+ *
+ *  @return id <XHPhotoProtocol>
+ */
 - (id <XHPhotoProtocol> _Nonnull)xh_photoBrowser:(XHPhotoBrowser * _Nonnull)photoBrowser photoAtIndex:(NSInteger)index;
 
 @end
@@ -35,23 +47,66 @@ typedef NS_ENUM(NSUInteger, XHShowStyle) {
 
 @optional
 
-- (void)xh_photoBrowserDidTapDelete:(XHPhotoBrowser * _Nonnull)photoBrowser photoAtIndex:(NSInteger)index deleteBlock:(void(^)())deleteBlock;
-
-- (void)xh_photoBrowserSingleTap:(XHPhotoBrowser * _Nonnull)photoBrowser;
-
-- (void)xh_photoBrowserWillDisplay:(XHPhotoBrowser * _Nonnull)photoBrowser;
-- (void)xh_photoBrowserDidDisplay:(XHPhotoBrowser * _Nonnull)photoBrowser;
-
-- (void)xh_photoBrowserWillDismiss:(XHPhotoBrowser * _Nonnull)photoBrowser;
-- (void)xh_photoBrowserDidDismiss:(XHPhotoBrowser * _Nonnull)photoBrowser;
-
+/**
+ *  展示相册(单次触发 只在初始化完相册准备展示的时候触发)
+ */
 - (void)xh_photoBrowserWillMoveToSuperView:(XHPhotoBrowser * _Nonnull)photoBrowser;
+
+/**
+ *  退出相册(单次触发 只在相册准备从父View移除的时候触发)
+ */
 - (void)xh_photoBrowserWillRemoveFromSuperView:(XHPhotoBrowser * _Nonnull)photoBrowser;
 
-
+/**
+ *  相册正在展示的index和fromIndex
+ *
+ *  @param photoBrowser photoBrowser
+ *  @param index        当前展示的index
+ *  @param fromIndex    上一次展示的index(没有上一次时, fromIndex == NSNotFound)
+ */
 - (void)xh_photoBrowser:(XHPhotoBrowser * _Nonnull)photoBrowser didDisplayingImageAtIndex:(NSInteger)index fromIndex:(NSInteger)fromIndex;
 
+/**
+ *  点击删除按钮的回调
+ *
+ *  @param photoBrowser photoBrowser
+ *  @param index        当前图片的index
+ *  @param deleteBlock  删除操作的闭包(更新内部UI)
+ */
+- (void)xh_photoBrowserDidTapDelete:(XHPhotoBrowser * _Nonnull)photoBrowser photoAtIndex:(NSInteger)index deleteBlock:(void(^)())deleteBlock;
+
+/**
+ *  单击相册图片的回调
+ */
+- (void)xh_photoBrowserSingleTap:(XHPhotoBrowser * _Nonnull)photoBrowser;
+
+/**
+ *  相册进行屏幕旋转完的回调
+ */
 - (void)xh_photoBrowserDidOrientationChange:(XHPhotoBrowser * _Nonnull)photoBrowser;
+
+
+//------------------------------------------------------------------------------
+
+/**
+ *  将要展示相册(会多次触发: 上下滑动消失->将要展示的时候; 初次将要展示的时候)
+ */
+- (void)xh_photoBrowserWillDisplay:(XHPhotoBrowser * _Nonnull)photoBrowser;
+
+/**
+ *  已经展示相册(会多次触发: 上下滑动消失->展示的时候; 初次展示的时候)
+ */
+- (void)xh_photoBrowserDidDisplay:(XHPhotoBrowser * _Nonnull)photoBrowser;
+
+/**
+ *  将要退出相册(会多次触发: 上下滑动将要消失的时候; 单击相册将要退出的时候;)
+ */
+- (void)xh_photoBrowserWillDismiss:(XHPhotoBrowser * _Nonnull)photoBrowser;
+
+/**
+ *  已经退出相册(会多次触发: 上下滑动消失的时候; 单击相册退出的时候;)
+ */
+- (void)xh_photoBrowserDidDismiss:(XHPhotoBrowser * _Nonnull)photoBrowser;
 
 @end
 
@@ -138,8 +193,8 @@ typedef NS_ENUM(NSUInteger, XHShowStyle) {
 
 
 //- (instancetype)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithFrame:(CGRect)frame UNAVAILABLE_ATTRIBUTE;
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithFrame:(CGRect)frame UNAVAILABLE_ATTRIBUTE;
 
 /**
  *  初始化

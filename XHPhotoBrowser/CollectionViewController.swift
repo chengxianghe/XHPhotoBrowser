@@ -40,8 +40,10 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: switcher)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftsSwitcher)
+        
+        switcher.on = true
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem.init(customView: switcher), UIBarButtonItem.init(title: "虚化", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)]
+        self.navigationItem.leftBarButtonItems = [UIBarButtonItem.init(customView: leftsSwitcher), UIBarButtonItem.init(title: "下标", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)]
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             for dict in imageurls {
@@ -107,6 +109,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         v.delegate = self
         v.dataSource = self
         v.showDeleteButton = true
+        v.showCloseButton = false
         v.toolBarShowStyle = leftsSwitcher.on ? .Auto : .Hide
         v.fromItemIndex = currentPage
         v.blurEffectBackground = self.switcher.on
@@ -205,28 +208,6 @@ extension CollectionViewController: XHPhotoBrowserDelegate {
 //                break
 //            }
 //        }
-
-    }
-    
-    func xh_photoBrowserDidOrientationChange(photoBrowser: XHPhotoBrowser) {
-    }
-    
-    func xh_photoBrowserWillDisplay(photoBrowser: XHPhotoBrowser) {
-        print("将要展示")
-
-    }
-    
-    func xh_photoBrowserDidDisplay(photoBrowser: XHPhotoBrowser) {
-        print("已经展示")
-    }
-    
-    func xh_photoBrowserWillDismiss(photoBrowser: XHPhotoBrowser) {
-        print("将要消失")
-
-    }
-    
-    func xh_photoBrowserDidDismiss(photoBrowser: XHPhotoBrowser) {
-        print("已经消失")
 
     }
     

@@ -576,9 +576,8 @@
     
     _pager.style = _pageStyle;
     
-    if (!_showCloseButton) {
-        _closeButton.hidden = YES;
-    }
+    _closeButton.hidden = !_showCloseButton;
+    _deleteButton.hidden = !_showDeleteButton;
     
     if (_toolBarShowStyle == XHShowStyleHide) {
         _toolBar.xh_height = 0;
@@ -628,6 +627,8 @@
     [self updateToolbar];
     self.toolBar.alpha = 0;
     self.captionView.alpha = 0;
+    self.deleteButton.alpha = 0;
+    self.closeButton.alpha = 0;
     [self moveBrowserToSuperview];
     [_toContainerView addSubview:self];
     
@@ -674,7 +675,12 @@
         float oneTime = animated ? 0.25 : 0;
         [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
             _blurBackground.alpha = 1;
-        }completion:NULL];
+        }completion:^(BOOL finished) {
+            [UIView animateWithDuration:oneTime animations:^{
+                self.deleteButton.alpha = 1;
+                self.closeButton.alpha = 1;
+            }];
+        }];
         
         _scrollView.userInteractionEnabled = NO;
         [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -690,7 +696,6 @@
             [self didDisplayPhotoIndex:currentPage from:NSNotFound];
             [self updateCaption:NO];
             [self hideToolBar];
-            _deleteButton.hidden = !_showDeleteButton;
         }];
         
     } else {
@@ -712,7 +717,12 @@
         float oneTime = animated ? 0.18 : 0;
         [UIView animateWithDuration:oneTime*2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
             _blurBackground.alpha = 1;
-        }completion:NULL];
+        }completion:^(BOOL finished) {
+            [UIView animateWithDuration:oneTime animations:^{
+                self.deleteButton.alpha = 1;
+                self.closeButton.alpha = 1;
+            }];
+        }];
         
         _scrollView.userInteractionEnabled = NO;
         [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -732,7 +742,6 @@
                 [self didDisplayPhotoIndex:currentPage from:NSNotFound];
                 [self updateCaption:NO];
                 [self hideToolBar];
-                _deleteButton.hidden = !_showDeleteButton;
             }];
         }];
     }
@@ -840,6 +849,8 @@
             self.pager.alpha = 0;
             self.blurBackground.alpha = 0;
             self.captionView.alpha = 0;
+            self.closeButton.alpha = 0;
+            self.deleteButton.alpha = 0;
         }completion:^(BOOL finished) {
             [self.scrollView.layer setValue:@(1) forKeyPath:@"transform.scale"];
             [self removeFromSuperview];
@@ -863,6 +874,9 @@
         _toolBar.alpha = 0.0;
         _blurBackground.alpha = 0.0;
         _captionView.alpha = 0.0;
+        _closeButton.alpha = 0;
+        _deleteButton.alpha = 0;
+        
         if (isFromImageClipped) {
             CGRect fromFrame = [fromView convertRect:fromView.bounds toView:cell];
             if (_thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
@@ -1083,6 +1097,8 @@
 
 // MARK: - Gesture
 - (void)singleTap:(UITapGestureRecognizer *)tap {
+    if (!_isPresented) return;
+    
     if ([self.delegate respondsToSelector:@selector(xh_photoBrowserSingleTap:)]) {
         [self.delegate xh_photoBrowserSingleTap:self];
     }
@@ -1093,6 +1109,7 @@
         } else {
             self.captionView.alpha = 1.0;
             self.toolBar.alpha = 1;
+            self.toolBar.xh_bottom = self.xh_height;
             self.captionView.xh_top = self.xh_height - self.captionView.xh_height - self.toolBar.xh_height;
         }
     } else {
@@ -1100,8 +1117,11 @@
             if (self.captionView.alpha == 0 && self.captionView.text.length) {
                 self.captionView.alpha = 1.0;
                 self.toolBar.alpha = 1;
+                self.toolBar.xh_bottom = self.xh_height;
                 self.captionView.xh_top = self.xh_height - self.captionView.xh_height - self.toolBar.xh_height;
             } else {
+                self.toolBar.xh_top = self.xh_height;
+                self.captionView.xh_bottom = self.xh_height;
                 self.captionView.alpha = 0;
                 self.toolBar.alpha = 0;
             }
@@ -1166,6 +1186,8 @@
                 _blurBackground.alpha = alpha;
                 _toolBar.alpha = alpha;
                 _captionView.alpha = (_captionView.text.length ? alpha : 0);
+                _closeButton.alpha = alpha;
+                _deleteButton.alpha = alpha;
             } completion:nil];
             
         } break;
@@ -1192,6 +1214,8 @@
                     _blurBackground.alpha = 0;
                     _toolBar.alpha = 0;
                     _captionView.alpha = 0;
+                    _closeButton.alpha = 0;
+                    _deleteButton.alpha = 0;
 
                     if (moveToTop) {
                         _scrollView.xh_bottom = 0;
@@ -1211,6 +1235,8 @@
                     _scrollView.xh_top = 0;
                     _captionView.alpha = (_captionView.text.length ? 1.0 : 0);
                     _blurBackground.alpha = 1.0;
+                    _deleteButton.alpha = 1.0;
+                    _closeButton.alpha = 1.0;
                     [self hideToolBar];
                 } completion:^(BOOL finished) {
                     [self didShowPhotoGroup:YES];
@@ -1221,6 +1247,8 @@
         case UIGestureRecognizerStateCancelled : {
             _scrollView.xh_top = 0;
             _blurBackground.alpha = 1;
+            _closeButton.alpha = 1;
+            _deleteButton.alpha = 1;
             _captionView.alpha = (_captionView.text.length ? 1.0 : 0);
             [self didShowPhotoGroup:YES];
         }
