@@ -127,9 +127,9 @@ typedef NS_ENUM(NSUInteger, XHShowStyle) {
 @property (nonatomic, assign) NSInteger fromItemIndex;
 
 /**
- *  图片下标的展示样式(Default is Num)
+ *  展示图片下标的PageControlView
  */
-@property (nonatomic, assign) XHPageControlStyle pageStyle;
+@property (nonatomic, strong, readonly) XHPageControlView *pager;
 
 /**
  *  是否需要模糊背景(Default is YES)

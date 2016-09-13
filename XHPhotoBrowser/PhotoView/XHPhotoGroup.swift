@@ -156,7 +156,7 @@ class XHPhotoGroup: UIView {
         v.fromItemIndex = currentPage
         v.blurEffectBackground = false
         v.toolBarShowStyle = .Auto
-        
+        v.pager.hidesForSinglePage = true
 //        v.showToolBarWhenScroll = false
 //        v.showCaptionWhenScroll = false
         v.showInContaioner(vc.tabBarController!.view, animated: true, completion: nil)

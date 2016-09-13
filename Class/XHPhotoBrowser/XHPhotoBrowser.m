@@ -91,7 +91,6 @@
     _showToolBarWhenScroll = YES;
     _showCaptionWhenScroll = YES;
     _tapDismissWhenCaptionNone = YES;
-    _pageStyle = XHPageControlStyleNum;
     _imagePadding = 20;
     _maxCaptionHeight = 150;
     
@@ -574,9 +573,7 @@
     if (!toContainer) return;
     
     self.frame = toContainer.bounds;
-    
-    _pager.style = _pageStyle;
-    
+        
     _closeButton.hidden = !_showCloseButton;
     _deleteButton.hidden = !_showDeleteButton;
     
@@ -1108,10 +1105,15 @@
         if (_tapDismissWhenCaptionNone) {
             [self dismiss];
         } else {
-            self.captionView.alpha = 1.0;
-            self.toolBar.alpha = 1;
-            self.toolBar.xh_bottom = self.xh_height;
-            self.captionView.xh_top = self.xh_height - self.captionView.xh_height - self.toolBar.xh_height;
+            [UIView animateWithDuration:0.2 animations:^{
+                if (self.toolBar.alpha > 0) {
+                    self.toolBar.alpha = 0;
+                    self.toolBar.xh_top = self.xh_height;
+                } else {
+                    self.toolBar.alpha = 1.0;
+                    self.toolBar.xh_bottom = self.xh_height;
+                }
+            }];
         }
     } else {
         [UIView animateWithDuration:0.2 animations:^{

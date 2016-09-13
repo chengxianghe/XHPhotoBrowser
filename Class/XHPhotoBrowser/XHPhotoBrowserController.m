@@ -73,7 +73,7 @@
     browser.showToolBarWhenScroll = NO;
     browser.showCaptionWhenScroll = NO;
     browser.tapDismissWhenCaptionNone = NO;
-    browser.pageStyle = XHPageControlStyleNone;
+    browser.pager.style = XHPageControlStyleNone;
     _browser = browser;
 }
 
@@ -136,8 +136,11 @@
     
     // Check that we're disappearing for good
     // self.isMovingFromParentViewController just doesn't work, ever. Or self.isBeingDismissed
+    // old:   if ((self.navigationController.isBeingDismissed) ||
+    // ([self.navigationController.viewControllers objectAtIndex:0] != self && ![self.navigationController.viewControllers containsObject:self])) {
+    
     if ((self.navigationController.isBeingDismissed) ||
-        ([self.navigationController.viewControllers objectAtIndex:0] != self && ![self.navigationController.viewControllers containsObject:self])) {
+        ([self.navigationController.viewControllers objectAtIndex:0] != self)) {
         
         // State
         _viewIsActive = NO;
