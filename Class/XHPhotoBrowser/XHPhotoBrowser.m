@@ -292,15 +292,16 @@
                 if (_showCaptionWhenScroll) {
                     _captionView.alpha = (_captionView.text.length ? 1.0 : 0);
                 }
+                
+                if (_showToolBarWhenScroll) {
+                    _toolBar.alpha = 1.0;
+                    _toolBar.xh_bottom = self.xh_height;
+                }
             } else {
                 _captionView.alpha = (_captionView.text.length ? 1.0 : 0);
             }
             CGSize size = CGSizeZero;
             if (_captionView.text.length) {
-                //NSDictionary *attr = @{NSFontAttributeName : _captionView.font};
-                //size = [_captionView.text boundingRectWithSize:CGSizeMake(self.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attr context:nil].size;
-                //size.height += 16;
-
                 size = [_captionView sizeThatFits:CGSizeMake(self.xh_width, MAXFLOAT)];
             }
             size.width = self.xh_width;

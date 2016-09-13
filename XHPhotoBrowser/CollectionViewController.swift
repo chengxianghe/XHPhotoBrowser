@@ -110,7 +110,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         v.dataSource = self
         v.showDeleteButton = true
         v.showCloseButton = false
-        v.toolBarShowStyle = leftsSwitcher.on ? .Auto : .Hide
+        v.toolBarShowStyle = leftsSwitcher.on ? .Show : .Hide
         v.fromItemIndex = currentPage
         v.blurEffectBackground = self.switcher.on
         v.showInContaioner(vc.tabBarController!.view, animated: true, completion: nil)

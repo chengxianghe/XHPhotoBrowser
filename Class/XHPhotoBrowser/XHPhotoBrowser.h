@@ -142,12 +142,12 @@ typedef NS_ENUM(NSUInteger, XHShowStyle) {
 @property (nonatomic, assign) XHShowStyle toolBarShowStyle;
 
 /**
- *  是否在翻页时显示toolBar(Default is YES)
+ *  是否在翻页时强制显示toolBar(Default is YES)
  */
 @property (nonatomic, assign) BOOL showToolBarWhenScroll;
 
 /**
- *  是否在翻页时显示caption(Default is YES)
+ *  是否在翻页时强制显示caption(Default is YES)
  */
 @property (nonatomic, assign) BOOL showCaptionWhenScroll;
 
