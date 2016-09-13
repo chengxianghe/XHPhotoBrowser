@@ -51,6 +51,21 @@
 
 @end
 
+
+@implementation UIImage (XHPhotoBrowser)
+
++ (UIImage *)xh_imageNamedFromMyBundle:(NSString *)name {
+    UIImage *image = [UIImage imageNamed:[@"XHPhotoBrowser.bundle" stringByAppendingPathComponent:name]];
+    if (image) {
+        return image;
+    } else {
+        image = [UIImage imageNamed:[@"Frameworks/XHPhotoBrowser.framework/XHPhotoBrowser.bundle" stringByAppendingPathComponent:name]];
+        return image;
+    }
+}
+
+@end
+
 @implementation XHPhotoBrowser
 
 - (void)dealloc {
@@ -143,7 +158,7 @@
     
     // arrows:back
     UIButton *previousBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *previousImage = [UIImage imageNamed:@"XHPhotoBrowser.bundle/images/btn_common_back_wh"];
+    UIImage *previousImage = [UIImage xh_imageNamedFromMyBundle:@"images/btn_common_back_wh"];
     previousBtn.frame = CGRectMake(0, 0, 44, 44);
     previousBtn.imageEdgeInsets = UIEdgeInsetsMake(13.25, 17.25, 13.25, 17.25);
     [previousBtn setImage:previousImage forState:UIControlStateNormal];
@@ -154,7 +169,7 @@
     
     // arrows:next
     UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *nextImage = [UIImage imageNamed:@"XHPhotoBrowser.bundle/images/btn_common_forward_wh"];
+    UIImage *nextImage = [UIImage xh_imageNamedFromMyBundle:@"images/btn_common_forward_wh"];
     nextBtn.frame = CGRectMake(0, 0, 44, 44);
     nextBtn.imageEdgeInsets = UIEdgeInsetsMake(13.25, 17.25, 13.25, 17.25);
     [nextBtn setImage:nextImage forState:UIControlStateNormal];
@@ -232,7 +247,7 @@
 }
 
 - (void)setSettingCloseButton {
-    UIImage *doneImage = [UIImage imageNamed: @"XHPhotoBrowser.bundle/images/btn_common_close_wh"];
+    UIImage *doneImage = [UIImage xh_imageNamedFromMyBundle: @"images/btn_common_close_wh"];
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [closeButton setImage:doneImage forState:UIControlStateNormal];
 
@@ -256,7 +271,7 @@
 }
 
 - (void)setSettingDeleteButton {
-    UIImage *deleteImage = [UIImage imageNamed: @"XHPhotoBrowser.bundle/images/btn_common_delete_wh"];
+    UIImage *deleteImage = [UIImage xh_imageNamedFromMyBundle: @"images/btn_common_delete_wh"];
     UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [deleteButton setImage:deleteImage forState:UIControlStateNormal];
     
@@ -1357,6 +1372,5 @@
     }
     return result;
 }
-
 
 @end
