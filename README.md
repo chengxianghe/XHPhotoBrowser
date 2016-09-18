@@ -6,6 +6,7 @@ photo browser
 - 项目依赖[YYWebImage](https://github.com/ibireme/YYWebImage)
 - 支持 ARC 和 CocoaPods 
 - iOS 8.0 (理论上iOS7.0也没问题, 但是我没有设备测试,所以...)
+- 编译环境 Xcode 8.0, Swift 3.0
 
 ===
 
