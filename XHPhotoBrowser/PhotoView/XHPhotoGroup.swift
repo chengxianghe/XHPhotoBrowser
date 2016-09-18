@@ -16,12 +16,12 @@ class XHPhotoItem: NSObject {
     var original_pic = ""
     
     /// size
-    var photoSize = CGSizeZero
+    var photoSize = CGSize.zero
 }
 
 class XHPhotoGroup: UIView {
 
-    private var imageViews = [UIImageView]()
+    fileprivate var imageViews = [UIImageView]()
     
     var photoItemArray: [XHPhotoItem]? {
         didSet {
@@ -42,11 +42,11 @@ class XHPhotoGroup: UIView {
     func setupPhotoGroup() {
         for _ in 0..<9 {
             let imageView = UIImageView()
-            imageView.contentMode = .ScaleAspectFill
+            imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
-            imageView.userInteractionEnabled = true
+            imageView.isUserInteractionEnabled = true
             
-            let tap = UITapGestureRecognizer.init(target: self, action: #selector(self.tapImage(_:)))
+            let tap = UITapGestureRecognizer.init(target: self, action: #selector(self.tapImage(sender:)))
             imageView.addGestureRecognizer(tap)
             self.addSubview(imageView)
             imageViews.append(imageView)
@@ -62,34 +62,34 @@ class XHPhotoGroup: UIView {
     }
     
     func setFrameSubviews() {
-        let array = PhotoViewFrameHelper.getPhotoViewFramesWithPhotoCount(photoItemArray?.count ?? 0, photoViewSize: self.frame.size, gap: 10)
+        let array = PhotoViewFrameHelper.getPhotoViewFramesWithPhotoCount(count: photoItemArray?.count ?? 0, photoViewSize: self.frame.size, gap: 10)
         
-        let enumer = imageViews.enumerate()
+        let enumer = imageViews.enumerated()
         for (index, imageView) in enumer {
             if index < array.count {
                 imageView.frame = CGRectFromString(array[index])
             } else {
-                imageView.frame = CGRectZero;
+                imageView.frame = CGRect.zero;
             }
         }
     }
     
     func setPhotoGroupImage() {
         
-        let enumer = imageViews.enumerate()
+        let enumer = imageViews.enumerated()
         for (index, imageView) in enumer {
-            if index >= photoItemArray?.count {
+            if index >= photoItemArray?.count ?? 0 {
                 imageView.image = nil;
                 return
             }
             
-            imageView.layer.removeAnimationForKey("contents")
+            imageView.layer.removeAnimation(forKey: "contents")
             
             let photoItem = photoItemArray![index]
             
-            imageView.yy_setImageWithURL(NSURL(string: photoItem.original_pic)!,
+            imageView.yy_setImage(with: NSURL(string: photoItem.original_pic)! as URL,
                                          placeholder: UIImage(named: "whiteplaceholder"),
-                                         options: YYWebImageOptions.AvoidSetImage,
+                                         options: YYWebImageOptions.avoidSetImage,
                                          progress: nil,
                                          transform: nil,
                                          completion: {[weak imageView] (image, url, from, stage, error) in
@@ -105,27 +105,27 @@ class XHPhotoGroup: UIView {
                                             
                                             imageView.image = image;
                                             
-                                            let width = image!.size.width * UIScreen.mainScreen().scale
-                                            let height = image!.size.height * UIScreen.mainScreen().scale
+                                            let width = image!.size.width * UIScreen.main.scale
+                                            let height = image!.size.height * UIScreen.main.scale
                                             //
                                             let scale = (height / width) / (imageView.bounds.size.height / imageView.bounds.size.width);
-                                            if (scale < 0.99 || isnan(scale)) { // 宽图把左右两边裁掉
+                                            if (scale < 0.99 || scale.isNaN) { // 宽图把左右两边裁掉
 //                                                imageView.alignTop = false
-                                                imageView.contentMode = UIViewContentMode.ScaleAspectFill;
-                                                imageView.layer.contentsRect = CGRectMake(0, 0, 1, 1);
+                                                imageView.contentMode = UIViewContentMode.scaleAspectFill;
+                                                imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: 1);
                                             } else { // 高图只保留顶部
 //                                                imageView.alignTop = true
-                                                imageView.contentMode = UIViewContentMode.ScaleToFill;
+                                                imageView.contentMode = UIViewContentMode.scaleToFill;
                                                 let imageViewScale = imageView.bounds.size.width / imageView.bounds.size.height
-                                                imageView.layer.contentsRect = CGRectMake(0, 0, 1, width / height / imageViewScale);
+                                                imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: width / height / imageViewScale);
                                             }
                                             
-                                            if (from != YYWebImageFromType.MemoryCacheFast) {
+                                            if (from != YYWebImageFromType.memoryCacheFast) {
                                                 let transition = CATransition()
                                                 transition.duration = 0.15;
                                                 transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseOut);
                                                 transition.type = kCATransitionFade;
-                                                imageView.layer.addAnimation(transition, forKey: "contents")
+                                                imageView.layer.add(transition, forKey: "contents")
                                             }
         
             })
@@ -137,17 +137,17 @@ class XHPhotoGroup: UIView {
     func tapImage(sender: UITapGestureRecognizer) {
         //启动图片浏览器
         let vc = self.xh_viewController
-        let currentPage = imageViews.indexOf(sender.view as! UIImageView) ?? 0
+        let currentPage = imageViews.index(of: sender.view as! UIImageView) ?? 0
 
         var items = [XHPhotoGroupItem]()
-        let enumer = photoItemArray!.enumerate()
+        let enumer = photoItemArray!.enumerated()
         
         for (index, photoItem) in enumer {
             let item = XHPhotoGroupItem()
             item.thumbView = imageViews[index]
-            item.largeImageURL = NSURL(string: photoItem.original_pic)
-            item.shouldClipToTop = self.shouldClippedToTop(item.thumbView)
-            item.caption = caption[random()%10];
+            item.largeImageURL = NSURL(string: photoItem.original_pic) as URL!
+            item.shouldClipToTop = self.shouldClippedToTop(view: item.thumbView)
+            item.caption = caption[Int(arc4random())%10];
             items.append(item)
         }
 
@@ -155,11 +155,11 @@ class XHPhotoGroup: UIView {
         v.delegate = self
         v.fromItemIndex = currentPage
         v.blurEffectBackground = false
-        v.toolBarShowStyle = .Auto
+        v.toolBarShowStyle = .auto
         v.pager.hidesForSinglePage = true
 //        v.showToolBarWhenScroll = false
 //        v.showCaptionWhenScroll = false
-        v.showInContaioner(vc.tabBarController!.view, animated: true, completion: nil)
+        v.show(inContaioner: (vc?.tabBarController!.view)!, animated: true, completion: nil)
 
     }
 
@@ -176,39 +176,39 @@ class XHPhotoGroup: UIView {
 
 extension XHPhotoGroup: XHPhotoBrowserDelegate {
     
-    func xh_photoBrowserWillMoveToSuperView(photoBrowser: XHPhotoBrowser) {
+    func xh_photoBrowserWillMove(toSuperView photoBrowser: XHPhotoBrowser) {
         let index = photoBrowser.fromItemIndex
-        self.imageViews[index].hidden = true
+        self.imageViews[index].isHidden = true
     }
     
-    func xh_photoBrowserWillRemoveFromSuperView(photoBrowser: XHPhotoBrowser) {
+    func xh_photoBrowserWillRemove(fromSuperView photoBrowser: XHPhotoBrowser) {
         let index = photoBrowser.currentPage
-        self.imageViews[index].hidden = false
+        self.imageViews[index].isHidden = false
     }
     
-    func xh_photoBrowserWillDisplay(photoBrowser: XHPhotoBrowser) {
+    func xh_photoBrowserWillDisplay(_ photoBrowser: XHPhotoBrowser) {
         print("将要展示")
 
     }
     
-    func xh_photoBrowserDidDisplay(photoBrowser: XHPhotoBrowser) {
+    func xh_photoBrowserDidDisplay(_ photoBrowser: XHPhotoBrowser) {
         print("已经展示")
     }
     
-    func xh_photoBrowserWillDismiss(photoBrowser: XHPhotoBrowser) {
+    func xh_photoBrowserWillDismiss(_ photoBrowser: XHPhotoBrowser) {
         print("将要消失")
     }
     
-    func xh_photoBrowserDidDismiss(photoBrowser: XHPhotoBrowser) {
+    func xh_photoBrowserDidDismiss(_ photoBrowser: XHPhotoBrowser) {
         print("已经消失")
     }
     
-    func xh_photoBrowser(photoBrowser: XHPhotoBrowser, didDisplayingImageAtIndex index: Int, fromIndex: Int) {
+    func xh_photoBrowser(_ photoBrowser: XHPhotoBrowser, didDisplayingImageAt index: Int, from fromIndex: Int) {
         print("正在展示第 \(index) 页 , fromIndex:\(fromIndex)")
         if fromIndex != NSNotFound {
-            self.imageViews[fromIndex].hidden = false
+            self.imageViews[fromIndex].isHidden = false
         }
-        self.imageViews[index].hidden = true
+        self.imageViews[index].isHidden = true
 
     }
 }

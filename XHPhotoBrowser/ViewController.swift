@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         self.title = "测试"
     }
     
-    @IBAction func onPushBrowser(sender: AnyObject) {
+    @IBAction func onPushBrowser(_ sender: UIButton) {
         let browserVC = XHPhotoBrowserController()
         var images = [XHPhotoGroupItem]();
         
@@ -24,12 +24,12 @@ class ViewController: UIViewController {
             
             let dict = imageurls[i]
             let model = ImageModel()
-            model.setValuesForKeysWithDictionary(dict)
-            model.caption = caption[random()%10]
+            model.setValuesForKeys(dict)
             
+            model.caption = caption[Int(arc4random())%10]
             let item = MYPhotoGroupItem()
             item.caption = model.caption
-            item.largeImageURL = NSURL(string: model.big)
+            item.largeImageURL = NSURL(string: model.big) as URL!
             item.shouldClipToTop = false
             
             images.append(item)
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         browserVC.moreBlock = {[weak browserVC] in
             let other = ["设置1", "设置2", "设置3"]
             let sheet = XHActionSheet(title: "more", cancelTitle: "取消", otherTitles: other)
-            sheet.showInView(browserVC?.view, custom: nil, clickIndex: { (index) in
+            sheet.show(in: browserVC?.view, custom: nil, clickIndex: { (index) in
                 if index == 0 {
                     print("取消")
                 } else {
@@ -64,8 +64,8 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
 }

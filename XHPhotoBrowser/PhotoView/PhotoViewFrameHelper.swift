@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let screenW = UIScreen.mainScreen().bounds.size.width
+private let screenW = UIScreen.main.bounds.size.width
 private let TEXT_WIDTH: CGFloat = screenW - 20
 private let radio1: CGFloat = 116 / 154.0
 private let radio2: CGFloat = 176 / 236.0
@@ -36,24 +36,24 @@ class PhotoViewFrameHelper: NSObject {
         
         if (count == 1) {
             let photoWidth = (photoViewSize.width - gap) / 2.0;
-            return [NSStringFromCGRect(CGRectMake(0, 0, photoWidth, photoViewSize.height))];
+            return [NSStringFromCGRect(CGRect(x: 0, y: 0, width: photoWidth, height: photoViewSize.height))];
         }
         
         var array = [String]();
         
-        var onePhotoSize = CGSizeZero;
+        var onePhotoSize = CGSize.zero;
         var columns: Int = 0;
         var row: Int = 0;
         
         if (count == 2 || count == 4) {
             // 2/4 张， 单张比例 高度/宽度
             let photoWidth = (photoViewSize.width - gap) / 2.0;
-            onePhotoSize = CGSizeMake(photoWidth, photoWidth * radio2);
+            onePhotoSize = CGSize(width: photoWidth, height: photoWidth * radio2);
             columns = 2;
         } else {
             // 单张比例 高度/宽度 9宫格
             let photoWidth = (photoViewSize.width - 2 * gap) / 3.0;
-            onePhotoSize = CGSizeMake(photoWidth, photoWidth * radio1);
+            onePhotoSize = CGSize(width: photoWidth, height: photoWidth * radio1);
             columns = 3;
         }
 
@@ -63,7 +63,7 @@ class PhotoViewFrameHelper: NSObject {
             let x = CGFloat(col) * (onePhotoSize.width + gap);
             let y = CGFloat(row) * (onePhotoSize.height + gap);
             
-            let frame = CGRectMake(x, y, onePhotoSize.width, onePhotoSize.height);
+            let frame = CGRect(x: x, y: y, width: onePhotoSize.width, height: onePhotoSize.height);
             
             array.append(NSStringFromCGRect(frame))
         }
@@ -76,20 +76,20 @@ class PhotoViewFrameHelper: NSObject {
      */
     static func getPhotoViewSizeWithPhotoCount(count: NSInteger, gap: CGFloat) -> CGSize {
         // 一行最多有3列
-        var photoViewSize = CGSizeZero;
+        var photoViewSize = CGSize.zero;
         
         // 单张比例 高度/宽度 9宫格
-        let  photoSize1 = CGSizeMake(kPhotoWidth1(TEXT_WIDTH, gap: gap), self.kPhotoWidth1(TEXT_WIDTH, gap: gap) * radio1);
+        let  photoSize1 = CGSize(width: kPhotoWidth1(width: TEXT_WIDTH, gap: gap), height: self.kPhotoWidth1(width: TEXT_WIDTH, gap: gap) * radio1);
         
         // 2/4 张， 单张比例 高度/宽度
-        let  photoSize2 = CGSizeMake(kPhotoWidth2(TEXT_WIDTH, gap: gap), kPhotoWidth2(TEXT_WIDTH, gap: gap) * radio2);
+        let  photoSize2 = CGSize(width: kPhotoWidth2(width: TEXT_WIDTH, gap: gap), height: kPhotoWidth2(width: TEXT_WIDTH, gap: gap) * radio2);
         
         photoViewSize.width = TEXT_WIDTH;
         
         
         switch (count) {
         case 0:
-            return CGSizeZero;
+            return CGSize.zero;
         case 1:
             fallthrough
         case 2:

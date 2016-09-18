@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="j8x-gx-UcA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="j8x-gx-UcA">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,31 +15,33 @@
                         <viewControllerLayoutGuide type="bottom" id="cj1-Kk-yHm"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="2v6-mA-5u9">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LTl-pB-w11">
-                                <rect key="frame" x="12" y="61" width="95" height="30"/>
+                                <frame key="frameInset" minX="12" minY="61" width="95" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="tableView cell"/>
                                 <connections>
                                     <segue destination="PmX-Fv-epb" kind="show" id="Msl-PE-mc8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xPm-Or-2EI">
-                                <rect key="frame" x="12" y="175" width="185" height="30"/>
+                                <frame key="frameInset" minX="12" minY="175" width="185" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="XHPhotoBrowserController"/>
                                 <connections>
-                                    <action selector="onPushBrowser:" destination="NbO-D5-4r5" eventType="touchUpInside" id="Ozs-jx-R7d"/>
+                                    <action selector="onPushBrowser:" destination="NbO-D5-4r5" eventType="touchUpInside" id="GsO-3t-AXR"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="2kl-N9-Xvn"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8yI-0B-R7A" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1736" y="296"/>
+            <point key="canvasLocation" x="2007" y="-30"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HWE-Fs-8nz">
@@ -46,12 +49,11 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NsR-St-OTk" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="more" id="Opr-dQ-TeS"/>
                     <toolbarItems/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="cVa-BL-mgY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="1" green="0.59999999999999998" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="1" green="0.59999999999999998" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="0.59999999999999998" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="1" green="0.59999999999999998" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="CPe-WZ-gBn">
@@ -64,7 +66,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SPr-qN-VNl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1272" y="302"/>
+            <point key="canvasLocation" x="1204" y="-30"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hfL-bF-iXe">
@@ -81,7 +83,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C1x-SJ-AwM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1288" y="984"/>
+            <point key="canvasLocation" x="1215" y="1060"/>
         </scene>
         <!--CollectionView-->
         <scene sceneID="9Lf-Jj-eIQ">
@@ -92,11 +94,10 @@
                         <viewControllerLayoutGuide type="bottom" id="Zzg-Jx-GN7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="U5z-t5-3Ny">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MuX-40-Bnz">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lmZ-z6-7ka">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -105,17 +106,14 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="exampleCollectionViewCell" id="nqa-9b-jE8" customClass="ExampleCollectionViewCell" customModule="XHPhotoBrowser" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="S3s-Ah-FiD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="S3s-Ah-FiD"/>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="S3s-Ah-FiD" secondAttribute="trailing" id="UEg-FD-Aa4"/>
@@ -134,7 +132,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="MuX-40-Bnz" firstAttribute="top" secondItem="U5z-t5-3Ny" secondAttribute="top" id="4ub-Un-tXA"/>
                             <constraint firstAttribute="bottom" secondItem="MuX-40-Bnz" secondAttribute="bottom" id="FZU-ve-VrC"/>
@@ -155,7 +153,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PSc-Lo-MMK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1736" y="984"/>
+            <point key="canvasLocation" x="2318" y="1059"/>
         </scene>
         <!--Local Photo View Controller-->
         <scene sceneID="cWU-tf-vK9">
@@ -165,19 +163,18 @@
                         <viewControllerLayoutGuide type="top" id="PC7-XO-Clb"/>
                         <viewControllerLayoutGuide type="bottom" id="6om-pp-ary"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="AtN-hr-MMc">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="AtN-hr-MMc">
+                        <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i3J-f7-sFt">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PhotoTableViewCell" id="9GJ-x0-wUK" customClass="PhotoTableViewCell" customModule="XHPhotoBrowser" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9GJ-x0-wUK" id="SYH-Wp-5Wc">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <frame key="frameInset" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -188,7 +185,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6om-pp-ary" firstAttribute="top" secondItem="i3J-f7-sFt" secondAttribute="bottom" id="J5H-qW-j16"/>
                             <constraint firstItem="i3J-f7-sFt" firstAttribute="top" secondItem="PC7-XO-Clb" secondAttribute="bottom" id="NeL-rH-dwC"/>
@@ -203,17 +200,16 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="chO-RV-CRu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2351" y="296"/>
+            <point key="canvasLocation" x="2929" y="-30"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="DBP-v3-69v">
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="j8x-gx-UcA" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="liO-bh-smM">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="NsR-St-OTk" kind="relationship" relationship="viewControllers" id="le5-IX-oYs"/>
@@ -222,7 +218,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pPn-RL-VH0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="691" y="672"/>
+            <point key="canvasLocation" x="-260" y="633"/>
         </scene>
     </scenes>
 </document>

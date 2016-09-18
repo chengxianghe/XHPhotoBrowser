@@ -24,16 +24,16 @@ var caption = ["",
 ]
 
 var imageurls: [[String : AnyObject]] = {
-    return NSArray.init(contentsOfFile: NSBundle.mainBundle().pathForResource("imagesModels", ofType: "plist")!) as! [[String : AnyObject]]
+    return NSArray.init(contentsOfFile: Bundle.main.path(forResource: "imagesModels", ofType: "plist")!) as! [[String : AnyObject]]
 }()
 
-class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    private final let screenBound = UIScreen.mainScreen().bounds
+class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    private final let screenBound = UIScreen.main.bounds
     private var screenWidth: CGFloat { return screenBound.size.width }
     private var screenHeight: CGFloat { return screenBound.size.height }
         
-    @IBOutlet weak var collectionView: UICollectionView!
-    var images = [ImageModel]()
+    @IBOutlet public weak var collectionView: UICollectionView!
+    fileprivate var images = [ImageModel]()
     let switcher = UISwitch()
     let leftsSwitcher = UISwitch()
 
@@ -41,15 +41,15 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         super.viewDidLoad()
         setupTableView()
         
-        switcher.on = true
-        self.navigationItem.rightBarButtonItems = [UIBarButtonItem.init(customView: switcher), UIBarButtonItem.init(title: "虚化", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)]
-        self.navigationItem.leftBarButtonItems = [UIBarButtonItem.init(customView: leftsSwitcher), UIBarButtonItem.init(title: "下标", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)]
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        switcher.isOn = true
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem.init(customView: switcher), UIBarButtonItem.init(title: "虚化", style: UIBarButtonItemStyle.plain, target: nil, action: nil)]
+        self.navigationItem.leftBarButtonItems = [UIBarButtonItem.init(customView: leftsSwitcher), UIBarButtonItem.init(title: "下标", style: UIBarButtonItemStyle.plain, target: nil, action: nil)]
+        
+        DispatchQueue.global().async {
             for dict in imageurls {
                 let model = ImageModel()
-                model.setValuesForKeysWithDictionary(dict)
-//                model.caption = caption[random()%10]
+                model.setValuesForKeys(dict)
+                //                model.caption = caption[random()%10]
                 
                 self.images.append(model)
                 
@@ -57,12 +57,11 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                     break
                 }
             }
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async {
                 self.collectionView.reloadData()
-            })
-        })
-        
-        
+                
+            }
+        }
     }
     
     private func setupTableView() {
@@ -74,27 +73,23 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         super.didReceiveMemoryWarning()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        return false
-    }
-    
     // MARK: - UICollectionViewDataSource
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("exampleCollectionViewCell", forIndexPath: indexPath) as? ExampleCollectionViewCell else {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "exampleCollectionViewCell", for: indexPath) as? ExampleCollectionViewCell else {
             return UICollectionViewCell()
         }
 
-        cell.setInfo(self.images[indexPath.row].small)
+        cell.setInfo(url: self.images[indexPath.row].small)
         
         return cell
     }
     
     // MARK: - UICollectionViewDelegate
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         //启动图片浏览器
         let vc = self
@@ -110,22 +105,35 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         v.dataSource = self
         v.showDeleteButton = true
         v.showCloseButton = false
-        v.toolBarShowStyle = leftsSwitcher.on ? .Show : .Hide
+        v.toolBarShowStyle = leftsSwitcher.isOn ? .show : .hide
         v.fromItemIndex = currentPage
-        v.blurEffectBackground = self.switcher.on
-        v.showInContaioner(vc.tabBarController!.view, animated: true, completion: nil)
+        v.blurEffectBackground = self.switcher.isOn
+        v.show(inContaioner: vc.tabBarController!.view, animated: true, completion: nil)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            return CGSize(width: screenWidth/2 - 5, height: 300)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return CGSize(width: screenWidth/2.0 - 5, height: 300)
         } else {
-            return CGSize(width: screenWidth/3 - 10, height: screenWidth/3 - 10)
+            return CGSize(width: screenWidth/3.0 - 10, height: screenWidth/3 - 10)
         }
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    func shouldClippedToTop(view: UIView?) -> Bool {
+        if (view != nil) {
+            if (view!.layer.contentsRect.size.height < 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     
@@ -143,62 +151,52 @@ class MYPhotoGroupItem: XHPhotoGroupItem {
 }
 
 extension CollectionViewController: XHPhotoBrowserDataSource {
-    func xh_numberOfImagesInPhotoBrowser(photoBrowser: XHPhotoBrowser) -> Int {
+    
+    func xh_numberOfImages(in photoBrowser: XHPhotoBrowser) -> Int {
         return self.images.count
     }
     
-    func xh_photoBrowser(photoBrowser: XHPhotoBrowser, photoAtIndex index: Int) -> XHPhotoProtocol {
+    func xh_photoBrowser(_ photoBrowser: XHPhotoBrowser, photoAt index: Int) -> XHPhotoProtocol {
         let item = MYPhotoGroupItem()
-        let indexPaths = collectionView.indexPathsForVisibleItems()
+        let indexPaths = collectionView.indexPathsForVisibleItems
         for indexP in indexPaths {
             if index == indexP.row {
-                item.thumbView = (self.collectionView(self.collectionView, cellForItemAtIndexPath: indexP) as! ExampleCollectionViewCell)
+                item.thumbView = self.collectionView(self.collectionView, cellForItemAt: indexP) as! ExampleCollectionViewCell
                 break
             }
         }
         
         item.caption = self.images[index].caption
-        
-        item.largeImageURL = NSURL(string: images[index].big)
+        item.largeImageURL = NSURL(string: self.images[index].big) as! URL
         if item.thumbView != nil {
-            item.shouldClipToTop = self.shouldClippedToTop((item.thumbView as! ExampleCollectionViewCell).exampleImageView)
+            item.shouldClipToTop = self.shouldClippedToTop(view: (item.thumbView as! ExampleCollectionViewCell).exampleImageView)
         } else {
             item.shouldClipToTop = false
         }
 //        item.shouldClipToTop = self.shouldClippedToTop(item.thumbView)
         return item
     }
-    
-    func shouldClippedToTop(view: UIView?) -> Bool {
-        if (view != nil) {
-            if (view!.layer.contentsRect.size.height < 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
 }
 
 
 extension CollectionViewController: XHPhotoBrowserDelegate {
     
-    func xh_photoBrowserWillMoveToSuperView(photoBrowser: XHPhotoBrowser) {
-        let viscells = self.collectionView.visibleCells()
-        let viscellIndexs = self.collectionView.indexPathsForVisibleItems()
+    func xh_photoBrowserWillMove(toSuperView photoBrowser: XHPhotoBrowser) {
+        let viscells = self.collectionView.visibleCells
+        let viscellIndexs = self.collectionView.indexPathsForVisibleItems
         let index = photoBrowser.fromItemIndex
-        for (i, indexPath) in viscellIndexs.enumerate() {
+        for (i, indexPath) in viscellIndexs.enumerated() {
             if indexPath.item == index {
-                viscells[i].hidden = true
+                viscells[i].isHidden = true
                 break
             }
         }
 
     }
     
-    func xh_photoBrowserWillRemoveFromSuperView(photoBrowser: XHPhotoBrowser) {
-        let viscells = self.collectionView.visibleCells()
-        viscells.forEach({$0.hidden = false})
+    func xh_photoBrowserWillRemove(fromSuperView photoBrowser: XHPhotoBrowser) {
+        let viscells = self.collectionView.visibleCells
+        viscells.forEach({$0.isHidden = false})
 
 //        let viscellIndexs = self.collectionView.indexPathsForVisibleItems()
 //        let index = photoBrowser.currentPage
@@ -211,23 +209,23 @@ extension CollectionViewController: XHPhotoBrowserDelegate {
 
     }
     
-    func xh_photoBrowser(photoBrowser: XHPhotoBrowser, didDisplayingImageAtIndex index: Int, fromIndex: Int) {
+    func xh_photoBrowser(_ photoBrowser: XHPhotoBrowser, didDisplayingImageAt index: Int, from fromIndex: Int) {
         print("正在展示第 \(index) 页 , fromIndex:\(fromIndex)")
         
-        let viscells = self.collectionView.visibleCells()
-        let viscellIndexs = self.collectionView.indexPathsForVisibleItems()
+        let viscells = self.collectionView.visibleCells
+        let viscellIndexs = self.collectionView.indexPathsForVisibleItems
         
-        for (i, indexPath) in viscellIndexs.enumerate() {
+        for (i, indexPath) in viscellIndexs.enumerated() {
             if indexPath.item == index {
-               viscells[i].hidden = true
+               viscells[i].isHidden = true
                 break
             }
         }
 
         if fromIndex != NSNotFound {
-            for (i, indexPath) in viscellIndexs.enumerate() {
+            for (i, indexPath) in viscellIndexs.enumerated() {
                 if indexPath.item == fromIndex {
-                    viscells[i].hidden = false
+                    viscells[i].isHidden = false
                     break
                 }
             }
@@ -246,8 +244,8 @@ class ExampleCollectionViewCell: UICollectionViewCell {
     func setInfo(url: String) {
         let imageView = self.exampleImageView
 
-        imageView.layer.removeAnimationForKey("contents")
-        imageView.yy_setImageWithURL(NSURL(string: url)!, placeholder: UIImage(named: "whiteplaceholder"), options: YYWebImageOptions.AvoidSetImage, progress: nil, transform: nil, completion: {[weak imageView] (image, url, from, stage, error) in
+        imageView?.layer.removeAnimation(forKey: "contents")
+        imageView?.yy_setImage(with: NSURL(string: url)! as URL, placeholder: UIImage(named: "whiteplaceholder"), options: YYWebImageOptions.avoidSetImage, progress: nil, transform: nil, completion: {[weak imageView] (image, url, from, stage, error) in
                 
                 // if (image != nil && stage == YYWebImageStage.Finished) {
                 //     imageView.image = image;
@@ -263,24 +261,25 @@ class ExampleCollectionViewCell: UICollectionViewCell {
                 
                 imageView.image = image;
                 
-                let width = image!.size.width * UIScreen.mainScreen().scale
-                let height = image!.size.height * UIScreen.mainScreen().scale
+                let width = image!.size.width * UIScreen.main.scale
+                let height = image!.size.height * UIScreen.main.scale
                 //
                 let scale = (height / width) / (imageView.bounds.size.height / imageView.bounds.size.width);
-                if (scale < 0.99 || isnan(scale)) { // 宽图把左右两边裁掉
-                    imageView.contentMode = UIViewContentMode.ScaleAspectFill
-                    imageView.layer.contentsRect = CGRectMake(0, 0, 1, 1)
+                if (scale < 0.99 || scale.isNaN) { // 宽图把左右两边裁掉
+                    imageView.contentMode = UIViewContentMode.scaleAspectFill
+                    
+                    imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: 1)
                 } else { // 高图只保留顶部
-                    imageView.contentMode = UIViewContentMode.ScaleToFill;
-                    imageView.layer.contentsRect = CGRectMake(0, 0, 1, width / height);
-                }
+                    imageView.contentMode = UIViewContentMode.scaleToFill;
+                    imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: width / height)
+            }
             
-                if (from != YYWebImageFromType.MemoryCacheFast) {
+                if (from != YYWebImageFromType.memoryCacheFast) {
                     let transition = CATransition()
                     transition.duration = 0.15;
                     transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseOut);
                     transition.type = kCATransitionFade;
-                    imageView.layer.addAnimation(transition, forKey: "contents")
+                    imageView.layer.add(transition, forKey: "contents")
                 }
                 
             })
@@ -290,7 +289,7 @@ class ExampleCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         exampleImageView.image = nil
-        exampleImageView.contentMode = UIViewContentMode.ScaleAspectFill
+        exampleImageView.contentMode = UIViewContentMode.scaleAspectFill
 //        layer.cornerRadius = 25.0
 //        layer.masksToBounds = true
     }
