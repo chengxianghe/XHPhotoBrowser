@@ -72,7 +72,7 @@
     browser.blurEffectBackground = NO;
     browser.showToolBarWhenScroll = NO;
     browser.showCaptionWhenScroll = NO;
-    browser.tapDismissWhenCaptionNone = NO;
+    browser.singleTapOption = XHSingleTapOptionNone;
     browser.pager.style = XHPageControlStyleNone;
     _browser = browser;
 }

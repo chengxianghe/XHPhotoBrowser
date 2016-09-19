@@ -14,10 +14,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class XHPhotoBrowser;
 
+/// toolBar的展示风格
 typedef NS_ENUM(NSUInteger, XHShowStyle) {
     XHShowStyleAuto, ///< 自动
     XHShowStyleHide, ///< 隐藏
     XHShowStyleShow, ///< 展示
+};
+
+/// 单击图片的处理
+typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
+    XHSingleTapOptionNone, ///< 单击不做相册退出处理, 默认显示/隐藏caption和工具条
+    XHSingleTapOptionAuto, ///< 自动(有caption时单击显示/隐藏caption和工具条, 没有caption时单击退出相册)
+    XHSingleTapOptionDismiss, ///< 不管有无caption, 单击均退出相册
 };
 
 @protocol XHPhotoBrowserDataSource <NSObject>
@@ -157,10 +165,9 @@ typedef NS_ENUM(NSUInteger, XHShowStyle) {
 @property (nonatomic, assign) BOOL upDownDismiss;
 
 /**
- *  是否消失当单击并且没有caption的时候(Default is YES)
+ *  单击图片时的选项(Default is Auto)
  */
-@property (nonatomic, assign) BOOL tapDismissWhenCaptionNone;
-
+@property (nonatomic, assign) XHSingleTapOption singleTapOption;
 
 /**
  *  thumbView是否是cell(Default is NO)

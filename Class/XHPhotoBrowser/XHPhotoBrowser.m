@@ -105,7 +105,7 @@
     _toolBarShowStyle = XHShowStyleAuto;
     _showToolBarWhenScroll = YES;
     _showCaptionWhenScroll = YES;
-    _tapDismissWhenCaptionNone = YES;
+    _singleTapOption = XHSingleTapOptionAuto;
     _imagePadding = 20;
     _maxCaptionHeight = 150;
     
@@ -1116,35 +1116,49 @@
         [self.delegate xh_photoBrowserSingleTap:self];
     }
     
-    if (self.captionView.alpha == 0 && self.captionView.text.length <= 0) {
-        if (_tapDismissWhenCaptionNone) {
-            [self dismiss];
-        } else {
-            [UIView animateWithDuration:0.2 animations:^{
-                if (self.toolBar.alpha > 0) {
-                    self.toolBar.alpha = 0;
-                    self.toolBar.xh_top = self.xh_height;
-                } else {
-                    self.toolBar.alpha = 1.0;
-                    self.toolBar.xh_bottom = self.xh_height;
-                }
-            }];
-        }
-    } else {
+    if (_singleTapOption == XHSingleTapOptionDismiss) {
+        [self dismiss];
+        return;
+    }
+    
+    if (_singleTapOption == XHSingleTapOptionNone) {
         [UIView animateWithDuration:0.2 animations:^{
-            if (self.captionView.alpha == 0 && self.captionView.text.length) {
-                self.captionView.alpha = 1.0;
-                self.toolBar.alpha = 1;
-                self.toolBar.xh_bottom = self.xh_height;
-                self.captionView.xh_top = self.xh_height - self.captionView.xh_height - self.toolBar.xh_height;
-            } else {
+            if (self.captionView.alpha != 0 || self.toolBar.alpha != 0) {
                 self.toolBar.xh_top = self.xh_height;
                 self.captionView.xh_bottom = self.xh_height;
                 self.captionView.alpha = 0;
                 self.toolBar.alpha = 0;
+            } else {
+                self.captionView.alpha = 1.0;
+                self.toolBar.alpha = 1.0;
+                self.toolBar.xh_bottom = self.xh_height;
+                self.captionView.xh_top = self.xh_height - self.captionView.xh_height - self.toolBar.xh_height;
             }
         } completion:^(BOOL finished) {
         }];
+        
+        return;
+    }
+        
+    if (_singleTapOption == XHSingleTapOptionAuto) {
+        if (self.captionView.text.length <= 0) {
+            [self dismiss];
+        } else {
+            [UIView animateWithDuration:0.2 animations:^{
+                if (self.captionView.alpha == 0) {
+                    self.captionView.alpha = 1.0;
+                    self.toolBar.alpha = 1;
+                    self.toolBar.xh_bottom = self.xh_height;
+                    self.captionView.xh_top = self.xh_height - self.captionView.xh_height - self.toolBar.xh_height;
+                } else {
+                    self.toolBar.xh_top = self.xh_height;
+                    self.captionView.xh_bottom = self.xh_height;
+                    self.captionView.alpha = 0;
+                    self.toolBar.alpha = 0;
+                }
+            } completion:^(BOOL finished) {
+            }];
+        }
     }
 }
 
