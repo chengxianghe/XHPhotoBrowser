@@ -7,9 +7,9 @@
 //
 
 #import "XHPhotoBrowser.h"
-#import "XHPhotoGroupHeader.h"
-#import "XHPhotoGroupItem.h"
-#import "XHPhotoGroupCell.h"
+#import "XHPhotoBrowserHeader.h"
+#import "XHPhotoItem.h"
+#import "XHPhotoBrowserCell.h"
 #import "XHPageControlView.h"
 #import <Accelerate/Accelerate.h>
 
@@ -22,7 +22,7 @@
 
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) NSMutableArray<__kindof XHPhotoGroupCell *> *cells;
+@property (nonatomic, strong) NSMutableArray<__kindof XHPhotoBrowserCell *> *cells;
 @property (nonatomic, strong) XHPageControlView *pager;
 @property (nonatomic, assign) BOOL fromNavigationBarHidden;
 
@@ -365,9 +365,9 @@
                 if (finished) {
                     _scrollView.contentSize = CGSizeMake(_scrollView.xh_width * self.groupItems.count, _scrollView.xh_height);
                     _isOrientationChange = NO;
-                    XHPhotoGroupCell *cell = [self cellForPage:index];
+                    XHPhotoBrowserCell *cell = [self cellForPage:index];
                     if (index >= self.groupItems.count) {
-                        XHPhotoGroupCell *cell = [self cellForPage:index];
+                        XHPhotoBrowserCell *cell = [self cellForPage:index];
                         cell.page = -1;
                         cell.item = nil;
                         [cell removeFromSuperview];
@@ -387,19 +387,19 @@
             } completion:^(BOOL finished) {
                 if (finished) {
                     
-                    XHPhotoGroupCell *cell = [self cellForPage:index];
+                    XHPhotoBrowserCell *cell = [self cellForPage:index];
                     cell.page = -1;
                     cell.item = nil;
                     [cell removeFromSuperview];
                     
                     if (index + 1 <= _groupItems.count) {
-                        XHPhotoGroupCell *cell = [self cellForPage:index + 1];
+                        XHPhotoBrowserCell *cell = [self cellForPage:index + 1];
                         cell.xh_left = _imagePadding / 2;
                         cell.page = 0;
                     }
                     
                     if (index + 2 <= _groupItems.count) {
-                        XHPhotoGroupCell *cell = [self cellForPage:index + 2];
+                        XHPhotoBrowserCell *cell = [self cellForPage:index + 2];
                         cell.xh_left = _scrollView.xh_width + _imagePadding / 2;
                         cell.page = 1;
                     }
@@ -435,7 +435,7 @@
 
 // MARK: Action Button
 - (void)actionButtonPressed {
-    XHPhotoGroupCell *tile = [self cellForPage:self.currentPage];
+    XHPhotoBrowserCell *tile = [self cellForPage:self.currentPage];
     if (!tile.imageView.image) return;
     
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] init];
@@ -652,7 +652,7 @@
     [UIView setAnimationsEnabled:YES];
     [self willShowPhotoGroup:animated];
     
-    XHPhotoGroupCell *cell = [self cellForPage:currentPage];
+    XHPhotoBrowserCell *cell = [self cellForPage:currentPage];
     id<XHPhotoProtocol> item = _groupItems[currentPage];
     
     BOOL isFromImageClipped = [item shouldClipToTop];
@@ -811,7 +811,7 @@
     [self willDismissPhotoGroup:animated];
     
     NSInteger currentPage = self.currentPage;
-    XHPhotoGroupCell *cell = [self cellForPage:currentPage];
+    XHPhotoBrowserCell *cell = [self cellForPage:currentPage];
     id<XHPhotoProtocol> item = _groupItems[currentPage];
     
     UIView *fromView = nil;
@@ -950,14 +950,14 @@
 //MARK: 单击消失
 - (void)dismiss {
     // 停止正在滚动的图片
-    XHPhotoGroupCell *cell = [self cellForPage:_pager.currentPage];
+    XHPhotoBrowserCell *cell = [self cellForPage:_pager.currentPage];
     [cell setContentOffset:cell.contentOffset animated:NO];
     
     [self dismissAnimated:YES completion:nil];
 }
 
 - (void)cancelAllImageLoad {
-    [_cells enumerateObjectsUsingBlock:^(XHPhotoGroupCell *cell, NSUInteger idx, BOOL *stop) {
+    [_cells enumerateObjectsUsingBlock:^(XHPhotoBrowserCell *cell, NSUInteger idx, BOOL *stop) {
         [cell.imageView yy_cancelCurrentImageRequest];
     }];
 }
@@ -973,9 +973,9 @@
     
     for (NSInteger i = page - 1; i <= page + 1; i++) { // preload left and right cell
         if (i >= 0 && i < self.groupItems.count) {
-            XHPhotoGroupCell *cell = [self cellForPage:i];
+            XHPhotoBrowserCell *cell = [self cellForPage:i];
             if (!cell) {
-                XHPhotoGroupCell *cell = [self dequeueReusableCell];
+                XHPhotoBrowserCell *cell = [self dequeueReusableCell];
                 cell.page = i;
                 cell.xh_left = (self.xh_width + _imagePadding) * i + _imagePadding / 2;
                 
@@ -1060,7 +1060,7 @@
 
 /// enqueue invisible cells for reuse
 - (void)updateCellsForReuse {
-    for (XHPhotoGroupCell *cell in _cells) {
+    for (XHPhotoBrowserCell *cell in _cells) {
         if (cell.superview) {
             if (cell.xh_left > _scrollView.contentOffset.x + _scrollView.xh_width * 2
                 ||cell.xh_right < _scrollView.contentOffset.x - _scrollView.xh_width) {
@@ -1073,15 +1073,15 @@
 }
 
 /// dequeue a reusable cell
-- (XHPhotoGroupCell *)dequeueReusableCell {
-    XHPhotoGroupCell *cell = nil;
+- (XHPhotoBrowserCell *)dequeueReusableCell {
+    XHPhotoBrowserCell *cell = nil;
     for (cell in _cells) {
         if (!cell.superview) {
             return cell;
         }
     }
     
-    cell = [XHPhotoGroupCell new];
+    cell = [XHPhotoBrowserCell new];
     cell.frame = self.bounds;
     cell.imageContainerView.frame = self.bounds;
     cell.imageView.frame = cell.bounds;
@@ -1092,8 +1092,8 @@
 }
 
 /// get the cell for specified page, nil if the cell is invisible
-- (XHPhotoGroupCell *)cellForPage:(NSInteger)page {
-    for (XHPhotoGroupCell *cell in _cells) {
+- (XHPhotoBrowserCell *)cellForPage:(NSInteger)page {
+    for (XHPhotoBrowserCell *cell in _cells) {
         if (cell.page == page) {
             return cell;
         }
@@ -1164,7 +1164,7 @@
 
 - (void)doubleTap:(UITapGestureRecognizer *)g {
     if (!_isPresented) return;
-    XHPhotoGroupCell *tile = [self cellForPage:self.currentPage];
+    XHPhotoBrowserCell *tile = [self cellForPage:self.currentPage];
     if (tile) {
         if (tile.zoomScale > 1) {
             [tile setZoomScale:1 animated:YES];
@@ -1302,7 +1302,7 @@
     _scrollView.contentSize = CGSizeMake(_scrollView.xh_width * self.groupItems.count, _scrollView.xh_height);
     _isOrientationChange = NO;
     
-    [_cells enumerateObjectsUsingBlock:^(__kindof XHPhotoGroupCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
+    [_cells enumerateObjectsUsingBlock:^(__kindof XHPhotoBrowserCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
         if (cell.superview) {
             cell.frame = self.bounds;
             [cell setZoomScale:1.0 animated:NO];

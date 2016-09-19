@@ -8,7 +8,7 @@
 
 import UIKit
 
-class XHPhotoItem: NSObject {
+class XHPhotoGroupItem: NSObject {
     /// 缩略图
     var thumbnail_pic = ""
     
@@ -23,7 +23,7 @@ class XHPhotoGroup: UIView {
 
     fileprivate var imageViews = [UIImageView]()
     
-    var photoItemArray: [XHPhotoItem]? {
+    var photoItemArray: [XHPhotoGroupItem]? {
         didSet {
             setupPhotoData()
         }
@@ -139,11 +139,11 @@ class XHPhotoGroup: UIView {
         let vc = self.xh_viewController
         let currentPage = imageViews.index(of: sender.view as! UIImageView) ?? 0
 
-        var items = [XHPhotoGroupItem]()
+        var items = [XHPhotoItem]()
         let enumer = photoItemArray!.enumerated()
         
         for (index, photoItem) in enumer {
-            let item = XHPhotoGroupItem()
+            let item = XHPhotoItem()
             item.thumbView = imageViews[index]
             item.largeImageURL = NSURL(string: photoItem.original_pic) as URL!
             item.shouldClipToTop = self.shouldClippedToTop(view: item.thumbView)

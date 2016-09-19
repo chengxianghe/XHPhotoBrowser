@@ -7,7 +7,7 @@
 //
 
 #import "XHPhotoBrowserController.h"
-#import "XHPhotoGroupHeader.h"
+#import "XHPhotoBrowserHeader.h"
 
 @interface XHPhotoBrowserController () <XHPhotoBrowserDelegate, XHPhotoBrowserDataSource>
 {

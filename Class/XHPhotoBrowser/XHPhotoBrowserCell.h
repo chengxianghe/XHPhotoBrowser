@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@class XHPhotoGroupItem,YYAnimatedImageView;
+@class XHPhotoItem,YYAnimatedImageView;
 
-@interface XHPhotoGroupCell : UIScrollView <UIScrollViewDelegate>
+@interface XHPhotoBrowserCell : UIScrollView <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIView *imageContainerView;
 @property (nonatomic, strong) YYAnimatedImageView *imageView;
@@ -18,7 +18,7 @@
 @property (nonatomic, assign) BOOL showProgress;
 @property (nonatomic, assign) CGFloat progress;
 @property (nonatomic, strong) CAShapeLayer *progressLayer;
-@property (nonatomic, strong) XHPhotoGroupItem *item;
+@property (nonatomic, strong) XHPhotoItem *item;
 @property (nonatomic, readonly) BOOL itemDidLoad;
 
 - (void)resizeSubviewSize;

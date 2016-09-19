@@ -139,7 +139,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     
 }
 
-class MYPhotoGroupItem: XHPhotoGroupItem {
+class MYPhotoGroupItem: XHPhotoItem {
     override var thumbImage: UIImage? {
         get {
             if self.thumbView != nil {

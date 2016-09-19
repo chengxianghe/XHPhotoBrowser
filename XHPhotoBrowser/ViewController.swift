@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     
     @IBAction func onPushBrowser(_ sender: UIButton) {
         let browserVC = XHPhotoBrowserController()
-        var images = [XHPhotoGroupItem]();
+        var images = [XHPhotoItem]();
         
         for i in 0..<imageurls.count {
             

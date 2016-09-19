@@ -19,7 +19,7 @@ class ImageModel: NSObject {
 class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    var dataSource = Array<[XHPhotoItem]>()
+    var dataSource = Array<[XHPhotoGroupItem]>()
     deinit {
         print("LocalPhotoViewController deinit")
     }
@@ -63,8 +63,8 @@ class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableVi
                 
                 i = i + count
 
-                let items: [XHPhotoItem] = tempArr.map({
-                    let photo = XHPhotoItem()
+                let items: [XHPhotoGroupItem] = tempArr.map({
+                    let photo = XHPhotoGroupItem()
                     photo.thumbnail_pic = $0.small
                     photo.original_pic = $0.big
                     photo.photoSize = CGSize(width: 100, height: 100)
@@ -154,12 +154,12 @@ class PhotoTableViewCell: UITableViewCell {
 //        self.backgroundColor = UIColor.redColor()
     }
     
-    func setInfo(images: [XHPhotoItem]) {
+    func setInfo(images: [XHPhotoGroupItem]) {
         self.photosView.frame = CGRect(x: 10, y: 10, width: UIScreen.main.bounds.width - 20, height: PhotoTableViewCell.height(images: images) - 20)
         self.photosView.photoItemArray = images
     }
     
-    static func height(images: [XHPhotoItem]) -> CGFloat {
+    static func height(images: [XHPhotoGroupItem]) -> CGFloat {
         let h = PhotoViewFrameHelper.getPhotoViewSizeWithPhotoCount(count: images.count, gap: 10).height + 20
         return h
     }

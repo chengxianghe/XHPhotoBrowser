@@ -6,13 +6,13 @@
 //  Copyright © 2015年 ibireme. All rights reserved.
 //
 
-#import "XHPhotoGroupCell.h"
-#import "XHPhotoGroupItem.h"
-#import "XHPhotoGroupHeader.h"
+#import "XHPhotoBrowserCell.h"
+#import "XHPhotoItem.h"
+#import "XHPhotoBrowserHeader.h"
 
 static NSString *const kLayerAnimationKey = @"yytest.fade";
 
-@implementation XHPhotoGroupCell
+@implementation XHPhotoBrowserCell
 
 - (instancetype)init {
     self = super.init;
@@ -62,7 +62,7 @@ static NSString *const kLayerAnimationKey = @"yytest.fade";
     _progressLayer.frame = frame;
 }
 
-- (void)setItem:(XHPhotoGroupItem *)item {
+- (void)setItem:(XHPhotoItem *)item {
     if (_item == item) return;
     _item = item;
     _itemDidLoad = NO;

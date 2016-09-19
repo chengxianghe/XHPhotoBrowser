@@ -23,8 +23,8 @@
 		14AE3F7A1D73F7620032ABCA /* XHPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 14AE3F6E1D73F7620032ABCA /* XHPhotoBrowser.bundle */; };
 		14AE3F7B1D73F7620032ABCA /* XHPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F701D73F7620032ABCA /* XHPhotoBrowser.m */; };
 		14AE3F7C1D73F7620032ABCA /* XHPhotoBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F721D73F7620032ABCA /* XHPhotoBrowserController.m */; };
-		14AE3F7D1D73F7620032ABCA /* XHPhotoGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F741D73F7620032ABCA /* XHPhotoGroupCell.m */; };
-		14AE3F7E1D73F7620032ABCA /* XHPhotoGroupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F771D73F7620032ABCA /* XHPhotoGroupItem.m */; };
+		14AE3F7D1D73F7620032ABCA /* XHPhotoBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F741D73F7620032ABCA /* XHPhotoBrowserCell.m */; };
+		14AE3F7E1D73F7620032ABCA /* XHPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE3F771D73F7620032ABCA /* XHPhotoItem.m */; };
 		14AEB9901D72E31200E37A99 /* XHActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB98F1D72E31200E37A99 /* XHActionSheet.m */; };
 		2CFF160A3FDEA407ADF255DA /* libPods-XHPhotoBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 276FC5EE1633C36F82F1AA73 /* libPods-XHPhotoBrowser.a */; };
 /* End PBXBuildFile section */
@@ -53,11 +53,11 @@
 		14AE3F701D73F7620032ABCA /* XHPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHPhotoBrowser.m; sourceTree = "<group>"; };
 		14AE3F711D73F7620032ABCA /* XHPhotoBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoBrowserController.h; sourceTree = "<group>"; };
 		14AE3F721D73F7620032ABCA /* XHPhotoBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHPhotoBrowserController.m; sourceTree = "<group>"; };
-		14AE3F731D73F7620032ABCA /* XHPhotoGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoGroupCell.h; sourceTree = "<group>"; };
-		14AE3F741D73F7620032ABCA /* XHPhotoGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHPhotoGroupCell.m; sourceTree = "<group>"; };
-		14AE3F751D73F7620032ABCA /* XHPhotoGroupHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoGroupHeader.h; sourceTree = "<group>"; };
-		14AE3F761D73F7620032ABCA /* XHPhotoGroupItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoGroupItem.h; sourceTree = "<group>"; };
-		14AE3F771D73F7620032ABCA /* XHPhotoGroupItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHPhotoGroupItem.m; sourceTree = "<group>"; };
+		14AE3F731D73F7620032ABCA /* XHPhotoBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoBrowserCell.h; sourceTree = "<group>"; };
+		14AE3F741D73F7620032ABCA /* XHPhotoBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHPhotoBrowserCell.m; sourceTree = "<group>"; };
+		14AE3F751D73F7620032ABCA /* XHPhotoBrowserHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoBrowserHeader.h; sourceTree = "<group>"; };
+		14AE3F761D73F7620032ABCA /* XHPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHPhotoItem.h; sourceTree = "<group>"; };
+		14AE3F771D73F7620032ABCA /* XHPhotoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHPhotoItem.m; sourceTree = "<group>"; };
 		14AEB98E1D72E31200E37A99 /* XHActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHActionSheet.h; sourceTree = "<group>"; };
 		14AEB98F1D72E31200E37A99 /* XHActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHActionSheet.m; sourceTree = "<group>"; };
 		276FC5EE1633C36F82F1AA73 /* libPods-XHPhotoBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XHPhotoBrowser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,11 +137,11 @@
 				14AE3F701D73F7620032ABCA /* XHPhotoBrowser.m */,
 				14AE3F711D73F7620032ABCA /* XHPhotoBrowserController.h */,
 				14AE3F721D73F7620032ABCA /* XHPhotoBrowserController.m */,
-				14AE3F731D73F7620032ABCA /* XHPhotoGroupCell.h */,
-				14AE3F741D73F7620032ABCA /* XHPhotoGroupCell.m */,
-				14AE3F751D73F7620032ABCA /* XHPhotoGroupHeader.h */,
-				14AE3F761D73F7620032ABCA /* XHPhotoGroupItem.h */,
-				14AE3F771D73F7620032ABCA /* XHPhotoGroupItem.m */,
+				14AE3F731D73F7620032ABCA /* XHPhotoBrowserCell.h */,
+				14AE3F741D73F7620032ABCA /* XHPhotoBrowserCell.m */,
+				14AE3F751D73F7620032ABCA /* XHPhotoBrowserHeader.h */,
+				14AE3F761D73F7620032ABCA /* XHPhotoItem.h */,
+				14AE3F771D73F7620032ABCA /* XHPhotoItem.m */,
 			);
 			path = XHPhotoBrowser;
 			sourceTree = "<group>";
@@ -314,10 +314,10 @@
 				14717E921D59DBC3000245D1 /* AppDelegate.swift in Sources */,
 				14AA67B71D741B1300DEF7E4 /* XHPhotoGroup.swift in Sources */,
 				14AE3F7C1D73F7620032ABCA /* XHPhotoBrowserController.m in Sources */,
-				14AE3F7D1D73F7620032ABCA /* XHPhotoGroupCell.m in Sources */,
+				14AE3F7D1D73F7620032ABCA /* XHPhotoBrowserCell.m in Sources */,
 				14AE3F781D73F7620032ABCA /* UIView+XHAdd.m in Sources */,
 				14AA67B51D741B1300DEF7E4 /* PhotoViewFrameHelper.swift in Sources */,
-				14AE3F7E1D73F7620032ABCA /* XHPhotoGroupItem.m in Sources */,
+				14AE3F7E1D73F7620032ABCA /* XHPhotoItem.m in Sources */,
 				14AE3F791D73F7620032ABCA /* XHPageControlView.m in Sources */,
 				143FA4EB1D6C44CB001FD20B /* CollectionViewController.swift in Sources */,
 			);

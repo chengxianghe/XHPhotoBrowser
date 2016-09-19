@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "XHPhotoGroupItem.h"
+#import "XHPhotoItem.h"
 #import "XHPageControlView.h"
 
 NS_ASSUME_NONNULL_BEGIN

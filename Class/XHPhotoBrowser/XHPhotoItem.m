@@ -1,14 +1,23 @@
 //
-//  YYPhotoGroupItem.m
+//  XHPhotoItem.m
 //  YYKitDemo
 //
 //  Created by chengxianghe on 15/12/26.
 //  Copyright © 2015年 ibireme. All rights reserved.
 //
 
-#import "XHPhotoGroupItem.h"
+#import "XHPhotoItem.h"
 
-@implementation XHPhotoGroupItem
+@implementation XHPhotoItem
+
++ (BOOL)shouldClipToTopWithView:(UIView * _Nullable)view {
+    if (view != nil) {
+        if (view.layer.contentsRect.size.height < 1) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
 - (UIImage *)thumbImage {
     if ([_thumbView respondsToSelector:@selector(image)]) {
@@ -18,7 +27,7 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    XHPhotoGroupItem *item = [self.class new];
+    XHPhotoItem *item = [self.class new];
     return item;
 }
 
