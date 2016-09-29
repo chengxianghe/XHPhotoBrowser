@@ -15,6 +15,9 @@ typedef void(^XHPhotoBrowserControllerOnMoreBlock)();
 
 @property (nonatomic, strong, readonly, nonnull) XHPhotoBrowser *browser;
 
+/** 是否在viewDidload时加载图片浏览器(默认YES) */
+@property (nonatomic, assign) BOOL showBrowserWhenDidload;
+
 /** 初始化数据 */
 @property (nonatomic, strong, nullable) NSArray<__kindof id <XHPhotoProtocol>> *groupItems;
 

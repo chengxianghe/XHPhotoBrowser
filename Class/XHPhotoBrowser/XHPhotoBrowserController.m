@@ -57,6 +57,7 @@
 
 - (void)_initialisation {
     self.hidesBottomBarWhenPushed = YES;
+    _showBrowserWhenDidload = YES;
     _viewIsActive = NO;
     _didSavePreviousStateOfNavBar = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -179,7 +180,9 @@
     UIBarButtonItem *toolActionButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = toolActionButton;
 
-    [_browser showInContaioner:self.view animated:NO completion:nil];
+    if (_showBrowserWhenDidload) {
+        [_browser showInContaioner:self.view animated:NO completion:nil];
+    }
 }
 
 - (void)viewDidLayoutSubviews {
