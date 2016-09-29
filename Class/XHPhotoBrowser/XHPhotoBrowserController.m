@@ -231,7 +231,7 @@
     navBar.barStyle = UIBarStyleBlackTranslucent;
 
     [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-#if __IPHONE_8_0
+#ifdef __IPHONE_8_0
     [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsCompact];
 #else
     [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsLandscapePhone];
@@ -247,7 +247,7 @@
     _previousNavBarStyle = self.navigationController.navigationBar.barStyle;
     _previousNavigationBarBackgroundImageDefault = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault];
     
-#if __IPHONE_8_0
+#ifdef __IPHONE_8_0
     _previousNavigationBarBackgroundImageLandscapePhone = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsCompact];
 #else
     _previousNavigationBarBackgroundImageLandscapePhone = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsLandscapePhone];
@@ -264,7 +264,7 @@
         navBar.barStyle = _previousNavBarStyle;
         [navBar setBackgroundImage:_previousNavigationBarBackgroundImageDefault forBarMetrics:UIBarMetricsDefault];
         
-#if __IPHONE_8_0
+#ifdef __IPHONE_8_0
         [navBar setBackgroundImage:_previousNavigationBarBackgroundImageLandscapePhone forBarMetrics:UIBarMetricsCompact];
 #else
         [navBar setBackgroundImage:_previousNavigationBarBackgroundImageLandscapePhone forBarMetrics:UIBarMetricsLandscapePhone];
