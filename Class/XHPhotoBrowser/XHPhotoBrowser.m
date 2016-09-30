@@ -295,8 +295,6 @@
     _deleteButton = deleteButton;
 }
 
-
-
 // MARK: - Toolbar
 - (void)updateCaption:(BOOL)isScroll {
     if (_pager.currentPage < _groupItems.count) {
@@ -473,7 +471,7 @@
         self.isLongPressed = NO;
     };
     
-#if __IPHONE_8_0
+#ifdef __IPHONE_8_0
     activityViewController.completionWithItemsHandler = ^(NSString * __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError) {
         handler(activityType, completed);
     };
