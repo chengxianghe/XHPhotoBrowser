@@ -201,6 +201,10 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
  */
 @property (nonatomic, assign) CGFloat maxCaptionHeight;
 
+/**
+ *  是否正在展示Browser
+ */
+@property (nonatomic, assign, readonly) BOOL isPresented;
 
 #pragma mark - 初始化
 
