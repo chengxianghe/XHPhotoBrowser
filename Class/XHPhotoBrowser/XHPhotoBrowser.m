@@ -131,7 +131,7 @@
     _scrollView.pagingEnabled = YES;
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.showsVerticalScrollIndicator = NO;
-//    _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    //    _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _scrollView.delaysContentTouches = NO;
     _scrollView.canCancelContentTouches = YES;
     
@@ -142,19 +142,19 @@
     _toolBar.xh_height = 40;
     _toolBar.center = CGPointMake(self.xh_width / 2, self.xh_height - 20);
     _toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-
+    
     _toolBar.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.3];
     _toolBar.clipsToBounds = true;
     _toolBar.translucent = true;
     [_toolBar setBackgroundImage:[[UIImage alloc] init] forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
-
+    
     _pager = [[XHPageControlView alloc] init];
     _pager.hidesForSinglePage = NO;
     _pager.userInteractionEnabled = NO;
     _pager.xh_width = 100;
     _pager.xh_height = 20;
     _pager.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-
+    
     
     // arrows:back
     UIButton *previousBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -187,22 +187,22 @@
     [self addSubview:_contentView];
     [self addSubview:_toolBar];
     [_contentView addSubview:_scrollView];
-
+    
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     NSMutableArray *items = [NSMutableArray array];
     
     [items addObject:_toolActionButton];
     [items addObject:flexSpace];
-
+    
     [items addObject:_toolPreviousButton];
     [items addObject:flexSpace];
-
+    
     [items addObject:toolCounterButton];
     [items addObject:flexSpace];
     
     [items addObject:_toolNextButton];
     [items addObject:flexSpace];
-
+    
     [items addObject:_toolActionButton];
     
     [_toolBar setItems:items animated:NO];
@@ -230,7 +230,7 @@
         [_contentView addGestureRecognizer:pan];
         _panGesture = pan;
     }
-
+    
 }
 
 - (void)setSettingCaptionView {
@@ -241,7 +241,7 @@
     captionView.textColor = [UIColor whiteColor];
     captionView.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.3];
     captionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-
+    
     [self addSubview:captionView];
     _captionView = captionView;
 }
@@ -250,7 +250,7 @@
     UIImage *doneImage = [UIImage xh_imageNamedFromMyBundle: @"images/btn_common_close_wh"];
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [closeButton setImage:doneImage forState:UIControlStateNormal];
-
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         closeButton.imageEdgeInsets = UIEdgeInsetsMake(15.25, 15.25, 15.25, 15.25);
     } else {
@@ -258,14 +258,14 @@
     }
     closeButton.backgroundColor = [UIColor clearColor];
     [closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-
+    
     closeButton.translatesAutoresizingMaskIntoConstraints = true;
     closeButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
-
+    
     _closeButtonHideFrame = CGRectMake(5, -20, 44, 44);
     _closeButtonShowFrame = CGRectMake(5, 20, 44, 44);
     [self addSubview:closeButton];
-
+    
     closeButton.frame = _closeButtonShowFrame;
     _closeButton = closeButton;
 }
@@ -282,7 +282,7 @@
     }
     deleteButton.backgroundColor = [UIColor clearColor];
     deleteButton.hidden = YES;
-
+    
     [deleteButton addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     deleteButton.translatesAutoresizingMaskIntoConstraints = true;
@@ -296,10 +296,11 @@
 }
 
 // MARK: - Toolbar
-- (void)updateCaption:(BOOL)isScroll {
+- (void)updateCaption:(BOOL)isScroll animated:(BOOL)animated {
     if (_pager.currentPage < _groupItems.count) {
         _captionView.text = _groupItems[_pager.currentPage].caption;
-        [UIView animateWithDuration:0.2 animations:^{
+        float oneTime = animated ? 0.2 : 0;
+        [UIView animateWithDuration:oneTime animations:^{
             if (isScroll) {
                 if (_showCaptionWhenScroll) {
                     _captionView.alpha = (_captionView.text.length ? 1.0 : 0);
@@ -334,7 +335,7 @@
 
 - (void)deleteButtonPressed:(UIButton *)sender {
     sender.enabled = NO;
-
+    
     NSInteger index = _pager.currentPage;
     
     if ([self.delegate respondsToSelector:@selector(xh_photoBrowserDidTapDelete:photoAtIndex:deleteBlock:)]) {
@@ -412,7 +413,7 @@
                     // 更新
                     [self didDisplayPhotoIndex:0 from:NSNotFound];
                     _pager.currentPage = 0;
-                    [self updateCaption:YES];
+                    [self updateCaption:YES animated:YES];
                     [self updateToolbar];
                     sender.enabled = YES;
                 }
@@ -552,7 +553,7 @@
         [self scrollViewDidScroll:_scrollView];
     } else {
         NSInteger maxLength = range.location + range.length;
-
+        
         if (maxLength > _groupItems.count) {
             NSInteger deleteLength = _groupItems.count - range.location;
             [(NSMutableArray *)_groupItems removeObjectsInRange:NSMakeRange(range.location, deleteLength)];
@@ -586,7 +587,7 @@
     if (!toContainer) return;
     
     self.frame = toContainer.bounds;
-        
+    
     _closeButton.hidden = !_showCloseButton;
     _deleteButton.hidden = !_showDeleteButton;
     
@@ -640,12 +641,13 @@
     self.captionView.alpha = 0;
     self.deleteButton.alpha = 0;
     self.closeButton.alpha = 0;
-    [self moveBrowserToSuperview];
-    [_toContainerView addSubview:self];
     
     _scrollView.contentSize = CGSizeMake(_scrollView.xh_width * self.groupItems.count, _scrollView.xh_height);
     [_scrollView scrollRectToVisible:CGRectMake(_scrollView.xh_width * _pager.currentPage, 0, _scrollView.xh_width, _scrollView.xh_height) animated:NO];
     [self scrollViewDidScroll:_scrollView];
+    
+    [self moveBrowserToSuperview];
+    [_toContainerView addSubview:self];
     
     [UIView setAnimationsEnabled:YES];
     [self willShowPhotoGroup:animated];
@@ -661,7 +663,7 @@
             cell.item = item;
         }
     }
-    if (!cell.item) {
+    if (!cell.item && item.thumbImage != nil) {
         cell.imageView.image = item.thumbImage;
         [cell resizeSubviewSize];
     }
@@ -672,7 +674,7 @@
             fromFrame = [fromView convertRect:fromView.frame toView:cell];
             fromFrame.size = CGSizeMake(fromFrame.size.width * 2, fromFrame.size.height * 2);
         }
-
+        
         fromFrame.origin.y -= _contentOffSetY;
         
         CGRect originFrame = cell.imageContainerView.frame;
@@ -697,7 +699,7 @@
         [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             [cell.imageContainerView.layer setValue:@(1) forKeyPath:@"transform.scale"];
             cell.imageContainerView.frame = originFrame;
-            [self showToolBar];
+            [self showToolBar:animated];
         }completion:^(BOOL finished) {
             _isPresented = YES;
             [self scrollViewDidScroll:_scrollView];
@@ -705,7 +707,7 @@
             if (completion) completion();
             [self didShowPhotoGroup:animated];
             [self didDisplayPhotoIndex:currentPage from:NSNotFound];
-            [self updateCaption:NO];
+            [self updateCaption:NO animated:animated];
             [self hideToolBar];
         }];
         
@@ -720,7 +722,7 @@
         fromFrame.origin.y -= _contentOffSetY;
         //9.3 (CGRect) fromFrame = (origin = (x = 166.5, y = -82.5), size = (width = 70, height = 70))
         //8.1 (CGRect) fromFrame = (origin = (x = 83.25, y = -122.5), size = (width = 35, height = 35))
-
+        
         cell.imageContainerView.clipsToBounds = NO;
         cell.imageView.frame = fromFrame;
         cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -742,7 +744,7 @@
         }completion:^(BOOL finished) {
             [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
                 [cell.imageView.layer setValue:@(1.0) forKeyPath:@"transform.scale"];
-                [self showToolBar];
+                [self showToolBar:animated];
             }completion:^(BOOL finished) {
                 cell.imageContainerView.clipsToBounds = YES;
                 _isPresented = YES;
@@ -751,7 +753,7 @@
                 if (completion) completion();
                 [self didShowPhotoGroup:animated];
                 [self didDisplayPhotoIndex:currentPage from:NSNotFound];
-                [self updateCaption:NO];
+                [self updateCaption:NO animated:animated];
                 [self hideToolBar];
             }];
         }];
@@ -841,7 +843,7 @@
             targetTemp = [fromView convertRect:fromView.frame toView:self.toContainerView];
             targetTemp.size = CGSizeMake(targetTemp.size.width * 2, targetTemp.size.height * 2);
         }
-
+        
         targetTemp.origin.y -= _contentOffSetY;
         
         if (CGRectGetMidY(targetTemp) - 64 < 0 || CGRectGetMidY(targetTemp) + 49 > [UIScreen mainScreen].bounds.size.height) {
@@ -894,9 +896,9 @@
                 fromFrame = [fromView convertRect:fromView.frame toView:cell];
                 fromFrame.size = CGSizeMake(fromFrame.size.width * 2, fromFrame.size.height * 2);
             }
-
+            
             fromFrame.origin.y -= _contentOffSetY;
-
+            
             CGFloat scale = fromFrame.size.width / cell.imageContainerView.xh_width * cell.zoomScale;
             CGFloat height = fromFrame.size.height / fromFrame.size.width * cell.imageContainerView.xh_width;
             if (isnan(height)) height = cell.imageContainerView.xh_height;
@@ -911,7 +913,7 @@
             
             //8.1 gif 大 (CGRect) fromFrame = (origin = (x = 227.25, y = 8.16666698), size = (width = 11.666667, height = 11.666667))
             //9.3 gif (CGRect) fromFrame = (origin = (x = 241.166672, y = 21.5), size = (width = 23.333334, height = 23.333334))
-
+            
             CGRect fromFrame = [fromView convertRect:fromView.bounds toView:cell.imageContainerView];
             if (_thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
                 fromFrame = [fromView convertRect:fromView.frame toView:cell.imageContainerView];
@@ -919,7 +921,7 @@
             }
             
             fromFrame.origin.y -= _contentOffSetY/cell.zoomScale;
-
+            
             if ([fromView isKindOfClass:[UIImageView class]]) {
                 cell.imageView.contentMode = fromView.contentMode;
             } else {
@@ -994,12 +996,12 @@
     if (_pager.currentPage != intPage) {
         [self didDisplayPhotoIndex:intPage from:_pager.currentPage];
         _pager.currentPage = intPage;
-        [self updateCaption:YES];
+        [self updateCaption:YES animated:YES];
         [self updateToolbar];
     }
-
+    
     if (_showToolBarWhenScroll) {
-        [self showToolBar]; 
+        [self showToolBar:YES];
     }
 }
 
@@ -1013,7 +1015,7 @@
     [self hideToolBar];
 }
 
-- (void)showToolBar {
+- (void)showToolBar:(BOOL)animated {
     if (_toolBarShowStyle != XHShowStyleHide) {
         if (_toolBarShowStyle == XHShowStyleAuto) {
             [self hideToolBar];
@@ -1023,11 +1025,13 @@
             return;
         }
         
-        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        float oneTime = animated ? 0.2 : 0;
+        
+        [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             _toolBar.alpha = 1;
         } completion:^(BOOL finish) {
             if (finish) {
-                [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                     _captionView.xh_top = self.xh_height - _captionView.xh_height - self.toolBar.xh_height;
                 } completion:^(BOOL finished) {
                 }];
@@ -1053,7 +1057,7 @@
             } completion:nil];
         }
     }];
-
+    
 }
 
 /// enqueue invisible cells for reuse
@@ -1137,7 +1141,7 @@
         
         return;
     }
-        
+    
     if (_singleTapOption == XHSingleTapOptionAuto) {
         if (self.captionView.text.length <= 0) {
             [self dismiss];
@@ -1246,7 +1250,7 @@
                     _captionView.alpha = 0;
                     _closeButton.alpha = 0;
                     _deleteButton.alpha = 0;
-
+                    
                     if (moveToTop) {
                         _scrollView.xh_bottom = 0;
                     } else {
@@ -1328,7 +1332,7 @@
     
     CGFloat scale = [UIScreen mainScreen].scale;
     label.xh_size = CGSizeMake(ceil(size.width * scale) / scale,
-                            ceil(size.height * scale) / scale);
+                               ceil(size.height * scale) / scale);
     label.font = font;
     label.text = msg;
     label.textColor = [UIColor whiteColor];
