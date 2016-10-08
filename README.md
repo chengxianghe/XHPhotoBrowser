@@ -19,6 +19,17 @@ photo browser
 
 GitHub：[chengxianghe](https://github.com/chengxianghe) 
 
+## Version 1.0.8:
+- 修复BrowserController打开时候有动画卡顿的问题
+- 增加判断当前是否正在展示相册的接口 ***isPresented***
+- 增加BrowserController自定义属性 ***showBrowserWhenDidload***
+- 修改item命名
+- 新增单击图片的处理接口 ***singleTapOption***
+- 升级Xcode8 适配Swift 3.0
+- 开放 ***pageControl*** 的定制接口
+- 增加和修改注释
+
+...
 
 ## Version 1.0.2:
 - 删除多余的log
@@ -34,7 +45,7 @@ GitHub：[chengxianghe](https://github.com/chengxianghe)
 ## Features (TODO)
 
 - [ ] 背景blur开启的时候,转屏总是有点卡,目前还没有好的方案...
-- [ ] 对于reloadData的部分还没有完全测试(我测试了reloadDataWithRange,但是感觉这个功能的作用不大,考虑是不是放弃这个功能);
+- [X] 对于reloadData的部分还没有完全测试(我测试了reloadDataWithRange,但是感觉这个功能的作用不大,考虑是不是放弃这个功能);
 
 ## Screenshots
 
