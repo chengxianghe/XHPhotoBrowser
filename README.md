@@ -45,7 +45,6 @@ GitHub：[chengxianghe](https://github.com/chengxianghe)
 ## Features (TODO)
 
 - [ ] 背景blur开启的时候,转屏总是有点卡,目前还没有好的方案...
-- [X] 对于reloadData的部分还没有完全测试(我测试了reloadDataWithRange,但是感觉这个功能的作用不大,考虑是不是放弃这个功能);
 
 ## Screenshots
 
