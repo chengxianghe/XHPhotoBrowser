@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         
         browserVC.groupItems = images;
         
-        
+        browserVC.fromItemIndex = 2;
         browserVC.moreBlock = {[weak browserVC] in
             let other = ["设置1", "设置2", "设置3"]
             let sheet = XHActionSheet(title: "more", cancelTitle: "取消", otherTitles: other)

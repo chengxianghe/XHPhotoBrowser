@@ -69,7 +69,7 @@
     browser.toolBarShowStyle = XHShowStyleShow;
     browser.showCloseButton = NO;
     browser.upDownDismiss = NO;
-    browser.fromItemIndex = _fromItemIndex;
+    browser.fromItemIndex = 0;
     browser.blurEffectBackground = NO;
     browser.showToolBarWhenScroll = NO;
     browser.showCaptionWhenScroll = NO;
@@ -179,6 +179,8 @@
     [btn addTarget:self action:@selector(onMore:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *toolActionButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = toolActionButton;
+
+    self.browser.fromItemIndex = self.fromItemIndex;
 
     if (_showBrowserWhenDidload) {
         [_browser showInContaioner:self.view animated:NO completion:nil];

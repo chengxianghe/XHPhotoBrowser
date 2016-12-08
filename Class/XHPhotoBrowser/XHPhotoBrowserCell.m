@@ -96,8 +96,9 @@ static NSString *const kLayerAnimationKey = @"yytest.fade";
     } transform:nil completion:^(UIImage *image, NSURL *url, YYWebImageFromType from, YYWebImageStage stage, NSError *error) {
         @strongify(self);
         if (!self) return;
-        self.progressLayer.hidden = YES;
         if (stage == YYWebImageStageFinished) {
+            self.progressLayer.hidden = YES;
+            
             self.maximumZoomScale = 3;
             if (image) {
                 self->_itemDidLoad = YES;
@@ -110,6 +111,8 @@ static NSString *const kLayerAnimationKey = @"yytest.fade";
                 transition.type = kCATransitionFade;
                 [self.imageView.layer addAnimation:transition forKey:kLayerAnimationKey];
             }
+        } else if (stage == YYWebImageStageCancelled) {
+            self.progressLayer.hidden = YES;
         }
         
     }];
