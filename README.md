@@ -42,10 +42,6 @@ GitHub：[chengxianghe](https://github.com/chengxianghe)
 - 支持push一个controller的形式展示,请参照demo;
 - 其余的功能请参照预览图;
 
-## Features (TODO)
-
-- [ ] 背景blur开启的时候,转屏总是有点卡,目前还没有好的方案...
-
 ## Screenshots
 
 #### 开启blur预览图
