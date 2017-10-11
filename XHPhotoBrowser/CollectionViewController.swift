@@ -23,8 +23,8 @@ var caption = ["",
                "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
 ]
 
-var imageurls: [[String : AnyObject]] = {
-    return NSArray.init(contentsOfFile: Bundle.main.path(forResource: "imagesModels", ofType: "plist")!) as! [[String : AnyObject]]
+var imageurls: [[String : String]] = {
+    return NSArray.init(contentsOfFile: Bundle.main.path(forResource: "imagesModels", ofType: "plist")!) as! [[String : String]]
 }()
 
 class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -48,7 +48,10 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         DispatchQueue.global().async {
             for dict in imageurls {
                 let model = ImageModel()
-                model.setValuesForKeys(dict)
+//                model.setValuesForKeys(dict)
+                model.big = dict["big"] ?? ""
+                model.middle = dict["middle"] ?? ""
+                model.small = dict["small"] ?? ""
                 //                model.caption = caption[random()%10]
                 
                 self.images.append(model)
@@ -167,7 +170,7 @@ extension CollectionViewController: XHPhotoBrowserDataSource {
         }
         
         item.caption = self.images[index].caption
-        item.largeImageURL = NSURL(string: self.images[index].big) as! URL
+        item.largeImageURL = URL(string: self.images[index].big)!
         if item.thumbView != nil {
             item.shouldClipToTop = self.shouldClippedToTop(view: (item.thumbView as! ExampleCollectionViewCell).exampleImageView)
         } else {

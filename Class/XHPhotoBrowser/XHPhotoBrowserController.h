@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "XHPhotoBrowser.h"
 
-typedef void(^XHPhotoBrowserControllerOnMoreBlock)();
+typedef void(^XHPhotoBrowserControllerOnMoreBlock)(void);
 
 @interface XHPhotoBrowserController : UIViewController
 

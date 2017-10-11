@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^XHActionSheetClick)(NSInteger clickIndex);
 typedef void(^XHActionSheetCustom)(XHActionSheet * _Nonnull actionSheet, UILabel * _Nonnull titleLabel);
-typedef void(^XHActionSheetCancel)();
+typedef void(^XHActionSheetCancel)(void);
 
 @interface XHActionSheet : UIView
 

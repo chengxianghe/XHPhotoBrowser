@@ -24,12 +24,14 @@ class ViewController: UIViewController {
             
             let dict = imageurls[i]
             let model = ImageModel()
-            model.setValuesForKeys(dict)
+            model.big = dict["big"] ?? ""
+            model.middle = dict["middle"] ?? ""
+            model.small = dict["small"] ?? ""
             
             model.caption = caption[Int(arc4random())%10]
             let item = MYPhotoGroupItem()
             item.caption = model.caption
-            item.largeImageURL = NSURL(string: model.big) as URL!
+            item.largeImageURL = URL(string: model.big)
             item.shouldClipToTop = false
             
             images.append(item)

@@ -134,7 +134,7 @@ class XHPhotoGroup: UIView {
 
     }
     
-    func tapImage(sender: UITapGestureRecognizer) {
+    @objc func tapImage(sender: UITapGestureRecognizer) {
         //启动图片浏览器
         let vc = self.xh_viewController
         let currentPage = imageViews.index(of: sender.view as! UIImageView) ?? 0

@@ -80,7 +80,7 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
  *  @param index        当前图片的index
  *  @param deleteBlock  删除操作的闭包(更新内部UI)
  */
-- (void)xh_photoBrowserDidTapDelete:(XHPhotoBrowser * _Nonnull)photoBrowser photoAtIndex:(NSInteger)index deleteBlock:(void(^)())deleteBlock;
+- (void)xh_photoBrowserDidTapDelete:(XHPhotoBrowser * _Nonnull)photoBrowser photoAtIndex:(NSInteger)index deleteBlock:(void(^)(void))deleteBlock;
 
 /**
  *  单击相册图片的回调

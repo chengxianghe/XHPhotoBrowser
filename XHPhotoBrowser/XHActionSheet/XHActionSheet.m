@@ -481,7 +481,7 @@
     }
 }
 
--(void)dismissViewWithCompletion:(void(^)())completion{
+-(void)dismissViewWithCompletion:(void(^)(void))completion{
     
     _isShowing = NO;
     

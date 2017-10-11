@@ -62,4 +62,29 @@
 #endif
 #endif
 
+/* 屏幕尺寸判断 ===============================================================================*/
+/** 判断是否为3.5inch 320*480 640*960 */
+#ifndef kIs_Inch3_5
+#define kIs_Inch3_5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
+#endif
+
+/** 判断是否为4.0inch 320*568 640*1136 */
+#ifndef kIs_Inch4_0
+#define kIs_Inch4_0 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#endif
+/** 判断是否为4.7inch 375*667 750*1334 */
+#ifndef kIs_Inch4_7
+#define kIs_Inch4_7 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
+#endif
+
+/** 判断是否为5.5inch 414*1104 1242*2208 */
+#ifndef kIs_Inch5_5
+#define kIs_Inch5_5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
+#endif
+
+/** 判断是否为5.8inch 375*812 1125*2436 */
+#ifndef kIs_Inch5_8
+#define kIs_Inch5_8 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+#endif
+
 #endif /* XHPhotoGroupHeader_h */

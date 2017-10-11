@@ -32,7 +32,7 @@ class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableVi
         self.loadData()
     }
     
-    func statusBarOrientationChange(notification: NSNotification) {
+    @objc func statusBarOrientationChange(notification: NSNotification) {
         self.tableView.reloadData()
 //        let orientation = UIApplication.sharedApplication().statusBarOrientation
     }
@@ -40,13 +40,15 @@ class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableVi
     func loadData() {
         DispatchQueue.global().async {
             //这里写需要大量时间的代码
-            let imageurls = NSArray.init(contentsOfFile: Bundle.main.path(forResource: "imagesModels", ofType: "plist")!) as! [[String : AnyObject]]
+            let imageurls = NSArray.init(contentsOfFile: Bundle.main.path(forResource: "imagesModels", ofType: "plist")!) as! [[String : String]]
             
             var modelArray = [ImageModel]()
             
             for dict in imageurls {
                 let model = ImageModel()
-                model.setValuesForKeys(dict)
+                model.big = dict["big"] ?? ""
+                model.middle = dict["middle"] ?? ""
+                model.small = dict["small"] ?? ""
                 modelArray.append(model)
             }
             
