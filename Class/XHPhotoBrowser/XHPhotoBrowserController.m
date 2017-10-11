@@ -83,11 +83,16 @@
     self.view.backgroundColor = [UIColor blackColor];
     
     CGFloat navH = kIs_Inch5_8 ? 88 : 64;
+    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && [UIApplication sharedApplication].isStatusBarHidden) {
+        navH = 44;
+    }
     CGFloat statusH = kStatusBarHeight;
     
     self.customNavView = [[UIView alloc] init];
     [self.customNavView setFrame:CGRectMake(0, 0, kScreenWidth, navH)];
     self.customNavView.backgroundColor = [UIColor blackColor];
+    self.customNavView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
     [self.view addSubview:self.customNavView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
@@ -98,7 +103,8 @@
     [titleLabel setFrame:CGRectMake(0, 0, 200, 40)];
     [titleLabel setCenter:CGPointMake(kScreenWidth * 0.5, (navH + statusH) * 0.5)];
     [self.customNavView addSubview:titleLabel];
-    
+    titleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     if (self.rightImage == nil) {
         self.rightImage = [UIImage imageNamed:@"XHPhotoBrowser.bundle/images/btn_common_more_wh"];
@@ -107,23 +113,32 @@
     [rightBtn setImage:self.rightImage forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(onMore:) forControlEvents:UIControlEventTouchUpInside];
     [self.customNavView addSubview:rightBtn];
-    
+    rightBtn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
+    [rightBtn setCenter:CGPointMake(kScreenWidth - 30, (navH + statusH) * 0.5)];
+
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setFrame:CGRectMake(5, statusH + 10, 30, 20)];
     [backBtn.imageView setContentMode:UIViewContentModeScaleAspectFit];
     [backBtn setImage:[UIImage imageNamed:@"XHPhotoBrowser.bundle/images/btn_common_back_wh"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(onBack:) forControlEvents:UIControlEventTouchUpInside];
+    [backBtn setCenter:CGPointMake(18, (navH + statusH) * 0.5)];
     [self.customNavView addSubview:backBtn];
-    
+    backBtn.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+
     self.browser.fromItemIndex = self.fromItemIndex;
     if (_showBrowserWhenDidload) {
         [_browser showInContaioner:self.view animated:NO completion:nil];
     }
+    
+    // 适配屏幕旋转
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationChange:)name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [self.view bringSubviewToFront:self.customNavView];
+    if (!self.statusBarHidden) {
+        [self.view bringSubviewToFront:self.customNavView];
+    }
 }
 
 #pragma mark - Action
@@ -160,6 +175,17 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
+}
+
+// MARK: - NSNotification 屏幕旋转
+- (void)statusBarOrientationChange:(NSNotification *)notification{
+    if (!self.statusBarHidden) {
+        CGFloat navH = kIs_Inch5_8 ? 88 : 64;
+        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && [UIApplication sharedApplication].isStatusBarHidden) {
+            navH = 44;
+        }
+        [self.customNavView setFrame:CGRectMake(0, 0, kScreenWidth, navH)];
+    }
 }
 
 #pragma mark - XHPhotoBrowserDataSource
