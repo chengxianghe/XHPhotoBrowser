@@ -191,7 +191,6 @@
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     NSMutableArray *items = [NSMutableArray array];
     
-    [items addObject:_toolActionButton];
     [items addObject:flexSpace];
     
     [items addObject:_toolPreviousButton];

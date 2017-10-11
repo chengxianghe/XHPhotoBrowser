@@ -38,13 +38,13 @@ typedef void(^XHActionSheetCancel)(void);
  *
  *  @return XHActionSheet
  */
-+ (instancetype)showInView:(UIView * _Nullable)view
-                     title:(NSString * _Nullable)title
-               cancelTitle:(NSString * _Nullable)cancelTitle
-               otherTitles:(NSArray<__kindof NSString *> * _Nullable)otherTitles
-                    custom:(XHActionSheetCustom _Nullable)custom
-                clickIndex:(XHActionSheetClick _Nullable)clickIndex
-                    cancel:(XHActionSheetCancel _Nullable)cancel;
++ (instancetype)showInView:(nullable UIView *)view
+                     title:(nullable NSString *)title
+               cancelTitle:(nullable NSString *)cancelTitle
+               otherTitles:(nullable NSArray<__kindof NSString *> *)otherTitles
+                    custom:(nullable XHActionSheetCustom)custom
+                clickIndex:(nullable XHActionSheetClick)clickIndex
+                    cancel:(nullable XHActionSheetCancel)cancel;
 
 
 /**
@@ -56,25 +56,25 @@ typedef void(^XHActionSheetCancel)(void);
  *
  *  @return XHActionSheet
  */
-- (instancetype)initWithTitle:(NSString * _Nullable)title
-                  cancelTitle:(NSString * _Nullable)cancelTitle
-                  otherTitles:(NSArray<__kindof NSString *> * _Nullable)otherTitles;
+- (instancetype)initWithTitle:(nullable NSString *)title
+                  cancelTitle:(nullable NSString *)cancelTitle
+                  otherTitles:(nullable NSArray<__kindof NSString *> *)otherTitles;
 
 /**
  *  改变ActionSheet的标题
  */
-- (void)changeActionSheetTitle:(NSString * _Nullable)title;
+- (void)changeActionSheetTitle:(nullable NSString *)title;
 
 /**
  *  改变指定下标的字体颜色
  */
-- (void)changeItemTitleColor:(UIColor * _Nonnull)color
+- (void)changeItemTitleColor:(nonnull UIColor *)color
                    withIndex:(NSInteger)index;
 
 /**
  *  改变指定下标的标题
  */
-- (void)changeItemTitle:(NSString * _Nullable)title
+- (void)changeItemTitle:(nullable NSString *)title
               withIndex:(NSInteger)index;
 
 /**
@@ -85,9 +85,9 @@ typedef void(^XHActionSheetCancel)(void);
  *  @param clickIndex   点击Item的block
  *  @param cancel       点击背景消失的block
  */
-- (void)showInView:(UIView * _Nullable)view
-            custom:(XHActionSheetCustom _Nullable)custom
-        clickIndex:(XHActionSheetClick _Nullable)clickIndex
-            cancel:(XHActionSheetCancel _Nullable)cancel;
+- (void)showInView:(nullable UIView *)view
+            custom:(nullable XHActionSheetCustom)custom
+        clickIndex:(nullable XHActionSheetClick)clickIndex
+            cancel:(nullable XHActionSheetCancel)cancel;
 @end
 NS_ASSUME_NONNULL_END

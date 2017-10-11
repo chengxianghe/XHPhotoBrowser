@@ -62,6 +62,23 @@
 #endif
 #endif
 
+// 屏幕大小
+#ifndef kScreenSize
+#define kScreenSize     [[UIScreen mainScreen] bounds].size
+#endif
+
+#ifndef kScreenWidth
+#define kScreenWidth    [[UIScreen mainScreen] bounds].size.width
+#endif
+
+#ifndef kScreenHeight
+#define kScreenHeight   [[UIScreen mainScreen] bounds].size.height
+#endif
+
+#ifndef kScreenOneScale
+#define kScreenOneScale (1.0 / [UIScreen mainScreen].scale)
+#endif
+
 /* 屏幕尺寸判断 ===============================================================================*/
 /** 判断是否为3.5inch 320*480 640*960 */
 #ifndef kIs_Inch3_5

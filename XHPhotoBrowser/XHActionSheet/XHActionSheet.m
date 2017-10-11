@@ -80,7 +80,7 @@
 
 @interface XHActionSheetCell : UITableViewCell
 
-@property (nonatomic, strong) UILabel *titleLabel;     //
+@property (nonatomic, strong) UILabel *titleLabel;
 
 @end
 
@@ -126,8 +126,8 @@
 @end
 
 @interface ActionSheetItem : NSObject
-@property (nonatomic,   copy) NSString  *title;     //
-@property (nonatomic, strong) UIColor   *titleColor;     //
+@property (nonatomic,   copy) NSString  *title;
+@property (nonatomic, strong) UIColor   *titleColor;
 @end
 
 @implementation ActionSheetItem
@@ -142,10 +142,10 @@
 @property (nonatomic,   copy) NSString  *cancelTitle;
 @property (nonatomic, strong) NSMutableArray *otherTitles;
 @property (nonatomic,   weak) UIView    *bottomView;
-@property (nonatomic,   weak) UILabel   *titleLabel;     //
+@property (nonatomic,   weak) UILabel   *titleLabel;
 @property (nonatomic,   weak) UIView    *topView;
-@property (nonatomic, strong) UITableView *tableView;     //
-@property (nonatomic, assign) BOOL isShowing;     // 是否正在展示
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, assign) BOOL isShowing; // 是否正在展示
 
 @end
 
@@ -313,16 +313,11 @@
         tap.delegate = self;
         [self.topView addGestureRecognizer:tap];
         [self.bottomView setFrame:CGRectMake(0, selfH - totalHeight, selfW, totalHeight)];
-        [UIView animateWithDuration:kDefaultAnimateTime animations:^{
-            //            if (totalHeight > selfH) {
-            //                [self layoutIfNeeded];
-            //            }
-        }];
     }];
 }
 
 - (void)statusBarOrientationChange:(NSNotification *)notification {
-    [self layoutIfNeeded];
+    [self setNeedsLayout];
 }
 
 -(void)layoutSubviews {
@@ -490,7 +485,7 @@
     
     [UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         [self.topView setFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-        [self.topView setBackgroundColor:[UIColor clearColor]];
+        self.topView.alpha = 0;
         [self.bottomView setFrame:CGRectMake(0, kScreenHeight, kScreenWidth, totalHeight)];
     } completion:^(BOOL finished) {
         if (finished) {
