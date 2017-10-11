@@ -139,8 +139,14 @@
     // toolbar
     _toolBar = [[UIToolbar alloc] init];
     _toolBar.xh_width = self.xh_width;
-    _toolBar.xh_height = 40;
-    _toolBar.center = CGPointMake(self.xh_width / 2, self.xh_height - 20);
+    if (kIs_Inch5_8) {
+        _toolBar.xh_height = 40 + 24;
+        _toolBar.center = CGPointMake(self.xh_width / 2, self.xh_height - 20 - 12);
+    } else {
+        _toolBar.xh_height = 40;
+        _toolBar.center = CGPointMake(self.xh_width / 2, self.xh_height - 20);
+    }
+
     _toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     
     _toolBar.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.3];
@@ -191,8 +197,11 @@
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     NSMutableArray *items = [NSMutableArray array];
     
+    // use customItem replace fixedSpace
+    UIBarButtonItem *customItem = [[UIBarButtonItem alloc] initWithCustomView:[UIButton buttonWithType:UIButtonTypeCustom]];
+    [items addObject:customItem];
     [items addObject:flexSpace];
-    
+
     [items addObject:_toolPreviousButton];
     [items addObject:flexSpace];
     
@@ -229,7 +238,6 @@
         [_contentView addGestureRecognizer:pan];
         _panGesture = pan;
     }
-    
 }
 
 - (void)setSettingCaptionView {
@@ -263,6 +271,10 @@
     
     _closeButtonHideFrame = CGRectMake(5, -20, 44, 44);
     _closeButtonShowFrame = CGRectMake(5, 20, 44, 44);
+    if (kIs_Inch5_8) {
+        _closeButtonHideFrame = CGRectMake(5, -20, 44, 44);
+        _closeButtonShowFrame = CGRectMake(5, 40, 44, 44);
+    }
     [self addSubview:closeButton];
     
     closeButton.frame = _closeButtonShowFrame;
@@ -289,6 +301,10 @@
     
     _deleteButtonHideFrame = CGRectMake(self.xh_width - 44, -20, 44, 44);
     _deleteButtonShowFrame = CGRectMake(self.xh_width - 44, 20, 44, 44);
+    if (kIs_Inch5_8) {
+        _deleteButtonHideFrame = CGRectMake(self.xh_width - 44, -20, 44, 44);
+        _deleteButtonShowFrame = CGRectMake(self.xh_width - 44, 40, 44, 44);
+    }
     [self addSubview:deleteButton];
     deleteButton.frame = _deleteButtonShowFrame;
     _deleteButton = deleteButton;
@@ -1052,7 +1068,11 @@
     } completion:^(BOOL finish) {
         if (finish) {
             [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                _captionView.xh_top = self.xh_height - _captionView.xh_height;
+                if (kIs_Inch5_8) {
+                    _captionView.xh_top = self.xh_height - _captionView.xh_height - 24;
+                } else {
+                    _captionView.xh_top = self.xh_height - _captionView.xh_height;
+                }
             } completion:nil];
         }
     }];

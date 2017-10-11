@@ -215,7 +215,7 @@
 				TargetAttributes = {
 					14717E8D1D59DBC3000245D1 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = G3HJ44W84H;
+						DevelopmentTeam = 23ZQ26R8J4;
 						LastSwiftMigration = 0900;
 					};
 				};
@@ -453,7 +453,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = G3HJ44W84H;
+				DEVELOPMENT_TEAM = 23ZQ26R8J4;
 				INFOPLIST_FILE = XHPhotoBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -476,7 +476,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = G3HJ44W84H;
+				DEVELOPMENT_TEAM = 23ZQ26R8J4;
 				INFOPLIST_FILE = XHPhotoBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

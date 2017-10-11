@@ -83,7 +83,7 @@
     self.view.backgroundColor = [UIColor blackColor];
     
     CGFloat navH = kIs_Inch5_8 ? 88 : 64;
-    CGFloat statusH = kIs_Inch5_8 ? 48 : 24;
+    CGFloat statusH = kStatusBarHeight;
     
     self.customNavView = [[UIView alloc] init];
     [self.customNavView setFrame:CGRectMake(0, 0, kScreenWidth, navH)];

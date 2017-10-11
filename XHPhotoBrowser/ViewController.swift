@@ -57,8 +57,6 @@ class ViewController: UIViewController {
         }
         
         self.navigationController?.pushViewController(browserVC, animated: true)
-
-        
     }
 
     override func didReceiveMemoryWarning() {

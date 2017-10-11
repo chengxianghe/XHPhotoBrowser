@@ -79,6 +79,10 @@
 #define kScreenOneScale (1.0 / [UIScreen mainScreen].scale)
 #endif
 
+#ifndef kStatusBarHeight
+#define kStatusBarHeight CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
+#endif
+
 /* 屏幕尺寸判断 ===============================================================================*/
 /** 判断是否为3.5inch 320*480 640*960 */
 #ifndef kIs_Inch3_5
