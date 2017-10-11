@@ -19,6 +19,13 @@ photo browser
 
 GitHub：[chengxianghe](https://github.com/chengxianghe) 
 
+## Version 1.0.10:
+- 适配iOS11
+- 适配iPhone X界面
+- XHPhotoBrowserController 隐藏系统导航栏，使用自定义（这导致在XHPhotoBrowserController中侧滑返回手势失效）
+- Demo升级Swift 4.0
+- 暂时建议不要使用横屏，iOS 11还需要额外的处理，有需要的话可以使用1.0.9版本或者等待下一版适配。
+
 ## Version 1.0.8:
 - 修复BrowserController打开时候有动画卡顿的问题
 - 增加判断当前是否正在展示相册的接口 ***isPresented***
