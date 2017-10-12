@@ -6,7 +6,7 @@ photo browser
 - 项目依赖[YYWebImage](https://github.com/ibireme/YYWebImage)
 - 支持 ARC 和 CocoaPods 
 - iOS 8.0 (理论上iOS7.0也没问题, 但是我没有设备测试,所以...)
-- 编译环境 Xcode 8.0, Swift 3.0
+- 编译环境 Xcode 9.0, Swift 4.0
 
 -----
 
@@ -19,10 +19,11 @@ photo browser
 
 GitHub：[chengxianghe](https://github.com/chengxianghe) 
 
-## Version 1.0.10:
+## Version 1.1.1:
 - 适配iOS11
-- 适配iPhone X界面 (目前已经适配大部分问题，但是转屏错位还未修复)
-- XHPhotoBrowserController 隐藏系统导航栏，使用自定义（这导致在XHPhotoBrowserController中侧滑返回手势失效）
+- 适配iPhone X界面
+- 使用Xcode 9.0, Swift 4.0重新编译
+- XHPhotoBrowserController 改用自定义的导航栏（这导致在XHPhotoBrowserController中侧滑返回手势失效）
 - Demo升级Swift 4.0
 
 

@@ -2,10 +2,11 @@
 Pod::Spec.new do |s|
 
 s.name         = "XHPhotoBrowser"
-s.version      = "1.0.10"
+s.version      = "1.1.1"
 s.summary      = "XHPhotoBrowser."
 s.description  	= <<-DESC
 			XHPhotoBrowser...一个图片展示控件, 使用Objective-C
+            已经适配iPhone X
 			DESC
 s.homepage     = "https://github.com/chengxianghe/XHPhotoBrowser"
 # s.screenshots  = "https://github.com/chengxianghe/watch-gif/raw/master/XHPhotoBrowser.gif?raw=true"
