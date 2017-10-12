@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1411CE021F8F49AB00299C5D /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411CE011F8F49AB00299C5D /* BaseNavigationController.swift */; };
 		143FA4EB1D6C44CB001FD20B /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143FA4EA1D6C44CB001FD20B /* CollectionViewController.swift */; };
 		14717E921D59DBC3000245D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14717E911D59DBC3000245D1 /* AppDelegate.swift */; };
 		14717E941D59DBC3000245D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14717E931D59DBC3000245D1 /* ViewController.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1411CE011F8F49AB00299C5D /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		141311A51D5AF8BA003AA86E /* XHPhotoBrowser-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XHPhotoBrowser-Bridging-Header.h"; sourceTree = "<group>"; };
 		143FA4EA1D6C44CB001FD20B /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		14717E8E1D59DBC3000245D1 /* XHPhotoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XHPhotoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +113,7 @@
 				14717EC21D59DCD2000245D1 /* imagesModels.plist */,
 				14717E9D1D59DBC3000245D1 /* Info.plist */,
 				141311A51D5AF8BA003AA86E /* XHPhotoBrowser-Bridging-Header.h */,
+				1411CE011F8F49AB00299C5D /* BaseNavigationController.swift */,
 			);
 			path = XHPhotoBrowser;
 			sourceTree = "<group>";
@@ -291,13 +294,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-XHPhotoBrowser-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -315,6 +321,7 @@
 				14AA67B71D741B1300DEF7E4 /* XHPhotoGroup.swift in Sources */,
 				14AE3F7C1D73F7620032ABCA /* XHPhotoBrowserController.m in Sources */,
 				14AE3F7D1D73F7620032ABCA /* XHPhotoBrowserCell.m in Sources */,
+				1411CE021F8F49AB00299C5D /* BaseNavigationController.swift in Sources */,
 				14AE3F781D73F7620032ABCA /* UIView+XHAdd.m in Sources */,
 				14AA67B51D741B1300DEF7E4 /* PhotoViewFrameHelper.swift in Sources */,
 				14AE3F7E1D73F7620032ABCA /* XHPhotoItem.m in Sources */,
