@@ -18,10 +18,14 @@ class XHPhotoGroupItem: NSObject {
     /// size
     var photoSize = CGSize.zero
 }
+typealias XHPhotoGroupShowClosure = (XHPhotoBrowser) -> (Void)
 
 class XHPhotoGroup: UIView {
 
     fileprivate var imageViews = [UIImageView]()
+    
+    var photoBrowserDidShowClosure: XHPhotoGroupShowClosure?
+    var photoBrowserDidDismissClosure: XHPhotoGroupShowClosure?
     
     var photoItemArray: [XHPhotoGroupItem]? {
         didSet {
@@ -189,11 +193,11 @@ extension XHPhotoGroup: XHPhotoBrowserDelegate {
     
     func xh_photoBrowserWillDisplay(_ photoBrowser: XHPhotoBrowser) {
         print("将要展示")
-
     }
     
     func xh_photoBrowserDidDisplay(_ photoBrowser: XHPhotoBrowser) {
         print("已经展示")
+        photoBrowserDidShowClosure?(photoBrowser)
     }
     
     func xh_photoBrowserWillDismiss(_ photoBrowser: XHPhotoBrowser) {
@@ -202,6 +206,7 @@ extension XHPhotoGroup: XHPhotoBrowserDelegate {
     
     func xh_photoBrowserDidDismiss(_ photoBrowser: XHPhotoBrowser) {
         print("已经消失")
+        photoBrowserDidDismissClosure?(photoBrowser)
     }
     
     func xh_photoBrowser(_ photoBrowser: XHPhotoBrowser, didDisplayingImageAt index: Int, from fromIndex: Int) {

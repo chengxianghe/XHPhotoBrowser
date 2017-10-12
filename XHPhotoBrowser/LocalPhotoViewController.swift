@@ -20,6 +20,7 @@ class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableVi
 
     @IBOutlet weak var tableView: UITableView!
     var dataSource = Array<[XHPhotoGroupItem]>()
+    var isShowingBrowser = false
     deinit {
         print("LocalPhotoViewController deinit")
     }
@@ -97,9 +98,18 @@ class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         cell.setInfo(images: self.dataSource[indexPath.row])
-        
+        cell.photosView.photoBrowserDidShowClosure = {[weak self] (boswer: XHPhotoBrowser) in
+            self?.isShowingBrowser = true
+            self?.setNeedsStatusBarAppearanceUpdate()
+        }
+        cell.photosView.photoBrowserDidDismissClosure = {[weak self] (boswer: XHPhotoBrowser) in
+            self?.isShowingBrowser = false
+            self?.setNeedsStatusBarAppearanceUpdate()
+        }
         return cell
     }
+    
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let array = self.dataSource[indexPath.row]
@@ -113,7 +123,7 @@ class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return self.isShowingBrowser ? .lightContent : .default;
     }
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
@@ -144,6 +154,9 @@ class LocalPhotoViewController: UIViewController, UITableViewDelegate, UITableVi
     
 }
 
+extension LocalPhotoViewController : XHPhotoBrowserDelegate {
+    
+}
 
 class PhotoTableViewCell: UITableViewCell {
     
