@@ -93,6 +93,22 @@
     return self;
 }
 
+- (CGRect)fixUpFrameForIphoneX:(CGRect)toFrame {
+    if (kIs_Inch5_8 && !_isFullScreen) {
+        CGFloat toWidth = CGRectGetWidth(toFrame);
+        CGFloat toHeight = CGRectGetHeight(toFrame);
+        if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
+            return CGRectMake(k_IPhoneX_SafeWidth, 0, toWidth - k_IPhoneX_SafeWidth, toHeight);
+        } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
+            return CGRectMake(0, 0, toWidth - k_IPhoneX_SafeWidth, toHeight);
+        } else {
+            return CGRectMake(0, k_IPhoneX_SafeWidth, toWidth, toHeight - k_IPhoneX_SafeWidth);
+        }
+    } else {
+        return toFrame;
+    }
+}
+
 - (void)setupSubviews {
     // 适配屏幕旋转
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationChange:)name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
@@ -108,9 +124,12 @@
     _singleTapOption = XHSingleTapOptionAuto;
     _imagePadding = 20;
     _maxCaptionHeight = 150;
+    _isFullScreen = YES;
+    _isFullScreenWord = NO;
     
     self.backgroundColor = [UIColor clearColor];
-    self.frame = [UIScreen mainScreen].bounds;
+    self.frame = [self fixUpFrameForIphoneX:[UIScreen mainScreen].bounds];
+    
     self.clipsToBounds = YES;
     
     _cells = @[].mutableCopy;
@@ -134,7 +153,10 @@
     //    _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _scrollView.delaysContentTouches = NO;
     _scrollView.canCancelContentTouches = YES;
-    
+    if (@available(iOS 11.0, *)) {
+        // for iOS11 iPhone X
+        _scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
     
     // toolbar
     _toolBar = [[UIToolbar alloc] init];
@@ -243,6 +265,10 @@
 - (void)setSettingCaptionView {
     UITextView *captionView = [[UITextView alloc] init];
     captionView.frame = CGRectMake(0, self.xh_height - self.toolBar.xh_height - _maxCaptionHeight, self.xh_width, _maxCaptionHeight);
+    captionView.textContainerInset = UIEdgeInsetsMake(k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset);
+    if (kIs_Inch5_8 && _isFullScreen && !_isFullScreenWord && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+        captionView.textContainerInset = UIEdgeInsetsMake(k_IPhoneX_TextDefaultInset, k_IPhoneX_SafeWidth, k_IPhoneX_TextDefaultInset, k_IPhoneX_SafeWidth);
+    }
     captionView.editable = NO;
     captionView.font = [UIFont systemFontOfSize:15.0];
     captionView.textColor = [UIColor whiteColor];
@@ -271,9 +297,12 @@
     
     _closeButtonHideFrame = CGRectMake(5, -20, 44, 44);
     _closeButtonShowFrame = CGRectMake(5, 20, 44, 44);
-    if (kIs_Inch5_8) {
-        _closeButtonHideFrame = CGRectMake(5, -20, 44, 44);
-        _closeButtonShowFrame = CGRectMake(5, 40, 44, 44);
+    if (kIs_Inch5_8 && _isFullScreen) {
+        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+            _closeButtonShowFrame = CGRectMake(k_IPhoneX_SafeWidth, 20, 44, 44);
+        } else {
+            _closeButtonShowFrame = CGRectMake(5, k_IPhoneX_SafeWidth, 44, 44);
+        }
     }
     [self addSubview:closeButton];
     
@@ -301,10 +330,14 @@
     
     _deleteButtonHideFrame = CGRectMake(self.xh_width - 44, -20, 44, 44);
     _deleteButtonShowFrame = CGRectMake(self.xh_width - 44, 20, 44, 44);
-    if (kIs_Inch5_8) {
-        _deleteButtonHideFrame = CGRectMake(self.xh_width - 44, -20, 44, 44);
-        _deleteButtonShowFrame = CGRectMake(self.xh_width - 44, 40, 44, 44);
+    if (kIs_Inch5_8 && _isFullScreen) {
+        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+            _deleteButtonShowFrame = CGRectMake(self.xh_width - 44 - k_IPhoneX_SafeWidth, 20, 44, 44);
+        } else {
+            _deleteButtonShowFrame = CGRectMake(self.xh_width - 44, k_IPhoneX_SafeWidth, 44, 44);
+        }
     }
+    
     [self addSubview:deleteButton];
     deleteButton.frame = _deleteButtonShowFrame;
     _deleteButton = deleteButton;
@@ -601,7 +634,12 @@
                   completion:(nullable void (^)(void))completion {
     if (!toContainer) return;
     
-    self.frame = toContainer.bounds;
+    CGRect toFrame = toContainer.bounds;
+    self.frame = [self fixUpFrameForIphoneX:toFrame];
+
+    _contentView.frame = self.bounds;
+    _scrollView.frame = CGRectMake(-_imagePadding / 2, 0, self.xh_width + _imagePadding, self.xh_height);
+    _scrollView.contentSize = CGSizeMake(_scrollView.xh_width * self.groupItems.count, _scrollView.xh_height);
     
     _closeButton.hidden = !_showCloseButton;
     _deleteButton.hidden = !_showDeleteButton;
@@ -647,7 +685,7 @@
         _blurBackground.backgroundColor = [UIColor blackColor];
     }
     
-    self.xh_size = _toContainerView.xh_size;
+//    self.xh_size = _toContainerView.xh_size;
     self.blurBackground.alpha = 0;
     self.pager.numberOfPages = self.groupItems.count;
     self.pager.currentPage = currentPage;
@@ -1102,8 +1140,7 @@
         }
     }
     
-    cell = [XHPhotoBrowserCell new];
-    cell.frame = self.bounds;
+    cell = [[XHPhotoBrowserCell alloc] initWithFrame:self.bounds];
     cell.imageContainerView.frame = self.bounds;
     cell.imageView.frame = cell.bounds;
     cell.page = -1;
@@ -1143,6 +1180,9 @@
     }
     
     if (_singleTapOption == XHSingleTapOptionNone) {
+        if (_toolBar.alpha >= 0.99) {
+            [self updateCaption:NO animated:NO];
+        }
         [UIView animateWithDuration:0.2 animations:^{
             if (self.captionView.alpha != 0 || self.toolBar.alpha != 0) {
                 self.toolBar.xh_top = self.xh_height;
@@ -1165,6 +1205,9 @@
         if (self.captionView.text.length <= 0) {
             [self dismiss];
         } else {
+            if (_toolBar.alpha >= 0.99) {
+                [self updateCaption:NO animated:NO];
+            }
             [UIView animateWithDuration:0.2 animations:^{
                 if (self.captionView.alpha == 0) {
                     self.captionView.alpha = 1.0;
@@ -1312,7 +1355,9 @@
 // MARK: - NSNotification 屏幕旋转
 - (void)statusBarOrientationChange:(NSNotification *)notification{
     _isOrientationChange = YES;
-    self.frame = _toContainerView.bounds;
+    CGRect toFrame = _toContainerView.bounds;
+    self.frame = [self fixUpFrameForIphoneX:toFrame];
+    
     _contentView.frame = self.bounds;
     
     if ([self.delegate respondsToSelector:@selector(xh_photoBrowserDidOrientationChange:)]) {
@@ -1322,6 +1367,29 @@
     _scrollView.frame = CGRectMake(-_imagePadding / 2, 0, self.xh_width + _imagePadding, self.xh_height);
     _scrollView.contentSize = CGSizeMake(_scrollView.xh_width * self.groupItems.count, _scrollView.xh_height);
     _isOrientationChange = NO;
+    
+    if (kIs_Inch5_8 && _isFullScreen && !_isFullScreenWord) {
+        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+            _captionView.textContainerInset = UIEdgeInsetsMake(k_IPhoneX_TextDefaultInset, k_IPhoneX_SafeWidth, k_IPhoneX_TextDefaultInset, k_IPhoneX_SafeWidth);
+        } else {
+            _captionView.textContainerInset = UIEdgeInsetsMake(k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset);
+        }
+        if (_toolBar.alpha >= 0.99) {
+            [self updateCaption:NO animated:NO];
+        }
+    }
+    
+    if (kIs_Inch5_8 && _isFullScreen) {
+        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+            _closeButtonShowFrame = CGRectMake(k_IPhoneX_SafeWidth, 20, 44, 44);
+            _deleteButtonShowFrame = CGRectMake(self.xh_width - 44 - k_IPhoneX_SafeWidth, 20, 44, 44);
+        } else {
+            _closeButtonShowFrame = CGRectMake(5, k_IPhoneX_SafeWidth, 44, 44);
+            _deleteButtonShowFrame = CGRectMake(self.xh_width - 44, k_IPhoneX_SafeWidth, 44, 44);
+        }
+        _closeButton.frame = _closeButtonShowFrame;
+        _deleteButton.frame = _deleteButtonShowFrame;
+    }
     
     [_cells enumerateObjectsUsingBlock:^(__kindof XHPhotoBrowserCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
         if (cell.superview) {

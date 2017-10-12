@@ -18,6 +18,9 @@ typedef void(^XHPhotoBrowserControllerOnMoreBlock)(void);
 /** 是否在viewDidload时加载图片浏览器(默认YES) */
 @property (nonatomic, assign) BOOL showBrowserWhenDidload;
 
+/** iPhone X(默认YES) */
+@property (nonatomic, assign) BOOL alwaysShowStatusBar;
+
 /** 初始化数据 */
 @property (nonatomic, strong, nullable) NSArray<__kindof id <XHPhotoProtocol>> *groupItems;
 

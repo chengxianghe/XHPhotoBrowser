@@ -16,6 +16,9 @@
 @property (nonatomic, assign) BOOL statusBarHidden;
 @property (nonatomic, assign) BOOL navBarAnimating;
 @property (nonatomic, strong) UIView *customNavView;
+@property (nonatomic, strong) UIButton *rightBtn;
+@property (nonatomic, strong) UIButton *backBtn;
+
 @property (nonatomic, strong) UILabel *customNavTitleLabel;
 
 @end
@@ -45,6 +48,7 @@
     self.hidesBottomBarWhenPushed = YES;
     _showBrowserWhenDidload = YES;
     _previousNavBarHidden = self.navigationController.navigationBar.hidden;
+    _alwaysShowStatusBar = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     XHPhotoBrowser *browser = [[XHPhotoBrowser alloc] init];
@@ -58,6 +62,8 @@
     browser.blurEffectBackground = NO;
     browser.showToolBarWhenScroll = NO;
     browser.showCaptionWhenScroll = NO;
+    browser.isFullScreen = NO;
+    browser.isFullScreenWord = NO;
     browser.singleTapOption = XHSingleTapOptionNone;
     browser.pager.style = XHPageControlStyleNone;
     _browser = browser;
@@ -83,6 +89,7 @@
     self.view.backgroundColor = [UIColor blackColor];
     
     CGFloat navH = kIs_Inch5_8 ? 88 : 64;
+
     if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && [UIApplication sharedApplication].isStatusBarHidden) {
         navH = 44;
     }
@@ -103,9 +110,12 @@
     [titleLabel setFrame:CGRectMake(0, 0, 200, 40)];
     [titleLabel setCenter:CGPointMake(kScreenWidth * 0.5, (navH + statusH) * 0.5)];
     [self.customNavView addSubview:titleLabel];
-    titleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+    if (!kIs_Inch5_8) {
+        titleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+    }
 
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.rightBtn = rightBtn;
     if (self.rightImage == nil) {
         self.rightImage = [UIImage imageNamed:@"XHPhotoBrowser.bundle/images/btn_common_more_wh"];
     }
@@ -113,18 +123,31 @@
     [rightBtn setImage:self.rightImage forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(onMore:) forControlEvents:UIControlEventTouchUpInside];
     [self.customNavView addSubview:rightBtn];
-    rightBtn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
     [rightBtn setCenter:CGPointMake(kScreenWidth - 30, (navH + statusH) * 0.5)];
-
+    if (kIs_Inch5_8) {
+        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+            rightBtn.xh_left = kScreenWidth - 50 - k_IPhoneX_SafeWidth;
+        }
+    } else {
+        rightBtn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
+    }
+    
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.backBtn = backBtn;
     [backBtn setFrame:CGRectMake(5, statusH + 10, 30, 20)];
     [backBtn.imageView setContentMode:UIViewContentModeScaleAspectFit];
     [backBtn setImage:[UIImage imageNamed:@"XHPhotoBrowser.bundle/images/btn_common_back_wh"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(onBack:) forControlEvents:UIControlEventTouchUpInside];
     [backBtn setCenter:CGPointMake(18, (navH + statusH) * 0.5)];
     [self.customNavView addSubview:backBtn];
-    backBtn.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
-
+    if (kIs_Inch5_8) {
+        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+            backBtn.xh_left = k_IPhoneX_SafeWidth;
+        }
+    } else {
+        backBtn.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+    }
+    
     self.browser.fromItemIndex = self.fromItemIndex;
     if (_showBrowserWhenDidload) {
         [_browser showInContaioner:self.view animated:NO completion:nil];
@@ -160,7 +183,7 @@
 }
 
 - (BOOL)prefersStatusBarHidden {
-    return _statusBarHidden;
+    return _alwaysShowStatusBar ? NO : _statusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -179,13 +202,31 @@
 
 // MARK: - NSNotification 屏幕旋转
 - (void)statusBarOrientationChange:(NSNotification *)notification{
-    if (!self.statusBarHidden) {
-        CGFloat navH = kIs_Inch5_8 ? 88 : 64;
+
+    CGFloat statusH = kStatusBarHeight;
+    if (!kIs_Inch5_8) {
+        CGFloat navH = 64;
         if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && [UIApplication sharedApplication].isStatusBarHidden) {
             navH = 44;
         }
         [self.customNavView setFrame:CGRectMake(0, 0, kScreenWidth, navH)];
+    } else {
+        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+            CGFloat navH = 44;
+            [self.customNavView setFrame:CGRectMake(0, 0, kScreenWidth, navH)];
+            [self.backBtn setCenter:CGPointMake(18 + 30, (navH + kStatusBarHeight) * 0.5)];
+            [self.rightBtn setCenter:CGPointMake(kScreenWidth - 30 - 40, (navH + statusH) * 0.5)];
+            [self.customNavTitleLabel setCenter:CGPointMake(kScreenWidth * 0.5, (navH + statusH) * 0.5)];
+        } else {
+            CGFloat navH = 88;
+            statusH = 44;
+            [self.customNavView setFrame:CGRectMake(0, 0, kScreenWidth, navH)];
+            [self.backBtn setCenter:CGPointMake(18, (navH + statusH) * 0.5)];
+            [self.rightBtn setCenter:CGPointMake(kScreenWidth - 30, (navH + statusH) * 0.5)];
+            [self.customNavTitleLabel setCenter:CGPointMake(kScreenWidth * 0.5, (navH + statusH) * 0.5)];
+        }
     }
+    self.customNavView.xh_top = self.statusBarHidden ? -self.customNavView.xh_height : 0;
 }
 
 #pragma mark - XHPhotoBrowserDataSource
@@ -205,13 +246,11 @@
     
     CGFloat duration = 0.2;
     self.navBarAnimating = YES;
+    
     [UIView animateWithDuration:duration animations:^{
-        
         self.statusBarHidden = self.customNavView.xh_top >= 0;
         self.customNavView.xh_top = self.statusBarHidden ? -self.customNavView.xh_height : 0;
         [self setNeedsStatusBarAppearanceUpdate];
-        
-        
     } completion:^(BOOL finished) {
         if (finished) {
             self.navBarAnimating = NO;

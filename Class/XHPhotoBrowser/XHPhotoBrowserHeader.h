@@ -108,4 +108,14 @@
 #define kIs_Inch5_8 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
 #endif
 
+/** iPhone X 默认的按钮边距 */
+#ifndef k_IPhoneX_SafeWidth
+#define k_IPhoneX_SafeWidth 44.0
+#endif
+
+/** iPhone X 默认的UITextView的文字内边距 */
+#ifndef k_IPhoneX_TextDefaultInset
+#define k_IPhoneX_TextDefaultInset 6.0
+#endif
+
 #endif /* XHPhotoGroupHeader_h */
