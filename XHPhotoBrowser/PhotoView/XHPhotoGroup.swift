@@ -164,6 +164,11 @@ class XHPhotoGroup: UIView {
         v.singleTapOption = .dismiss
 //        v.showToolBarWhenScroll = false
 //        v.showCaptionWhenScroll = false
+        
+        //iPhone X上可以设置额外的选项
+        v.isFullScreenWord = false
+        v.isFullScreen = true
+        
         v.show(inContaioner: (vc?.tabBarController!.view)!, animated: true, completion: nil)
 
     }

@@ -111,6 +111,10 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         v.toolBarShowStyle = leftsSwitcher.isOn ? .show : .hide
         v.fromItemIndex = currentPage
         v.blurEffectBackground = self.switcher.isOn
+        
+        //iPhone X上可以设置额外的选项
+        v.isFullScreenWord = false
+        v.isFullScreen = true
         v.show(inContaioner: vc.tabBarController!.view, animated: true, completion: nil)
     }
     

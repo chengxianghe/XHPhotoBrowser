@@ -1476,4 +1476,18 @@
     return result;
 }
 
+#pragma mark - setter
+
+//默认 YES
+- (void)setIsFullScreen:(BOOL)isFullScreen {
+    _isFullScreen = isFullScreen;
+    if (!isFullScreen) {
+        _closeButtonShowFrame = CGRectMake(5, 20, 44, 44);
+        _closeButton.frame = _closeButtonShowFrame;
+        
+        _deleteButtonShowFrame = CGRectMake(self.xh_width - 44, 20, 44, 44);
+        _deleteButton.frame = _deleteButtonShowFrame;
+    }
+}
+
 @end

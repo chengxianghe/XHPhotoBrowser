@@ -56,6 +56,7 @@ class ViewController: UIViewController {
                 }, cancel: nil)
         }
         
+//        browserVC.alwaysShowStatusBar = false
         self.navigationController?.pushViewController(browserVC, animated: true)
     }
 
