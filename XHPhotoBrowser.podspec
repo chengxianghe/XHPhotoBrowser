@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "XHPhotoBrowser"
-s.version      = "1.1.1"
+s.version      = "1.1.2"
 s.summary      = "XHPhotoBrowser."
 s.description  	= <<-DESC
 			XHPhotoBrowser...一个图片展示控件, 使用Objective-C
