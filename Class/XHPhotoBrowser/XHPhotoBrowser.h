@@ -235,7 +235,6 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
  *  展示
  *
  *  @param container   展示的容器
- *  @param currentPage 展示的初始页面
  *  @param animated    是否需要动画
  *  @param completion  完成的回调
  */
