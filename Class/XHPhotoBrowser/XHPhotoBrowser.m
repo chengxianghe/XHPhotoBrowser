@@ -1390,15 +1390,16 @@
         _closeButton.frame = _closeButtonShowFrame;
         _deleteButton.frame = _deleteButtonShowFrame;
     }
-    
+
+    @weakify(self)
     [_cells enumerateObjectsUsingBlock:^(__kindof XHPhotoBrowserCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
         if (cell.superview) {
-            cell.frame = self.bounds;
+            cell.frame = weak_self.bounds;
             [cell setZoomScale:1.0 animated:NO];
-            cell.xh_left = (self.xh_width + _imagePadding) * cell.page + _imagePadding / 2;
+            cell.xh_left = (weak_self.xh_width + weak_self.imagePadding) * cell.page + weak_self.imagePadding / 2;
             [cell resizeSubviewSize];
         } else {
-            cell.frame = self.bounds;
+            cell.frame = weak_self.bounds;
             [cell setZoomScale:1.0 animated:NO];
         }
     }];
