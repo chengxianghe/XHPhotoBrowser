@@ -194,8 +194,6 @@
 				14717E8A1D59DBC3000245D1 /* Sources */,
 				14717E8B1D59DBC3000245D1 /* Frameworks */,
 				14717E8C1D59DBC3000245D1 /* Resources */,
-				0BE8A196536A0087D5667F30 /* [CP] Embed Pods Frameworks */,
-				2B28AB2FEA0A3E8D1BF34FDD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -218,8 +216,9 @@
 				TargetAttributes = {
 					14717E8D1D59DBC3000245D1 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 23ZQ26R8J4;
+						DevelopmentTeam = E56PJSX4T7;
 						LastSwiftMigration = 0900;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -258,36 +257,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0BE8A196536A0087D5667F30 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XHPhotoBrowser/Pods-XHPhotoBrowser-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2B28AB2FEA0A3E8D1BF34FDD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XHPhotoBrowser/Pods-XHPhotoBrowser-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B935D2A992D65F1E5A80DFF5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -460,13 +429,15 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 23ZQ26R8J4;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = E56PJSX4T7;
 				INFOPLIST_FILE = XHPhotoBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.itwu.XHPhotoBrowsercc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ca1baece-7e89-4843-9b79-643fd408c8ce";
+				PROVISIONING_PROFILE_SPECIFIER = wildcard;
 				SWIFT_OBJC_BRIDGING_HEADER = "XHPhotoBrowser/XHPhotoBrowser-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
@@ -483,13 +454,15 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 23ZQ26R8J4;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = E56PJSX4T7;
 				INFOPLIST_FILE = XHPhotoBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.itwu.XHPhotoBrowsercc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ca1baece-7e89-4843-9b79-643fd408c8ce";
+				PROVISIONING_PROFILE_SPECIFIER = wildcard;
 				SWIFT_OBJC_BRIDGING_HEADER = "XHPhotoBrowser/XHPhotoBrowser-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
