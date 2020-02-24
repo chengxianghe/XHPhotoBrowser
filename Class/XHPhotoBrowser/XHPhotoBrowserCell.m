@@ -11,6 +11,7 @@
 #import "XHPhotoBrowserHeader.h"
 
 static NSString *const kLayerAnimationKey = @"yytest.fade";
+#define kMaximumZoomScale (2.0)
 
 @implementation XHPhotoBrowserCell
 
@@ -19,7 +20,7 @@ static NSString *const kLayerAnimationKey = @"yytest.fade";
     if (self) {
         self.delegate = self;
         self.bouncesZoom = YES;
-        self.maximumZoomScale = 3;
+        self.maximumZoomScale = kMaximumZoomScale;
         self.multipleTouchEnabled = YES;
         self.alwaysBounceVertical = NO;
         self.showsVerticalScrollIndicator = YES;
@@ -30,7 +31,7 @@ static NSString *const kLayerAnimationKey = @"yytest.fade";
         _imageContainerView.clipsToBounds = YES;
         [self addSubview:_imageContainerView];
         
-        _imageView = [YYAnimatedImageView new];
+        _imageView = [SDAnimatedImageView new];
         _imageView.clipsToBounds = YES;
         _imageView.backgroundColor = [UIColor blackColor];
         [_imageContainerView addSubview:_imageView];
@@ -40,7 +41,7 @@ static NSString *const kLayerAnimationKey = @"yytest.fade";
         progressFrame.size = CGSizeMake(40, 40);
         _progressLayer.frame = progressFrame;
         _progressLayer.cornerRadius = 20;
-        _progressLayer.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.500].CGColor;
+        _progressLayer.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5].CGColor;
         UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(_progressLayer.bounds, 7, 7) cornerRadius:(40 / 2 - 7)];
         _progressLayer.path = path.CGPath;
         _progressLayer.fillColor = [UIColor clearColor].CGColor;
@@ -70,7 +71,7 @@ static NSString *const kLayerAnimationKey = @"yytest.fade";
     
     [self setZoomScale:1.0 animated:NO];
     self.maximumZoomScale = 1;
-    [_imageView yy_cancelCurrentImageRequest];
+    [_imageView sd_cancelCurrentImageLoad];
     [_imageView.layer removeAnimationForKey:kLayerAnimationKey];
     
     _progressLayer.hidden = NO;
@@ -86,21 +87,29 @@ static NSString *const kLayerAnimationKey = @"yytest.fade";
     }
     
     @weakify(self);
-    [_imageView yy_setImageWithURL:item.largeImageURL placeholder:item.thumbImage options:kNilOptions progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [_imageView sd_setImageWithURL:item.largeImageURL
+                  placeholderImage:item.thumbImage
+                           options:SDWebImageRetryFailed
+                          progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
         @strongify(self);
         if (!self) return;
+
         CGFloat progress = receivedSize / (float)expectedSize;
         progress = progress < 0.01 ? 0.01 : progress > 1 ? 1 : progress;
         if (isnan(progress)) progress = 0;
-        self.progressLayer.hidden = NO;
-        self.progressLayer.strokeEnd = progress;
-    } transform:nil completion:^(UIImage *image, NSURL *url, YYWebImageFromType from, YYWebImageStage stage, NSError *error) {
+     
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.progressLayer.hidden = NO;
+               self.progressLayer.strokeEnd = progress;
+        });
+   
+    } completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         @strongify(self);
         if (!self) return;
-        if (stage == YYWebImageStageFinished) {
+        if (error == nil && image != nil) {
             self.progressLayer.hidden = YES;
             
-            self.maximumZoomScale = 3;
+            self.maximumZoomScale = kMaximumZoomScale;
             if (image) {
                 self->_itemDidLoad = YES;
                 
@@ -112,10 +121,9 @@ static NSString *const kLayerAnimationKey = @"yytest.fade";
                 transition.type = kCATransitionFade;
                 [self.imageView.layer addAnimation:transition forKey:kLayerAnimationKey];
             }
-        } else if (stage == YYWebImageStageCancelled) {
+        } else {
             self.progressLayer.hidden = YES;
         }
-        
     }];
     [self resizeSubviewSize];
 }

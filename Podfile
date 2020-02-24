@@ -6,4 +6,5 @@ platform :ios, "8.0"
 
 target "XHPhotoBrowser" do
     pod 'YYWebImage'
+    pod 'SDWebImage', '5.0.2'
 end

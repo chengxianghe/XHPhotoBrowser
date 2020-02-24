@@ -492,14 +492,14 @@
     [indicator startAnimating];
     
     // try to save original image data if the image contains multi-frame (such as GIF/APNG)
-    id imageItem = [tile.imageView.image yy_imageDataRepresentation];
+    id imageItem = [tile.imageView.image sd_imageData];
     
-    YYImageType type = YYImageDetectType((__bridge CFDataRef)(imageItem));
-    if (type != YYImageTypePNG &&
-        type != YYImageTypeJPEG &&
-        type != YYImageTypeGIF) {
-        imageItem = tile.imageView.image;
-    }
+//    YYImageType type = YYImageDetectType((__bridge CFDataRef)(imageItem));
+//    if (type != YYImageTypePNG &&
+//        type != YYImageTypeJPEG &&
+//        type != YYImageTypeGIF) {
+//        imageItem = tile.imageView.image;
+//    }
     
     UIActivityViewController *activityViewController =
     [[UIActivityViewController alloc] initWithActivityItems:@[imageItem] applicationActivities:nil];
@@ -711,8 +711,8 @@
     BOOL isFromImageClipped = [item shouldClipToTop];
     
     if (!isFromImageClipped) {
-        NSString *imageKey = [[YYWebImageManager sharedManager] cacheKeyForURL:item.largeImageURL];
-        if ([[YYWebImageManager sharedManager].cache getImageForKey:imageKey withType:YYImageCacheTypeMemory]) {
+        NSString *imageKey = [[SDWebImageManager sharedManager] cacheKeyForURL:item.largeImageURL];
+        if ([[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageKey]) {
             cell.item = item;
         }
     }
@@ -1011,7 +1011,7 @@
 
 - (void)cancelAllImageLoad {
     [_cells enumerateObjectsUsingBlock:^(XHPhotoBrowserCell *cell, NSUInteger idx, BOOL *stop) {
-        [cell.imageView yy_cancelCurrentImageRequest];
+        [cell.imageView sd_cancelCurrentImageLoad];
     }];
 }
 

@@ -4,10 +4,10 @@
 
 #import "UIView+XHAdd.h"
 
-#if __has_include(<YYWebImage/YYWebImage.h>)
-#import <YYWebImage/YYWebImage.h>
+#if __has_include(<SDWebImage/SDWebImage.h>)
+#import <SDWebImage/SDWebImage.h>
 #else
-@import YYWebImage;
+@import SDWebImage;
 #endif
 
 #ifndef XH_CLAMP // return the clamped value

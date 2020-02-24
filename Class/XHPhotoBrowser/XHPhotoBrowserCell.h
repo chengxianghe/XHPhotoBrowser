@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class XHPhotoItem,YYAnimatedImageView;
+@class XHPhotoItem,SDAnimatedImageView;
 
 @interface XHPhotoBrowserCell : UIScrollView <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIView *imageContainerView;
-@property (nonatomic, strong) YYAnimatedImageView *imageView;
+@property (nonatomic, strong) SDAnimatedImageView *imageView;
 @property (nonatomic, assign) NSInteger page;
 @property (nonatomic, assign) BOOL showProgress;
 @property (nonatomic, assign) CGFloat progress;
