@@ -93,7 +93,6 @@ static NSString *const kLayerAnimationKey = @"yytest.fade";
                           progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
         @strongify(self);
         if (!self) return;
-
         CGFloat progress = receivedSize / (float)expectedSize;
         progress = progress < 0.01 ? 0.01 : progress > 1 ? 1 : progress;
         if (isnan(progress)) progress = 0;

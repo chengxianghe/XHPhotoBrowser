@@ -1,6 +1,6 @@
 //
-//  YYPhotoGroupView.h
-//  YYKitDemo
+//  XHPhotoBrowser.h
+//  XHPhotoBrowser
 //
 //  Created by chengxianghe on 15/12/26.
 //  Copyright © 2015年 ibireme. All rights reserved.
@@ -13,13 +13,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class XHPhotoBrowser;
-
-/// toolBar的展示风格
-typedef NS_ENUM(NSUInteger, XHShowStyle) {
-    XHShowStyleAuto, ///< 自动
-    XHShowStyleHide, ///< 隐藏
-    XHShowStyleShow, ///< 展示
-};
 
 /// 单击图片的处理
 typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
@@ -145,19 +138,9 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
 @property (nonatomic, assign) BOOL blurEffectBackground;
 
 /**
- *  工具条显示样式(Default is Auto)
+ *  隐藏工具条显示样式(Default is NO)
  */
-@property (nonatomic, assign) XHShowStyle toolBarShowStyle;
-
-/**
- *  是否在翻页时强制显示toolBar(Default is YES)
- */
-@property (nonatomic, assign) BOOL showToolBarWhenScroll;
-
-/**
- *  是否在翻页时强制显示caption(Default is YES)
- */
-@property (nonatomic, assign) BOOL showCaptionWhenScroll;
+@property (nonatomic, assign) BOOL hideToolBar;
 
 /**
  *  是否上下滑动消失(Default is YES)
@@ -215,6 +198,11 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
  *  适配iPhone X系列 是否全屏展示按钮文字（包含安全区域，只在iPhone X上生效）默认 NO
  */
 @property (nonatomic, assign) BOOL isFullScreenWord;
+
+/**
+ *  关闭的时候是否显示动画 默认 YES
+ */
+@property (nonatomic, assign) BOOL animatedClose;
 
 #pragma mark - 初始化
 

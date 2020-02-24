@@ -1,6 +1,6 @@
 //
-//  YYPhotoGroupView.m
-//  YYKitDemo
+//  XHPhotoBrowser.m
+//  XHPhotoBrowser
 //
 //  Created by chengxianghe on 15/12/26.
 //  Copyright © 2015年 ibireme. All rights reserved.
@@ -36,7 +36,6 @@
 
 @property (nonatomic, strong) UIToolbar *toolBar;
 @property (nonatomic, strong) UIBarButtonItem *toolPreviousButton;
-@property (nonatomic, strong) UIBarButtonItem *toolActionButton;
 @property (nonatomic, strong) UIBarButtonItem *toolNextButton;
 
 @property (nonatomic, strong) UIButton *closeButton;
@@ -118,14 +117,13 @@
     _thumbViewIsCell = NO;
     _showDeleteButton = NO;
     _showCloseButton = YES;
-    _toolBarShowStyle = XHShowStyleAuto;
-    _showToolBarWhenScroll = YES;
-    _showCaptionWhenScroll = YES;
+    _hideToolBar = NO;
     _singleTapOption = XHSingleTapOptionAuto;
     _imagePadding = 20;
     _maxCaptionHeight = 150;
     _isFullScreen = YES;
     _isFullScreenWord = NO;
+    _animatedClose = YES;
     
     self.backgroundColor = [UIColor clearColor];
     self.frame = [self fixUpFrameForIphoneX:[UIScreen mainScreen].bounds];
@@ -207,10 +205,6 @@
     
     UIBarButtonItem *toolCounterButton = [[UIBarButtonItem alloc] initWithCustomView:_pager];
     
-    // action button
-    _toolActionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonPressed)];
-    _toolActionButton.tintColor = [UIColor whiteColor];
-    
     [self addSubview:_blurBackground];
     [self addSubview:_contentView];
     [self addSubview:_toolBar];
@@ -233,8 +227,8 @@
     [items addObject:_toolNextButton];
     [items addObject:flexSpace];
     
-    [items addObject:_toolActionButton];
-    
+    UIBarButtonItem *customItem2 = [[UIBarButtonItem alloc] initWithCustomView:[UIButton buttonWithType:UIButtonTypeCustom]];
+    [items addObject:customItem2];
     [_toolBar setItems:items animated:NO];
     
     [self setSettingCloseButton];
@@ -276,7 +270,7 @@
     captionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     
     [self addSubview:captionView];
-    _captionView = captionView;
+    self.captionView = captionView;
 }
 
 - (void)setSettingCloseButton {
@@ -344,33 +338,24 @@
 }
 
 // MARK: - Toolbar
-- (void)updateCaption:(BOOL)isScroll animated:(BOOL)animated {
+- (void)updateCaptionAnimated:(BOOL)animated {
     if (_pager.currentPage < _groupItems.count) {
-        _captionView.text = _groupItems[_pager.currentPage].caption;
+        self.captionView.text = _groupItems[_pager.currentPage].caption;
         float oneTime = animated ? 0.2 : 0;
         [UIView animateWithDuration:oneTime animations:^{
-            if (isScroll) {
-                if (_showCaptionWhenScroll) {
-                    _captionView.alpha = (_captionView.text.length ? 1.0 : 0);
-                }
-                
-                if (_showToolBarWhenScroll) {
-                    _toolBar.alpha = 1.0;
-                    _toolBar.xh_bottom = self.xh_height;
-                }
-            } else {
-                _captionView.alpha = (_captionView.text.length ? 1.0 : 0);
-            }
+//            if (!isScroll) {
+                self.captionView.alpha = (self.captionView.text.length ? 1.0 : 0);
+//            }
             CGSize size = CGSizeZero;
-            if (_captionView.text.length) {
-                size = [_captionView sizeThatFits:CGSizeMake(self.xh_width, MAXFLOAT)];
+            if (self.captionView.text.length) {
+                size = [self.captionView sizeThatFits:CGSizeMake(self.xh_width, MAXFLOAT)];
             }
             size.width = self.xh_width;
-            if (size.height > _maxCaptionHeight) {
-                size.height = _maxCaptionHeight;
+            if (size.height > self.maxCaptionHeight) {
+                size.height = self.maxCaptionHeight;
             }
-            _captionView.xh_top = self.xh_height - size.height - (self.toolBar.alpha < 1.0 ? 0 : self.toolBar.xh_height);
-            _captionView.xh_size = size;
+            self.captionView.xh_top = self.xh_height - size.height - (self.toolBar.alpha < 1.0 ? 0 : self.toolBar.xh_height);
+            self.captionView.xh_size = size;
         }];
     }
 }
@@ -407,11 +392,11 @@
             
             _isOrientationChange = YES;
             [UIView animateWithDuration:0.25 animations:^{
-                _scrollView.contentOffset = CGPointMake(MAX(0, (_pager.currentPage - 1) * _scrollView.xh_width), _scrollView.contentOffset.y);
+                self.scrollView.contentOffset = CGPointMake(MAX(0, (self.pager.currentPage - 1) * self.scrollView.xh_width), self.scrollView.contentOffset.y);
             } completion:^(BOOL finished) {
                 if (finished) {
-                    _scrollView.contentSize = CGSizeMake(_scrollView.xh_width * self.groupItems.count, _scrollView.xh_height);
-                    _isOrientationChange = NO;
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.xh_width * self.groupItems.count, self.scrollView.xh_height);
+                    self.isOrientationChange = NO;
                     XHPhotoBrowserCell *cell = [self cellForPage:index];
                     if (index >= self.groupItems.count) {
                         XHPhotoBrowserCell *cell = [self cellForPage:index];
@@ -430,7 +415,7 @@
             
             _isOrientationChange = YES;
             [UIView animateWithDuration:0.25 animations:^{
-                _scrollView.contentOffset = CGPointMake(_scrollView.xh_width, _scrollView.contentOffset.y);
+                self.scrollView.contentOffset = CGPointMake(self.scrollView.xh_width, self.scrollView.contentOffset.y);
             } completion:^(BOOL finished) {
                 if (finished) {
                     
@@ -439,29 +424,29 @@
                     cell.item = nil;
                     [cell removeFromSuperview];
                     
-                    if (index + 1 <= _groupItems.count) {
+                    if (index + 1 <= self.groupItems.count) {
                         XHPhotoBrowserCell *cell = [self cellForPage:index + 1];
-                        cell.xh_left = _imagePadding / 2;
+                        cell.xh_left = self.imagePadding / 2;
                         cell.page = 0;
                     }
                     
-                    if (index + 2 <= _groupItems.count) {
+                    if (index + 2 <= self.groupItems.count) {
                         XHPhotoBrowserCell *cell = [self cellForPage:index + 2];
-                        cell.xh_left = _scrollView.xh_width + _imagePadding / 2;
+                        cell.xh_left = self.scrollView.xh_width + self.imagePadding / 2;
                         cell.page = 1;
                     }
                     
-                    _scrollView.contentSize = CGSizeMake(_scrollView.xh_width * self.groupItems.count, _scrollView.xh_height);
-                    _scrollView.contentOffset = CGPointMake(0, _scrollView.contentOffset.y);
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.xh_width * self.groupItems.count, self.scrollView.xh_height);
+                    self.scrollView.contentOffset = CGPointMake(0, self.scrollView.contentOffset.y);
                     
-                    _isOrientationChange = NO;
+                    self.isOrientationChange = NO;
                     
                     [self scrollViewDidScroll:self.scrollView];
                     
                     // 更新
                     [self didDisplayPhotoIndex:0 from:NSNotFound];
-                    _pager.currentPage = 0;
-                    [self updateCaption:YES animated:YES];
+                    self.pager.currentPage = 0;
+                    [self updateCaptionAnimated:YES];
                     [self updateToolbar];
                     sender.enabled = YES;
                 }
@@ -534,8 +519,10 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [toVC presentViewController:activityViewController animated:YES completion:nil];
     } else {
-        UIPopoverController *sharePopover = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
-        [sharePopover presentPopoverFromBarButtonItem:_toolActionButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        // Use the popover presentation style for your view controller.
+        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+        activityViewController.popoverPresentationController.sourceView = self.toolBar;
+        [toVC presentViewController:activityViewController animated:YES completion:nil];
     }
 }
 
@@ -644,7 +631,7 @@
     _closeButton.hidden = !_showCloseButton;
     _deleteButton.hidden = !_showDeleteButton;
     
-    if (_toolBarShowStyle == XHShowStyleHide) {
+    if (_hideToolBar) {
         _toolBar.xh_height = 0;
         _toolBar.hidden = YES;
     }
@@ -740,7 +727,7 @@
         
         float oneTime = animated ? 0.25 : 0;
         [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
-            _blurBackground.alpha = 1;
+            self.blurBackground.alpha = 1;
         }completion:^(BOOL finished) {
             [UIView animateWithDuration:oneTime animations:^{
                 self.deleteButton.alpha = 1;
@@ -754,35 +741,25 @@
             cell.imageContainerView.frame = originFrame;
             [self showToolBar:animated];
         }completion:^(BOOL finished) {
-            _isPresented = YES;
-            [self scrollViewDidScroll:_scrollView];
-            _scrollView.userInteractionEnabled = YES;
+            self.isPresented = YES;
+            [self scrollViewDidScroll:self.scrollView];
+            self.scrollView.userInteractionEnabled = YES;
             if (completion) completion();
             [self didShowPhotoGroup:animated];
             [self didDisplayPhotoIndex:currentPage from:NSNotFound];
-            [self updateCaption:NO animated:animated];
-            [self hideToolBar];
+            [self updateCaptionAnimated:animated];
         }];
         
     } else {
-        //9.3 (CGRect) fromFrame = (origin = (x = 166.5, y = -146.5), size = (width = 70, height = 70))
-        //8.1 (CGRect) fromFrame = (origin = (x = 166.5, y = -146.5), size = (width = 35, height = 35))
         CGRect fromFrame = [_fromView convertRect:_fromView.bounds toView:cell.imageContainerView];
-        if (_thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
-            fromFrame = [fromView convertRect:fromView.frame toView:cell.imageContainerView];
-            fromFrame.size = CGSizeMake(fromFrame.size.width * 2, fromFrame.size.height * 2);
-        }
         fromFrame.origin.y -= _contentOffSetY;
-        //9.3 (CGRect) fromFrame = (origin = (x = 166.5, y = -82.5), size = (width = 70, height = 70))
-        //8.1 (CGRect) fromFrame = (origin = (x = 83.25, y = -122.5), size = (width = 35, height = 35))
-        
         cell.imageContainerView.clipsToBounds = NO;
         cell.imageView.frame = fromFrame;
         cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
         
         float oneTime = animated ? 0.18 : 0;
         [UIView animateWithDuration:oneTime*2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
-            _blurBackground.alpha = 1;
+            self.blurBackground.alpha = 1;
         }completion:^(BOOL finished) {
             [UIView animateWithDuration:oneTime animations:^{
                 self.deleteButton.alpha = 1;
@@ -790,7 +767,7 @@
             }];
         }];
         
-        _scrollView.userInteractionEnabled = NO;
+        self.scrollView.userInteractionEnabled = NO;
         [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
             cell.imageView.frame = cell.imageContainerView.bounds;
             [cell.imageView.layer setValue:@(1.01) forKeyPath:@"transform.scale"];
@@ -800,14 +777,13 @@
                 [self showToolBar:animated];
             }completion:^(BOOL finished) {
                 cell.imageContainerView.clipsToBounds = YES;
-                _isPresented = YES;
-                [self scrollViewDidScroll:_scrollView];
-                _scrollView.userInteractionEnabled = YES;
+                self.isPresented = YES;
+                [self scrollViewDidScroll:self.scrollView];
+                self.scrollView.userInteractionEnabled = YES;
                 if (completion) completion();
                 [self didShowPhotoGroup:animated];
                 [self didDisplayPhotoIndex:currentPage from:NSNotFound];
-                [self updateCaption:NO animated:animated];
-                [self hideToolBar];
+                [self updateCaptionAnimated:animated];
             }];
         }];
     }
@@ -937,20 +913,20 @@
     }
     
     [UIView animateWithDuration:animated ? 0.3 : 0 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
-        _toolBar.alpha = 0.0;
-        _blurBackground.alpha = 0.0;
-        _captionView.alpha = 0.0;
-        _closeButton.alpha = 0;
-        _deleteButton.alpha = 0;
+        self.toolBar.alpha = 0.0;
+        self.blurBackground.alpha = 0.0;
+        self.captionView.alpha = 0.0;
+        self.closeButton.alpha = 0;
+        self.deleteButton.alpha = 0;
         
         if (isFromImageClipped) {
             CGRect fromFrame = [fromView convertRect:fromView.bounds toView:cell];
-            if (_thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+            if (self.thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
                 fromFrame = [fromView convertRect:fromView.frame toView:cell];
                 fromFrame.size = CGSizeMake(fromFrame.size.width * 2, fromFrame.size.height * 2);
             }
             
-            fromFrame.origin.y -= _contentOffSetY;
+            fromFrame.origin.y -= self.contentOffSetY;
             
             CGFloat scale = fromFrame.size.width / cell.imageContainerView.xh_width * cell.zoomScale;
             CGFloat height = fromFrame.size.height / fromFrame.size.width * cell.imageContainerView.xh_width;
@@ -968,12 +944,12 @@
             //9.3 gif (CGRect) fromFrame = (origin = (x = 241.166672, y = 21.5), size = (width = 23.333334, height = 23.333334))
             
             CGRect fromFrame = [fromView convertRect:fromView.bounds toView:cell.imageContainerView];
-            if (_thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+            if (self.thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
                 fromFrame = [fromView convertRect:fromView.frame toView:cell.imageContainerView];
                 fromFrame.size = CGSizeMake(fromFrame.size.width * 2, fromFrame.size.height * 2);
             }
             
-            fromFrame.origin.y -= _contentOffSetY/cell.zoomScale;
+            fromFrame.origin.y -= self.contentOffSetY/cell.zoomScale;
             
             if ([fromView isKindOfClass:[UIImageView class]]) {
                 cell.imageView.contentMode = fromView.contentMode;
@@ -1006,7 +982,7 @@
     XHPhotoBrowserCell *cell = [self cellForPage:_pager.currentPage];
     [cell setContentOffset:cell.contentOffset animated:NO];
     
-    [self dismissAnimated:YES completion:nil];
+    [self dismissAnimated:self.animatedClose completion:nil];
 }
 
 - (void)cancelAllImageLoad {
@@ -1021,8 +997,8 @@
     }
     [self updateCellsForReuse];
     
-    CGFloat floatPage = _scrollView.contentOffset.x / _scrollView.xh_width;
-    NSInteger page = _scrollView.contentOffset.x / _scrollView.xh_width + 0.5;
+    CGFloat floatPage = self.scrollView.contentOffset.x / self.scrollView.xh_width;
+    NSInteger page = self.scrollView.contentOffset.x / self.scrollView.xh_width + 0.5;
     
     for (NSInteger i = page - 1; i <= page + 1; i++) { // preload left and right cell
         if (i >= 0 && i < self.groupItems.count) {
@@ -1049,31 +1025,13 @@
     if (_pager.currentPage != intPage) {
         [self didDisplayPhotoIndex:intPage from:_pager.currentPage];
         _pager.currentPage = intPage;
-        [self updateCaption:YES animated:YES];
+        [self updateCaptionAnimated:YES];
         [self updateToolbar];
     }
-    
-    if (_showToolBarWhenScroll) {
-        [self showToolBar:YES];
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    if (!decelerate) {
-        [self hideToolBar];
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    [self hideToolBar];
 }
 
 - (void)showToolBar:(BOOL)animated {
-    if (_toolBarShowStyle != XHShowStyleHide) {
-        if (_toolBarShowStyle == XHShowStyleAuto) {
-            [self hideToolBar];
-        }
-        
+    if (!_hideToolBar) {
         if (_toolBar.alpha >= 0.99) {
             return;
         }
@@ -1081,40 +1039,16 @@
         float oneTime = animated ? 0.2 : 0;
         
         [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _toolBar.alpha = 1;
+            self.toolBar.alpha = 1;
         } completion:^(BOOL finish) {
             if (finish) {
                 [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                    _captionView.xh_top = self.xh_height - _captionView.xh_height - self.toolBar.xh_height;
+                    self.captionView.xh_top = self.xh_height - self.captionView.xh_height - self.toolBar.xh_height;
                 } completion:^(BOOL finished) {
                 }];
             }
         }];
     }
-}
-
-- (void)hideToolBar {
-    if (_toolBarShowStyle == XHShowStyleAuto) {
-        [self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideToolBarDelay) object:nil];
-        [self performSelector:@selector(hideToolBarDelay) withObject:nil afterDelay:1.0];
-    }
-}
-
-- (void)hideToolBarDelay {
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        _toolBar.alpha = 0;
-    } completion:^(BOOL finish) {
-        if (finish) {
-            [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                if (kiPhoneX) {
-                    _captionView.xh_top = self.xh_height - _captionView.xh_height - 24;
-                } else {
-                    _captionView.xh_top = self.xh_height - _captionView.xh_height;
-                }
-            } completion:nil];
-        }
-    }];
-    
 }
 
 /// enqueue invisible cells for reuse
@@ -1181,7 +1115,7 @@
     
     if (_singleTapOption == XHSingleTapOptionNone) {
         if (_toolBar.alpha >= 0.99) {
-            [self updateCaption:NO animated:NO];
+            [self updateCaptionAnimated:NO];
         }
         [UIView animateWithDuration:0.2 animations:^{
             if (self.captionView.alpha != 0 || self.toolBar.alpha != 0) {
@@ -1206,7 +1140,7 @@
             [self dismiss];
         } else {
             if (_toolBar.alpha >= 0.99) {
-                [self updateCaption:NO animated:NO];
+                [self updateCaptionAnimated:NO];
             }
             [UIView animateWithDuration:0.2 animations:^{
                 if (self.captionView.alpha == 0) {
@@ -1266,7 +1200,7 @@
             }
             [self willDismissPhotoGroup:YES];
             [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                _captionView.xh_top = self.xh_height - _captionView.xh_height - self.toolBar.xh_height;
+                self.captionView.xh_top = self.xh_height - self.captionView.xh_height - self.toolBar.xh_height;
             } completion:nil];
         } break;
         case UIGestureRecognizerStateChanged: {
@@ -1279,11 +1213,11 @@
             CGFloat alpha = (alphaDelta - fabs(deltaY) + 50) / alphaDelta;
             alpha = XH_CLAMP(alpha, 0, 1);
             [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionCurveLinear animations:^{
-                _blurBackground.alpha = alpha;
-                _toolBar.alpha = alpha;
-                _captionView.alpha = (_captionView.text.length ? alpha : 0);
-                _closeButton.alpha = alpha;
-                _deleteButton.alpha = alpha;
+                self.blurBackground.alpha = alpha;
+                self.toolBar.alpha = alpha;
+                self.captionView.alpha = (self.captionView.text.length ? alpha : 0);
+                self.closeButton.alpha = alpha;
+                self.deleteButton.alpha = alpha;
             } completion:nil];
             
         } break;
@@ -1307,16 +1241,16 @@
                 duration = XH_CLAMP(duration, 0.05, 0.3);
                 
                 [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState animations:^{
-                    _blurBackground.alpha = 0;
-                    _toolBar.alpha = 0;
-                    _captionView.alpha = 0;
-                    _closeButton.alpha = 0;
-                    _deleteButton.alpha = 0;
+                    self.blurBackground.alpha = 0;
+                    self.toolBar.alpha = 0;
+                    self.captionView.alpha = 0;
+                    self.closeButton.alpha = 0;
+                    self.deleteButton.alpha = 0;
                     
                     if (moveToTop) {
-                        _scrollView.xh_bottom = 0;
+                        self.scrollView.xh_bottom = 0;
                     } else {
-                        _scrollView.xh_top = self.xh_height;
+                        self.scrollView.xh_top = self.xh_height;
                     }
                 } completion:^(BOOL finished) {
                     [self removeBrowserFromSuperview];
@@ -1328,12 +1262,11 @@
                 [self willShowPhotoGroup:YES];
                 
                 [UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:v.y / 1000 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
-                    _scrollView.xh_top = 0;
-                    _captionView.alpha = (_captionView.text.length ? 1.0 : 0);
-                    _blurBackground.alpha = 1.0;
-                    _deleteButton.alpha = 1.0;
-                    _closeButton.alpha = 1.0;
-                    [self hideToolBar];
+                    self.scrollView.xh_top = 0;
+                    self.captionView.alpha = (self.captionView.text.length ? 1.0 : 0);
+                    self.blurBackground.alpha = 1.0;
+                    self.deleteButton.alpha = 1.0;
+                    self.closeButton.alpha = 1.0;
                 } completion:^(BOOL finished) {
                     [self didShowPhotoGroup:YES];
                 }];
@@ -1341,11 +1274,11 @@
             
         } break;
         case UIGestureRecognizerStateCancelled : {
-            _scrollView.xh_top = 0;
+            self.scrollView.xh_top = 0;
             _blurBackground.alpha = 1;
             _closeButton.alpha = 1;
             _deleteButton.alpha = 1;
-            _captionView.alpha = (_captionView.text.length ? 1.0 : 0);
+            self.captionView.alpha = (self.captionView.text.length ? 1.0 : 0);
             [self didShowPhotoGroup:YES];
         }
         default:break;
@@ -1364,18 +1297,18 @@
         [self.delegate xh_photoBrowserDidOrientationChange:self];
     }
     
-    _scrollView.frame = CGRectMake(-_imagePadding / 2, 0, self.xh_width + _imagePadding, self.xh_height);
-    _scrollView.contentSize = CGSizeMake(_scrollView.xh_width * self.groupItems.count, _scrollView.xh_height);
+    self.scrollView.frame = CGRectMake(-_imagePadding / 2, 0, self.xh_width + _imagePadding, self.xh_height);
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.xh_width * self.groupItems.count, self.scrollView.xh_height);
     _isOrientationChange = NO;
     
     if (kiPhoneX && _isFullScreen && !_isFullScreenWord) {
         if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
-            _captionView.textContainerInset = UIEdgeInsetsMake(k_IPhoneX_TextDefaultInset, k_IPhoneX_SafeWidth, k_IPhoneX_TextDefaultInset, k_IPhoneX_SafeWidth);
+            self.captionView.textContainerInset = UIEdgeInsetsMake(k_IPhoneX_TextDefaultInset, k_IPhoneX_SafeWidth, k_IPhoneX_TextDefaultInset, k_IPhoneX_SafeWidth);
         } else {
-            _captionView.textContainerInset = UIEdgeInsetsMake(k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset);
+            self.captionView.textContainerInset = UIEdgeInsetsMake(k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset, k_IPhoneX_TextDefaultInset);
         }
-        if (_toolBar.alpha >= 0.99) {
-            [self updateCaption:NO animated:NO];
+        if (self.toolBar.alpha >= 0.99) {
+            [self updateCaptionAnimated:NO];
         }
     }
     
@@ -1404,10 +1337,10 @@
         }
     }];
     
-    if (CGPointEqualToPoint(CGPointMake(_scrollView.xh_width * _pager.currentPage, 0), _scrollView.contentOffset)) {
+    if (CGPointEqualToPoint(CGPointMake(self.scrollView.xh_width * _pager.currentPage, 0), self.scrollView.contentOffset)) {
         [self scrollViewDidScroll:self.scrollView];
     } else {
-        [_scrollView setContentOffset:CGPointMake(_scrollView.xh_width * _pager.currentPage, 0) animated:NO];
+        [self.scrollView setContentOffset:CGPointMake(self.scrollView.xh_width * _pager.currentPage, 0) animated:NO];
     }
 }
 

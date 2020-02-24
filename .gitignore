@@ -5,3 +5,4 @@ XHPhotoBrowser/XHPhotoBrowser.xcworkspace/xcuserdata/*
 # XHPhotoBrowser/Pods
 XHPhotoBrowser.xcworkspace/xcuserdata/cxh.xcuserdatad/xcdebugger
 XHPhotoBrowser.xcworkspace/xcshareddata
+*.xcbkptlist

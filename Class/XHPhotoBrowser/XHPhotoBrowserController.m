@@ -57,13 +57,11 @@
     browser.delegate = self;
     browser.dataSource = self;
     browser.showDeleteButton = NO;
-    browser.toolBarShowStyle = XHShowStyleShow;
+    browser.hideToolBar = NO;
     browser.showCloseButton = NO;
     browser.upDownDismiss = NO;
     browser.fromItemIndex = 0;
     browser.blurEffectBackground = NO;
-    browser.showToolBarWhenScroll = NO;
-    browser.showCaptionWhenScroll = NO;
     browser.isFullScreen = NO;
     browser.isFullScreenWord = NO;
     browser.singleTapOption = XHSingleTapOptionNone;

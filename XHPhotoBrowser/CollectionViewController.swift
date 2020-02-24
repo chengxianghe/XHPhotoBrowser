@@ -108,10 +108,12 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         v.dataSource = self
         v.showDeleteButton = true
         v.showCloseButton = false
-        v.toolBarShowStyle = leftsSwitcher.isOn ? .show : .hide
+        v.hideToolBar = !leftsSwitcher.isOn
         v.fromItemIndex = currentPage
         v.blurEffectBackground = self.switcher.isOn
         
+        v.animatedClose = false
+
         //iPhone X上可以设置额外的选项
         v.isFullScreenWord = false
         v.isFullScreen = true

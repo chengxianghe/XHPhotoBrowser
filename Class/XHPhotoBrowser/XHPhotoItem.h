@@ -16,26 +16,24 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol XHPhotoProtocol <NSObject>
 
 @required
-
-@property (nonatomic, strong) UIView * _Nullable thumbView; ///< thumb image, used for animation position calculation
-@property (nonatomic, strong) NSURL * _Nullable largeImageURL;
-@property (nonatomic, assign) BOOL shouldClipToTop;///< 是否是长图
-@property (nonatomic, readonly) UIImage * _Nullable thumbImage;
+@property (nonatomic, strong, nullable) NSURL *largeImageURL; ///< 大图url
+@property (nonatomic, strong, nullable) UIView *thumbView; ///<used for animation position calculation
 
 @optional
-
-@property (nonatomic, copy) NSString * _Nullable caption;
+@property (nonatomic, readonly, nullable) UIImage *thumbImage; ///< 缩略图
+@property (nonatomic, copy, nullable) NSString *caption;
+@property (nonatomic, assign) BOOL shouldClipToTop;///< 是否是长图
 
 @end
 
 @interface XHPhotoItem : NSObject <XHPhotoProtocol>
 
-@property (nonatomic, strong) UIView * _Nullable thumbView; ///< thumb image, used for animation position calculation
-@property (nonatomic, strong) NSURL * _Nullable largeImageURL;
-@property (nonatomic, assign) BOOL shouldClipToTop;
-@property (nonatomic, readonly) UIImage * _Nullable thumbImage;
+@property (nonatomic, strong, nullable) NSURL *largeImageURL;
+@property (nonatomic, strong, nullable) UIView *thumbView; ///<used for animation position calculation
 
-@property (nonatomic, copy) NSString * _Nullable caption;
+@property (nonatomic, readonly, nullable) UIImage *thumbImage;
+@property (nonatomic, copy, nullable) NSString *caption;
+@property (nonatomic, assign) BOOL shouldClipToTop;
 
 + (BOOL)shouldClipToTopWithView:(UIView * _Nullable)view;
 

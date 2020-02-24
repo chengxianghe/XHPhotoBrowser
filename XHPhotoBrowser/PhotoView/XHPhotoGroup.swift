@@ -149,7 +149,7 @@ class XHPhotoGroup: UIView {
         for (index, photoItem) in enumer {
             let item = XHPhotoItem()
             item.thumbView = imageViews[index]
-            item.largeImageURL = NSURL(string: photoItem.original_pic) as URL!
+            item.largeImageURL = URL(string: photoItem.original_pic)
             item.shouldClipToTop = self.shouldClippedToTop(view: item.thumbView)
             item.caption = caption[Int(arc4random())%10];
             items.append(item)
@@ -159,7 +159,7 @@ class XHPhotoGroup: UIView {
         v.delegate = self
         v.fromItemIndex = currentPage
         v.blurEffectBackground = false
-        v.toolBarShowStyle = .auto
+        v.hideToolBar = false
         v.pager.hidesForSinglePage = true
         v.singleTapOption = .dismiss
 //        v.showToolBarWhenScroll = false
