@@ -225,13 +225,6 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
                 animated:(BOOL)animated
               completion:(nullable void (^)(void))completion;
 
-+ (void)showInContaioner:(nonnull UIView *)container
-                fromRect:(CGRect)fromRect
-                urlItems:(nonnull NSArray<NSString *> *)urlItems
-                 current:(NSInteger)current
-                animated:(BOOL)animated
-              completion:(nullable void (^)(void))completion;
-
 /**
  *  初始化
  *  该初始化不需要设置delegate和dataSource,一般简单使用
@@ -249,18 +242,6 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
  *  @param completion  完成的回调
  */
 - (void)showInContaioner:(nonnull UIView *)container
-                animated:(BOOL)animated
-              completion:(nullable void (^)(void))completion;
-
-/**
- *  展示
- *  @param container   展示的容器
- *  @param fromRect    动画的起始位置
- *  @param animated    是否需要动画
- *  @param completion  完成的回调
- */
-- (void)showInContaioner:(nonnull UIView *)container
-                fromRect:(CGRect)fromRect
                 animated:(BOOL)animated
               completion:(nullable void (^)(void))completion;
 
