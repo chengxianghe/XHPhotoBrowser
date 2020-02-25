@@ -602,7 +602,22 @@
 - (void)showInContaioner:(UIView *)container
                 animated:(BOOL)animated
               completion:(void (^)(void))completion {
-    [self showInContaioner:container fromView:_groupItems.firstObject.thumbView animated:animated completion:completion];
+    if (self.dataSource != nil) {
+        [self reloadData];
+    }
+    
+    if (_fromItemIndex >= _groupItems.count) {
+        _fromItemIndex = _groupItems.count - 1;
+    }
+    
+    if (_fromItemIndex < 0) {
+        _fromItemIndex = 0;
+    }
+    
+    if (_groupItems.count) {
+        UIView *fromView = [self.groupItems[_fromItemIndex] thumbView];
+        [self presentFromImageView:fromView toContainer:container currentPage:_fromItemIndex animated:animated completion:completion];
+    }
 }
 
 - (void)showInContaioner:(nonnull UIView *)container
@@ -818,11 +833,12 @@
             
             CGRect originFrame = cell.imageContainerView.frame;
             CGFloat scale = fromFrame.size.width / cell.imageContainerView.xh_width;
-            
-            cell.imageContainerView.xh_centerX = CGRectGetMidX(fromFrame);
-            cell.imageContainerView.xh_height = fromFrame.size.height / scale;
-            [cell.imageContainerView.layer setValue:@(scale) forKeyPath:@"transform.scale"];
-            cell.imageContainerView.xh_centerY = CGRectGetMidY(fromFrame);
+            if (scale > 0) {
+                cell.imageContainerView.xh_centerX = CGRectGetMidX(fromFrame);
+                cell.imageContainerView.xh_height = fromFrame.size.height / scale;
+                [cell.imageContainerView.layer setValue:@(scale) forKeyPath:@"transform.scale"];
+                cell.imageContainerView.xh_centerY = CGRectGetMidY(fromFrame);
+            }
             
             float oneTime = animated ? 0.25 : 0;
             [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
