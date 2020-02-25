@@ -25,6 +25,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.pageControl = [[UIPageControl alloc] initWithFrame:self.bounds];
+        self.pageControl.userInteractionEnabled = NO;
         self.pageControl.hidden = YES;
         [self addSubview:self.pageControl];
         
@@ -68,7 +69,7 @@
     
     if (_style == XHPageControlStyleNone) {
         self.hidden = YES;
-    } else if (_numberOfPages < 9 && _style != XHPageControlStyleNum) {
+    } else if (_numberOfPages <= 9 && _style != XHPageControlStyleNum) {
         _pageControl.hidden = NO;
         _pageNumLabel.hidden = YES;
         

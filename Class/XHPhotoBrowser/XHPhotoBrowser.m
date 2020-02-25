@@ -16,6 +16,7 @@
 @interface XHPhotoBrowser() <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic,   weak) UIView *fromView;
+@property (nonatomic, assign) CGRect fromRect;
 @property (nonatomic,   weak) UIView *toContainerView;
 
 @property (nonatomic, strong) UIView *blurBackground;
@@ -114,7 +115,6 @@
     
     _blurEffectBackground = YES;
     _upDownDismiss = YES;
-    _thumbViewIsCell = NO;
     _showDeleteButton = NO;
     _showCloseButton = YES;
     _hideToolBar = NO;
@@ -175,7 +175,7 @@
     [_toolBar setBackgroundImage:[[UIImage alloc] init] forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     
     _pager = [[XHPageControlView alloc] init];
-    _pager.hidesForSinglePage = NO;
+    _pager.hidesForSinglePage = YES;
     _pager.userInteractionEnabled = NO;
     _pager.xh_width = 100;
     _pager.xh_height = 20;
@@ -529,7 +529,56 @@
 
 // MARK: - show
 
++ (XHPhotoBrowser *)browserWithUrlItems:(NSArray<NSString *> *)urlItems {
+    NSMutableArray *groupItems = [NSMutableArray array];
+    for (NSString *urlStr in urlItems) {
+        XHPhotoItem *item = [[XHPhotoItem alloc] init];
+        item.largeImageURL = [NSURL URLWithString:urlStr];
+        [groupItems addObject:item];
+    }
+
+    XHPhotoBrowser *browser = [[XHPhotoBrowser alloc] initWithGroupItems:groupItems];
+    browser.pager.style = XHPageControlStyleDot;
+    browser.toolBar.backgroundColor = [UIColor clearColor];
+    browser.toolPreviousButton.customView.hidden = YES;
+    browser.toolNextButton.customView.hidden = YES;
+
+    browser.hideToolBar = NO;
+    browser.showCloseButton = NO;
+    browser.upDownDismiss = NO;
+    browser.blurEffectBackground = NO;
+    browser.isFullScreen = NO;
+    browser.isFullScreenWord = NO;
+    browser.singleTapOption = XHSingleTapOptionDismiss;
+    browser.animatedClose = NO;
+    
+    return browser;
+}
+
++ (void)showInContaioner:(UIView *)container
+                fromRect:(CGRect)fromRect
+                urlItems:(NSArray<NSString *> *)urlItems
+                 current:(NSInteger)current
+                animated:(BOOL)animated
+              completion:(void (^)(void))completion {
+    XHPhotoBrowser *browser = [self browserWithUrlItems:urlItems];
+    browser.fromItemIndex = current;
+    [browser showInContaioner:container fromRect:fromRect animated:animated completion:completion];
+}
+
++ (void)showInContaioner:(UIView *)container
+                fromView:(nullable UIView *)fromView
+                urlItems:(NSArray<NSString *> *)urlItems
+                 current:(NSInteger)current
+                animated:(BOOL)animated
+              completion:(void (^)(void))completion {
+    XHPhotoBrowser *browser = [self browserWithUrlItems:urlItems];
+    browser.fromItemIndex = current;
+    [browser showInContaioner:container fromView:fromView animated:animated completion:completion];
+}
+
 - (void)showInContaioner:(UIView *)container
+                fromView:(UIView *)fromView
                 animated:(BOOL)animated
               completion:(void (^)(void))completion {
     
@@ -546,8 +595,28 @@
     }
     
     if (_groupItems.count) {
-        UIView *fromView = [self.groupItems[_fromItemIndex] thumbView];
         [self presentFromImageView:fromView toContainer:container currentPage:_fromItemIndex animated:animated completion:completion];
+    }
+}
+
+- (void)showInContaioner:(nonnull UIView *)container
+                fromRect:(CGRect)fromRect
+                animated:(BOOL)animated
+              completion:(nullable void (^)(void))completion {
+    if (self.dataSource != nil) {
+        [self reloadData];
+    }
+    
+    if (_fromItemIndex >= _groupItems.count) {
+        _fromItemIndex = _groupItems.count - 1;
+    }
+    
+    if (_fromItemIndex < 0) {
+        _fromItemIndex = 0;
+    }
+    
+    if (_groupItems.count) {
+        [self presentFromImageRect:fromRect toContainer:container currentPage:_fromItemIndex animated:animated completion:completion];
     }
 }
 
@@ -614,11 +683,11 @@
     }
 }
 
-- (void)presentFromImageView:(UIView *)fromView
+- (void)prepareFromImageRect:(CGRect)fromRect
+                    fromView:(UIView *)fromView
                  toContainer:(UIView *)toContainer
                  currentPage:(NSInteger)currentPage
-                    animated:(BOOL)animated
-                  completion:(nullable void (^)(void))completion {
+                    animated:(BOOL)animated {
     if (!toContainer) return;
     
     CGRect toFrame = toContainer.bounds;
@@ -643,31 +712,16 @@
     
     _scrollView.alwaysBounceHorizontal = _groupItems.count > 1;
     _fromView = fromView;
+    _fromRect = fromRect;
     _toContainerView = toContainer;
     
     _fromItemIndex = currentPage;
     
     if (_blurEffectBackground) {
-        UIView *view = nil;
-        
-        if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-            UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
-            view = effectView;
-        } else {
-            // toolbar 实现比较简单 也可以兼容ios7 但是可能有潜在的问题,所以ios8还是使用UIVisualEffectView
-            UIToolbar *toolBar = [[UIToolbar alloc] init];
-            toolBar.translucent = YES;
-            toolBar.barStyle = UIBarStyleBlackTranslucent;
-            toolBar.tintColor = nil;
-            toolBar.barTintColor = nil;
-            toolBar.barStyle = UIBarStyleBlackTranslucent;
-            [toolBar setBackgroundImage:nil forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
-            toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-            view = toolBar;
-        }
-        view.frame = _blurBackground.bounds;
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [_blurBackground addSubview:view];
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+        effectView.frame = _blurBackground.bounds;
+        effectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [_blurBackground addSubview:effectView];
     } else {
         _blurBackground.backgroundColor = [UIColor blackColor];
     }
@@ -691,39 +745,157 @@
     
     [UIView setAnimationsEnabled:YES];
     [self willShowPhotoGroup:animated];
+}
+
+- (void)presentFromImageRect:(CGRect)fromRect
+                 toContainer:(UIView *)toContainer
+                 currentPage:(NSInteger)currentPage
+                    animated:(BOOL)animated
+                  completion:(nullable void (^)(void))completion {
+    [self prepareFromImageRect:fromRect
+                      fromView:nil
+                   toContainer:toContainer
+                   currentPage:currentPage
+                      animated:animated];
     
+    [self presentFromImageViewCurrentPage:currentPage
+                                 fromRect:fromRect
+                                 fromView:nil
+                                 animated:animated
+                               completion:completion];
+}
+
+- (void)presentFromImageView:(UIView *)fromView
+                 toContainer:(UIView *)toContainer
+                 currentPage:(NSInteger)currentPage
+                    animated:(BOOL)animated
+                  completion:(nullable void (^)(void))completion {
+    [self prepareFromImageRect:CGRectNull
+                      fromView:fromView
+                   toContainer:toContainer
+                   currentPage:currentPage
+                      animated:animated];
+
+    [self presentFromImageViewCurrentPage:currentPage
+                                 fromRect:CGRectNull
+                                 fromView:fromView
+                                 animated:animated
+                               completion:completion];
+   
+}
+
+- (void)presentFromImageViewCurrentPage:(NSInteger)currentPage
+                               fromRect:(CGRect)fromRect
+                               fromView:(UIView *)fromView
+                               animated:(BOOL)animated
+                             completion:(nullable void (^)(void))completion {
     XHPhotoBrowserCell *cell = [self cellForPage:currentPage];
     id<XHPhotoProtocol> item = _groupItems[currentPage];
     
-    BOOL isFromImageClipped = [item shouldClipToTop];
-    
-    if (!isFromImageClipped) {
-        NSString *imageKey = [[SDWebImageManager sharedManager] cacheKeyForURL:item.largeImageURL];
-        if ([[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageKey]) {
-            cell.item = item;
+    if (CGRectIsNull(fromRect)) {
+        BOOL isFromImageClipped = [item shouldClipToTop];
+        
+        if (!isFromImageClipped) {
+            NSString *imageKey = [[SDWebImageManager sharedManager] cacheKeyForURL:item.largeImageURL];
+            if ([[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageKey]) {
+                cell.item = item;
+            }
         }
-    }
-    if (!cell.item && item.thumbImage != nil) {
-        cell.imageView.image = item.thumbImage;
-        [cell resizeSubviewSize];
-    }
-    
-    if (isFromImageClipped) {
-        CGRect fromFrame = [_fromView convertRect:_fromView.bounds toView:cell];
-        if (_thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
-            fromFrame = [fromView convertRect:fromView.frame toView:cell];
-            fromFrame.size = CGSizeMake(fromFrame.size.width * 2, fromFrame.size.height * 2);
+        if (!cell.item && item.thumbImage != nil) {
+            cell.imageView.image = item.thumbImage;
+            [cell resizeSubviewSize];
         }
         
+        if (isFromImageClipped) {
+            CGRect fromFrame = [fromView convertRect:fromView.bounds toView:cell];
+            fromFrame.origin.y -= _contentOffSetY;
+            
+            CGRect originFrame = cell.imageContainerView.frame;
+            CGFloat scale = fromFrame.size.width / cell.imageContainerView.xh_width;
+            
+            cell.imageContainerView.xh_centerX = CGRectGetMidX(fromFrame);
+            cell.imageContainerView.xh_height = fromFrame.size.height / scale;
+            [cell.imageContainerView.layer setValue:@(scale) forKeyPath:@"transform.scale"];
+            cell.imageContainerView.xh_centerY = CGRectGetMidY(fromFrame);
+            
+            float oneTime = animated ? 0.25 : 0;
+            [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
+                self.blurBackground.alpha = 1;
+            }completion:^(BOOL finished) {
+                [UIView animateWithDuration:oneTime animations:^{
+                    self.deleteButton.alpha = 1;
+                    self.closeButton.alpha = 1;
+                }];
+            }];
+            
+            _scrollView.userInteractionEnabled = NO;
+            [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                [cell.imageContainerView.layer setValue:@(1) forKeyPath:@"transform.scale"];
+                cell.imageContainerView.frame = originFrame;
+                [self showToolBar:animated];
+            }completion:^(BOOL finished) {
+                self.isPresented = YES;
+                [self scrollViewDidScroll:self.scrollView];
+                self.scrollView.userInteractionEnabled = YES;
+                if (completion) completion();
+                [self didShowPhotoGroup:animated];
+                [self didDisplayPhotoIndex:currentPage from:NSNotFound];
+                [self updateCaptionAnimated:animated];
+            }];
+            
+        } else {
+            CGRect fromFrame = [fromView convertRect:fromView.bounds toView:cell.imageContainerView];
+            fromFrame.origin.y -= _contentOffSetY;
+            cell.imageContainerView.clipsToBounds = NO;
+            cell.imageView.frame = fromFrame;
+            cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+            
+            float oneTime = animated ? 0.18 : 0;
+            [UIView animateWithDuration:oneTime*2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
+                self.blurBackground.alpha = 1;
+            }completion:^(BOOL finished) {
+                [UIView animateWithDuration:oneTime animations:^{
+                    self.deleteButton.alpha = 1;
+                    self.closeButton.alpha = 1;
+                }];
+            }];
+            
+            self.scrollView.userInteractionEnabled = NO;
+            [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
+                cell.imageView.frame = cell.imageContainerView.bounds;
+            }completion:^(BOOL finished) {
+                [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
+                    [cell.imageView.layer setValue:@(1.0) forKeyPath:@"transform.scale"];
+                    [self showToolBar:animated];
+                }completion:^(BOOL finished) {
+                    cell.imageContainerView.clipsToBounds = YES;
+                    self.isPresented = YES;
+                    [self scrollViewDidScroll:self.scrollView];
+                    self.scrollView.userInteractionEnabled = YES;
+                    if (completion) completion();
+                    [self didShowPhotoGroup:animated];
+                    [self didDisplayPhotoIndex:currentPage from:NSNotFound];
+                    [self updateCaptionAnimated:animated];
+                }];
+            }];
+        }
+    } else {
+        if (!cell.item && item.thumbImage != nil) {
+            cell.imageView.image = item.thumbImage;
+            [cell resizeSubviewSize];
+        }
+        
+        CGRect fromFrame = fromRect;
         fromFrame.origin.y -= _contentOffSetY;
         
         CGRect originFrame = cell.imageContainerView.frame;
         CGFloat scale = fromFrame.size.width / cell.imageContainerView.xh_width;
-        
-        cell.imageContainerView.xh_centerX = CGRectGetMidX(fromFrame);
-        cell.imageContainerView.xh_height = fromFrame.size.height / scale;
-        [cell.imageContainerView.layer setValue:@(scale) forKeyPath:@"transform.scale"];
-        cell.imageContainerView.xh_centerY = CGRectGetMidY(fromFrame);
+        if (scale > 0) {
+            cell.imageContainerView.xh_centerX = CGRectGetMidX(fromFrame);
+            cell.imageContainerView.xh_height = fromFrame.size.height / scale;
+            [cell.imageContainerView.layer setValue:@(scale) forKeyPath:@"transform.scale"];
+            cell.imageContainerView.xh_centerY = CGRectGetMidY(fromFrame);
+        }
         
         float oneTime = animated ? 0.25 : 0;
         [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -749,44 +921,8 @@
             [self didDisplayPhotoIndex:currentPage from:NSNotFound];
             [self updateCaptionAnimated:animated];
         }];
-        
-    } else {
-        CGRect fromFrame = [_fromView convertRect:_fromView.bounds toView:cell.imageContainerView];
-        fromFrame.origin.y -= _contentOffSetY;
-        cell.imageContainerView.clipsToBounds = NO;
-        cell.imageView.frame = fromFrame;
-        cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        
-        float oneTime = animated ? 0.18 : 0;
-        [UIView animateWithDuration:oneTime*2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.blurBackground.alpha = 1;
-        }completion:^(BOOL finished) {
-            [UIView animateWithDuration:oneTime animations:^{
-                self.deleteButton.alpha = 1;
-                self.closeButton.alpha = 1;
-            }];
-        }];
-        
-        self.scrollView.userInteractionEnabled = NO;
-        [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
-            cell.imageView.frame = cell.imageContainerView.bounds;
-            [cell.imageView.layer setValue:@(1.01) forKeyPath:@"transform.scale"];
-        }completion:^(BOOL finished) {
-            [UIView animateWithDuration:oneTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
-                [cell.imageView.layer setValue:@(1.0) forKeyPath:@"transform.scale"];
-                [self showToolBar:animated];
-            }completion:^(BOOL finished) {
-                cell.imageContainerView.clipsToBounds = YES;
-                self.isPresented = YES;
-                [self scrollViewDidScroll:self.scrollView];
-                self.scrollView.userInteractionEnabled = YES;
-                if (completion) completion();
-                [self didShowPhotoGroup:animated];
-                [self didDisplayPhotoIndex:currentPage from:NSNotFound];
-                [self updateCaptionAnimated:animated];
-            }];
-        }];
     }
+    
 }
 
 - (void)willShowPhotoGroup:(BOOL)animated {
@@ -868,11 +1004,6 @@
     BOOL outOfScreen = NO;
     if (fromView != nil) {
         CGRect targetTemp = [fromView convertRect:fromView.bounds toView:self.toContainerView];
-        if (_thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
-            targetTemp = [fromView convertRect:fromView.frame toView:self.toContainerView];
-            targetTemp.size = CGSizeMake(targetTemp.size.width * 2, targetTemp.size.height * 2);
-        }
-        
         targetTemp.origin.y -= _contentOffSetY;
         
         if (CGRectGetMidY(targetTemp) - 64 < 0 || CGRectGetMidY(targetTemp) + 49 > [UIScreen mainScreen].bounds.size.height) {
@@ -921,11 +1052,6 @@
         
         if (isFromImageClipped) {
             CGRect fromFrame = [fromView convertRect:fromView.bounds toView:cell];
-            if (self.thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
-                fromFrame = [fromView convertRect:fromView.frame toView:cell];
-                fromFrame.size = CGSizeMake(fromFrame.size.width * 2, fromFrame.size.height * 2);
-            }
-            
             fromFrame.origin.y -= self.contentOffSetY;
             
             CGFloat scale = fromFrame.size.width / cell.imageContainerView.xh_width * cell.zoomScale;
@@ -937,18 +1063,7 @@
             [cell.imageContainerView.layer setValue:@(scale) forKeyPath:@"transform.scale"];
             
         } else {
-            //8.1 gif (CGRect) fromFrame = (origin = (x = 41.75, y = -154.5), size = (width = 35, height = 35))
-            //9.3 gif (CGRect) fromFrame = (origin = (x = 83.5, y = -114.5), size = (width = 70, height = 70))
-            
-            //8.1 gif 大 (CGRect) fromFrame = (origin = (x = 227.25, y = 8.16666698), size = (width = 11.666667, height = 11.666667))
-            //9.3 gif (CGRect) fromFrame = (origin = (x = 241.166672, y = 21.5), size = (width = 23.333334, height = 23.333334))
-            
             CGRect fromFrame = [fromView convertRect:fromView.bounds toView:cell.imageContainerView];
-            if (self.thumbViewIsCell && [UIDevice currentDevice].systemVersion.floatValue < 9.0) {
-                fromFrame = [fromView convertRect:fromView.frame toView:cell.imageContainerView];
-                fromFrame.size = CGSizeMake(fromFrame.size.width * 2, fromFrame.size.height * 2);
-            }
-            
             fromFrame.origin.y -= self.contentOffSetY/cell.zoomScale;
             
             if ([fromView isKindOfClass:[UIImageView class]]) {

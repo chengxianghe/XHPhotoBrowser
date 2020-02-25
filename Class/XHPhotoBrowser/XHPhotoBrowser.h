@@ -119,6 +119,10 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
 @property (nonatomic, readonly, nullable) NSArray<__kindof id <XHPhotoProtocol>> *groupItems;
 @property (nonatomic, readonly) NSInteger currentPage;
 
+@property (nonatomic, strong, readonly) UIToolbar *toolBar;
+@property (nonatomic, strong, readonly) UIBarButtonItem *toolPreviousButton;
+@property (nonatomic, strong, readonly) UIBarButtonItem *toolNextButton;
+
 
 #pragma mark - 可配置属性
 
@@ -151,12 +155,6 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
  *  单击图片时的选项(Default is Auto)
  */
 @property (nonatomic, assign) XHSingleTapOption singleTapOption;
-
-/**
- *  thumbView是否是cell(Default is NO)
- *  当thumbView是tableView的cell,或者是collectionView的cell的时候需要设置为YES
- */
-@property (nonatomic, assign) BOOL thumbViewIsCell;
 
 /**
  *  默认是否展示删除按钮(Default is NO)
@@ -210,6 +208,30 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithFrame:(CGRect)frame UNAVAILABLE_ATTRIBUTE;
 
++ (nonnull XHPhotoBrowser *)browserWithUrlItems:(nonnull NSArray<NSString *> *)urlItems;
+
+/**
+ *  快捷使用 没有动画
+ *  @param container   展示的容器
+ *  @param urlItems    图片string数组
+ *  @param current     当前选中
+ *  @param completion  完成的回调
+ *
+*/
++ (void)showInContaioner:(nonnull UIView *)container
+                fromView:(nullable UIView *)fromView
+                urlItems:(nonnull NSArray<NSString *> *)urlItems
+                 current:(NSInteger)current
+                animated:(BOOL)animated
+              completion:(nullable void (^)(void))completion;
+
++ (void)showInContaioner:(nonnull UIView *)container
+                fromRect:(CGRect)fromRect
+                urlItems:(nonnull NSArray<NSString *> *)urlItems
+                 current:(NSInteger)current
+                animated:(BOOL)animated
+              completion:(nullable void (^)(void))completion;
+
 /**
  *  初始化
  *  该初始化不需要设置delegate和dataSource,一般简单使用
@@ -226,7 +248,19 @@ typedef NS_ENUM(NSUInteger, XHSingleTapOption) {
  *  @param animated    是否需要动画
  *  @param completion  完成的回调
  */
-- (void)showInContaioner:(UIView * _Nonnull)container
+- (void)showInContaioner:(nonnull UIView *)container
+                animated:(BOOL)animated
+              completion:(nullable void (^)(void))completion;
+
+/**
+ *  展示
+ *  @param container   展示的容器
+ *  @param fromRect    动画的起始位置
+ *  @param animated    是否需要动画
+ *  @param completion  完成的回调
+ */
+- (void)showInContaioner:(nonnull UIView *)container
+                fromRect:(CGRect)fromRect
                 animated:(BOOL)animated
               completion:(nullable void (^)(void))completion;
 

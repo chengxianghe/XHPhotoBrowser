@@ -16,10 +16,31 @@ class ViewController: UIViewController {
         self.title = "测试"
     }
     
+    @IBAction func tapImage(_ sender: UITapGestureRecognizer) {
+        var urls = [String]()
+        for i in 0..<imageurls.count {
+            let dict = imageurls[i]
+            urls.append(dict["big"] ?? "")
+            
+            if urls.count == 9 {
+                break
+            }
+        }
+        
+        XHPhotoBrowser.show(inContaioner: self.tabBarController!.view,
+                            from: sender.view,
+                            urlItems: urls,
+                            current: 3,
+                            animated: true) {
+                                print("XHPhotoBrowser completion")
+        }
+    }
+    
     @IBAction func onPushBrowser(_ sender: UIButton) {
         let browserVC = XHPhotoBrowserController()
         var images = [XHPhotoItem]();
         
+        var urls = [String]()
         for i in 0..<imageurls.count {
             
             let dict = imageurls[i]
@@ -35,14 +56,15 @@ class ViewController: UIViewController {
             item.shouldClipToTop = false
             
             images.append(item)
+            urls.append(model.big)
             
-            if images.count == 20 {
+            if images.count == 9 {
                 break
             }
         }
-        
+                
         browserVC.groupItems = images;
-        
+
         browserVC.fromItemIndex = 2;
         browserVC.moreBlock = {[weak browserVC] in
             let other = ["设置1", "设置2", "设置3"]
@@ -56,7 +78,7 @@ class ViewController: UIViewController {
                 }, cancel: nil)
         }
         
-//        browserVC.alwaysShowStatusBar = false
+        browserVC.alwaysShowStatusBar = false
         self.navigationController?.pushViewController(browserVC, animated: true)
     }
 

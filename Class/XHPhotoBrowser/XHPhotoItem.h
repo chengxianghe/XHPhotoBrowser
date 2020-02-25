@@ -17,9 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @required
 @property (nonatomic, strong, nullable) NSURL *largeImageURL; ///< 大图url
-@property (nonatomic, strong, nullable) UIView *thumbView; ///<used for animation position calculation
 
 @optional
+@property (nonatomic, strong, nullable) UIView *thumbView; ///<used for animation position calculation
 @property (nonatomic, readonly, nullable) UIImage *thumbImage; ///< 缩略图
 @property (nonatomic, copy, nullable) NSString *caption;
 @property (nonatomic, assign) BOOL shouldClipToTop;///< 是否是长图

@@ -102,7 +102,6 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         let v = XHPhotoBrowser()
         
         print(self.collectionView.contentOffset.y)
-        v.thumbViewIsCell = true
         v.contentOffSetY = self.collectionView.contentOffset.y
         v.delegate = self
         v.dataSource = self
@@ -112,7 +111,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         v.fromItemIndex = currentPage
         v.blurEffectBackground = self.switcher.isOn
         
-        v.animatedClose = false
+//        v.animatedClose = false
 
         //iPhone X上可以设置额外的选项
         v.isFullScreenWord = false
