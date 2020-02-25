@@ -599,6 +599,12 @@
     }
 }
 
+- (void)showInContaioner:(UIView *)container
+                animated:(BOOL)animated
+              completion:(void (^)(void))completion {
+    [self showInContaioner:container fromView:_groupItems.firstObject.thumbView animated:animated completion:completion];
+}
+
 - (void)showInContaioner:(nonnull UIView *)container
                 fromRect:(CGRect)fromRect
                 animated:(BOOL)animated
